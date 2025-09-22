@@ -7,12 +7,20 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY")
+
+# Esta línea asegura que DEBUG sea Falso en Render
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+# Este bloque de código entero es para los dominios permitidos
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS", default="", cast=lambda v: [s.strip() for s in v.split(",")]
+)
 RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default=None)
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+
+# Añade esta línea para que Django confíe en los formularios seguros de Render
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
 
 INSTALLED_APPS = [
