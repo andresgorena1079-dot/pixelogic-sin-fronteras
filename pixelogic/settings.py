@@ -11,7 +11,12 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 # --- CORRECCIÓN CLAVE ---
 # Añade tu dominio de Render y permite cualquier subdominio
-ALLOWED_HOSTS = ["pixelogic-sin-fronteras.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = []
+RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default=None)
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+# Añade esta línea para que Django confíe en los formularios seguros de Render
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
 
 INSTALLED_APPS = [
