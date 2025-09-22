@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ leccion.titulo }}{% endblock %}
+
+{% block content %}
+<div class="lesson-navigation">
+    {% if leccion_anterior %}
+        <a href="{% url 'cursos:detalle_leccion' leccion_anterior.id %}" class="lesson-nav-button"><i class="fas fa-arrow-left"></i> Lección Anterior</a>
+    {% else %}
+        <span class="lesson-nav-button disabled"><i class="fas fa-arrow-left"></i> Lección Anterior</span>
+    {% endif %}
+    
+    <a href="{% url 'cursos:detalle_modulo' leccion.modulo.id %}" class="lesson-nav-button index"><i class="fas fa-list-ul"></i> Índice del Módulo</a>
+    
+    {% if leccion_siguiente %}
+        <a href="{% url 'cursos:detalle_leccion' leccion_siguiente.id %}" class="lesson-nav-button">Siguiente Lección <i class="fas fa-arrow-right"></i></a>
+    {% else %}
+        <span class="lesson-nav-button disabled">Fin del Módulo <i class="fas fa-check"></i></span>
+    {% endif %}
+</div>
+
+<div class="lesson-content-area">
+    {{ leccion.contenido_html|safe }}
+</div>
+
+<hr>
+
+<div class="completion-section">
+    {% if user.is_authenticated and not completada %}
+        <form action="{% url 'cursos:completar_leccion' leccion.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="nav-button">Marcar como Completada</button>
+        </form>
+    {% elif completada %}
+        <p class="leccion-completada"><i class="fas fa-check-circle"></i> ¡Lección Completada!</p>
+    {% endif %}
+    
+    <a href="{% url 'cursos:zona_practica' leccion.id %}" class="cta-button practice-button">
+        <i class="fas fa-terminal"></i> Ir a la Zona de Práctica
+    </a>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var editor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+            lineNumbers: true,
+            mode: "python",
+            theme: "dracula",
+            indentUnit: 4,
+            matchBrackets: true
+        });
+
+        document.getElementById('run-button').addEventListener('click', function() {
+            const code = editor.getValue();
+            const outputElement = document.getElementById('console-output');
+            outputElement.textContent = 'Ejecutando...';
+
+            fetch("{% url 'cursos:execute_code' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ code: code })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    outputElement.style.color = '#ff5555'; // Rojo para errores
+                    outputElement.textContent = data.error;
+                } else {
+                    outputElement.style.color = '#f8f8f2'; // Blanco para la salida
+                    outputElement.textContent = data.output;
+                }
+            })
+            .catch(error => {
+                outputElement.style.color = '#ff5555';
+                outputElement.textContent = 'Error de conexión con el servidor de ejecución.';
+            });
+        });
+    });
+</script>
+{% endblock %}

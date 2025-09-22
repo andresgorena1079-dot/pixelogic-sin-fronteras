@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1, Lección 1: Introducción y Entorno - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 1: El Entorno y la Sintaxis Básica</h1>
+        <p class="lesson-intro">
+            ¡Bienvenido al inicio de tu viaje con Python! Antes de escribir código, un buen programador prepara sus herramientas. En esta primera lección, configuraremos un entorno de desarrollo profesional y escribiremos nuestro primer programa, entendiendo los conceptos más básicos de la sintaxis de Python.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Configuración del Entorno de Desarrollo</h2>
+        <p>
+            Al igual que un chef necesita una cocina bien equipada, un programador necesita un entorno de desarrollo robusto. Esto consiste en dos componentes clave: el intérprete de Python (el "motor") y un editor de código (nuestro "taller").
+        </p>
+
+        <div class="concept-card">
+            <h3>1.1: Instalación de Python 3.10+</h3>
+            <p>El intérprete de Python es el programa que lee, traduce y ejecuta tu código. Sin él, tu computadora no podría entender las instrucciones escritas en lenguaje Python.</p>
+            <ul>
+                <li><strong>Paso 1:</strong> Ve al sitio web oficial de Python: <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a>.</li>
+                <li><strong>Paso 2:</strong> Descarga la última versión estable para tu sistema operativo.</li>
+                <li><strong>Paso 3:</strong> Ejecuta el instalador.</li>
+            </ul>
+            <div class="note">
+                <p>⚠️ <strong>Atención (Windows):</strong> Durante la instalación, es <strong>vital</strong> marcar la casilla que dice <strong>"Add Python to PATH"</strong>. Esto te permitirá ejecutar Python desde cualquier terminal sin problemas.</p>
+            </div>
+        </div>
+
+        <div class="concept-card">
+            <h3>1.3: Uso de Entornos Virtuales (Buena Práctica)</h3>
+            <p>Un entorno virtual es una carpeta aislada que contiene una instalación de Python específica para un proyecto. Esto evita que los paquetes de diferentes proyectos entren en conflicto.</p>
+            <p><strong>¿Por qué es importante?</strong> Imagina que el Proyecto A necesita la versión 1.0 de una librería, pero el Proyecto B necesita la versión 2.0. Sin entornos virtuales, tendrías un conflicto. Con ellos, cada proyecto tiene su propio espacio aislado.</p>
+            <div class="code-block"><pre>
+<span class="comment"># 1. Navega a la carpeta de tu proyecto</span>
+<span class="comment"># 2. Crea un entorno llamado "venv"</span>
+<span class="variable">python</span> -m <span class="variable">venv</span> <span class="variable">venv</span>
+
+<span class="comment"># 3. Activa el entorno</span>
+<span class="comment"># En Windows:</span>
+.\<span class="variable">venv</span>\Scripts\activate
+<span class="comment"># En macOS/Linux:</span>
+<span class="keyword">source</span> <span class="variable">venv</span>/bin/activate
+            </pre></div>
+            <p>Sabrás que está activado porque el nombre `(venv)` aparecerá al inicio de la línea de tu terminal.</p>
+        </div>
+
+        <hr>
+
+        <h2>Tema 2: Primer Programa y Comentarios</h2>
+        <p>Ahora que tenemos el entorno listo, vamos a escribir nuestro primer programa, una tradición conocida como "Hola, Mundo".</p>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Función <code>print()</code></h3>
+            <p><strong>Categoría:</strong> Función Incorporada (Built-in)</p>
+            <p><strong>Sintaxis:</strong> <code>print(objeto1, objeto2, ..., sep=' ', end='\n')</code></p>
+            <p><strong>Descripción:</strong> Imprime los objetos especificados en la consola. Es la herramienta fundamental para mostrar información al usuario y para depurar (verificar) el estado de las variables.</p>
+            <p><strong>Ejemplo Práctico:</strong></p>
+            <div class="code-block"><pre>
+<span class="comment"># Código de Entrada</span>
+<span class="variable">nombre</span> = <span class="highlight">"Mundo"</span>
+<span class="function">print</span>(<span class="highlight">"Hola,"</span>, <span class="variable">nombre</span>, <span class="highlight">"!"</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">Hola, Mundo !</span>
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección</h3>
+
+            <h4>Ejercicio 1: Mensaje de Bienvenida (Conceptual)</h4>
+            <p><strong>Objetivo:</strong> Practicar el uso de la función <code>print()</code> con múltiples argumentos y el parámetro <code>sep</code>.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Escribe una única línea de código usando <code>print()</code>.</li>
+                <li>El `print` debe mostrar dos datos sobre Python: su creador y el año de creación.</li>
+                <li>Utiliza el parámetro <code>sep=" | "</code> para que los datos aparezcan separados por una barra vertical.</li>
+                <li>Usa el botón "Ejecutar" en la zona de práctica para ver el resultado.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucion1-1')">Ver Solución</span>
+            <div id="solucion1-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="function">print</span>(<span class="highlight">"Creador: Guido van Rossum"</span>, <span class="highlight">"Año: 1991"</span>, <span class="variable">sep</span>=<span class="highlight">" | "</span>)
+                </pre></div>
+            </div>
+            
+            <h4 style="margin-top: 30px;">Ejercicio 2: El "Hola, Mundo" (Validable)</h4>
+            <p><strong>Objetivo:</strong> Escribir un programa que imprima el saludo "Hola, Mundo" en la consola para que nuestro sistema pueda validarlo.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Escribe una sola línea de código.</li>
+                <li>Usa la función <code>print()</code> para mostrar el texto exacto: <code>Hola, Mundo</code></li>
+                <li>Usa el botón **"Validar Solución"** para comprobar si tu código es correcto. ¡Superar este desafío te permitirá avanzar a la siguiente lección y ganar tus primeros XP!</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucion1-2')">Ver Solución</span>
+            <div id="solucion1-2" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="function">print</span>(<span class="highlight">'Hola, Mundo'</span>)
+                </pre></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

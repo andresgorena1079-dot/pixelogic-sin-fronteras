@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 7, Lección 1: Introducción a Pandas - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 1: Introducción a Pandas</h1>
+        <p class="lesson-intro">
+            Bienvenido al mundo del análisis de datos con Python. **Pandas** es una librería de terceros (no viene por defecto con Python) que se ha convertido en la herramienta estándar para la manipulación y el análisis de datos. Piensa en Pandas como una versión programable y súper potente de una hoja de cálculo como Excel.
+        </p>
+        <div class="note">
+            <p><strong>Instalación:</strong> Para usar Pandas, primero debes instalarlo. Abre tu terminal (con tu entorno virtual activado) y ejecuta: <code>pip install pandas</code></p>
+        </div>
+
+        <hr>
+
+        <h2>Tema 1: ¿Qué son las Series y los DataFrames?</h2>
+        <p>Pandas introduce dos estructuras de datos principales que son la base de todo análisis:</p>
+        <ul>
+            <li><strong>Serie (Series):</strong> Es una estructura de una dimensión, similar a una columna en una hoja de cálculo o una lista con etiquetas (índices).</li>
+            <li><strong>DataFrame:</strong> Es una estructura de dos dimensiones, como una tabla completa o una hoja de cálculo, con filas y columnas etiquetadas. Es la estructura con la que más trabajarás.</li>
+        </ul>
+        
+        <div class="concept-card">
+            <h3>Creación de un DataFrame</h3>
+            <p>La forma más común de crear un DataFrame es a partir de un diccionario de Python, donde las claves son los nombres de las columnas y los valores son listas con los datos de esas columnas.</p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">pandas</span> <span class="keyword">as</span> <span class="variable">pd</span> <span class="comment"># 'pd' es el alias estándar para pandas</span>
+
+<span class="variable">datos</span> = {
+    <span class="highlight">'Nombre'</span>: [<span class="highlight">'Ana'</span>, <span class="highlight">'Luis'</span>, <span class="highlight">'Marta'</span>],
+    <span class="highlight">'Edad'</span>: [<span class="number">28</span>, <span class="number">34</span>, <span class="number">22</span>],
+    <span class="highlight">'Ciudad'</span>: [<span class="highlight">'Lima'</span>, <span class="highlight">'Bogotá'</span>, <span class="highlight">'Madrid'</span>]
+}
+
+<span class="variable">df</span> = <span class="variable">pd</span>.<span class="function">DataFrame</span>(<span class="variable">datos</span>)
+<span class="function">print</span>(<span class="variable">df</span>)
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 2: Lectura y Escritura de Archivos CSV</h2>
+        <p>El verdadero poder de Pandas reside en su capacidad para leer datos desde una multitud de formatos de archivo. El más común es el CSV (Valores Separados por Comas).</p>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>pd.read_csv()</code> y <code>.to_csv()</code></h3>
+            <p><strong><code>pd.read_csv('ruta/al/archivo.csv')</code>:</strong> Lee un archivo CSV y lo carga en un DataFrame de Pandas.</p>
+            <p><strong><code>df.to_csv('ruta/nuevo_archivo.csv', index=False)</code>:</strong> Guarda el contenido de un DataFrame en un nuevo archivo CSV. `index=False` evita que Pandas guarde el índice del DataFrame como una columna.</p>
+            <p><strong>Ejemplo Práctico:</strong></p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">pandas</span> <span class="keyword">as</span> <span class="variable">pd</span>
+
+<span class="comment"># Suponiendo que tenemos un archivo 'ventas.csv' con este contenido:</span>
+<span class="comment"># producto,cantidad,precio</span>
+<span class="comment"># Laptop,10,1200</span>
+<span class="comment"># Mouse,50,25</span>
+
+<span class="comment"># Leer el archivo CSV</span>
+<span class="variable">df_ventas</span> = <span class="variable">pd</span>.<span class="function">read_csv</span>(<span class="highlight">'ventas.csv'</span>)
+
+<span class="comment"># Inspeccionar los primeros datos con .head()</span>
+<span class="function">print</span>(<span class="highlight">"--- Primeras 5 filas del DataFrame ---"</span>)
+<span class="function">print</span>(<span class="variable">df_ventas</span>.<span class="function">head</span>())
+
+<span class="comment"># Añadir una nueva columna calculada</span>
+<span class="variable">df_ventas</span>[<span class="highlight">'Total'</span>] = <span class="variable">df_ventas</span>[<span class="highlight">'cantidad'</span>] * <span class="variable">df_ventas</span>[<span class="highlight">'precio'</span>]
+
+<span class="comment"># Guardar el nuevo DataFrame en otro archivo</span>
+<span class="variable">df_ventas</span>.<span class="function">to_csv</span>(<span class="highlight">'ventas_con_total.csv'</span>, <span class="variable">index</span>=<span class="boolean">False</span>)
+<span class="function">print</span>(<span class="highlight">"\nArchivo 'ventas_con_total.csv' guardado con éxito."</span>)
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicio: Análisis Básico de Datos de Películas</h3>
+            <p><strong>Objetivo:</strong> Usar Pandas para leer un archivo CSV, realizar un filtrado básico y encontrar información específica.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `01_analisis_peliculas.py`. Importa `pandas as pd`.</li>
+                <li>Crea un archivo de texto en la misma carpeta llamado `peliculas.csv` con el siguiente contenido:
+                    <div class="code-block"><pre>
+titulo,director,año,puntuacion
+Inception,Christopher Nolan,2010,8.8
+The Matrix,Wachowskis,1999,8.7
+Parasite,Bong Joon Ho,2019,8.6
+The Godfather,Francis Ford Coppola,1972,9.2
+                    </pre></div>
+                </li>
+                <li>Usa `pd.read_csv()` para cargar `peliculas.csv` en un DataFrame.</li>
+                <li>Imprime el DataFrame completo.</li>
+                <li>**Filtrado:** Crea un nuevo DataFrame llamado `peliculas_modernas` que contenga solo las películas estrenadas después del año 2000. Imprímelo.</li>
+                <li>**Búsqueda:** Encuentra la película con la puntuación más alta. Puedes hacerlo así: `mejor_pelicula = df.loc[df['puntuacion'].idxmax()]`. Imprime esta información.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM7L1-1')">Ver Solución</span>
+            <div id="solucionM7L1-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">pandas</span> <span class="keyword">as</span> <span class="variable">pd</span>
+
+<span class="comment"># Cargar los datos</span>
+<span class="variable">df</span> = <span class="variable">pd</span>.<span class="function">read_csv</span>(<span class="highlight">'peliculas.csv'</span>)
+<span class="function">print</span>(<span class="highlight">"--- DataFrame Completo ---"</span>)
+<span class="function">print</span>(<span class="variable">df</span>)
+
+<span class="comment"># Filtrar películas modernas</span>
+<span class="variable">peliculas_modernas</span> = <span class="variable">df</span>[<span class="variable">df</span>[<span class="highlight">'año'</span>] > <span class="number">2000</span>]
+<span class="function">print</span>(<span class="highlight">"\n--- Películas Estrenadas Después del 2000 ---"</span>)
+<span class="function">print</span>(<span class="variable">peliculas_modernas</span>)
+
+<span class="comment"># Encontrar la película con la mejor puntuación</span>
+<span class="variable">mejor_pelicula</span> = <span class="variable">df</span>.<span class="function">loc</span>[<span class="variable">df</span>[<span class="highlight">'puntuacion'</span>].<span class="function">idxmax</span>()]
+<span class="function">print</span>(<span class="highlight">"\n--- Película con la Mejor Puntuación ---"</span>)
+<span class="function">print</span>(<span class="variable">mejor_pelicula</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="../module_06_libreria_estandar/03_logging_y_debugging.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="02_numpy_y_matplotlib.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

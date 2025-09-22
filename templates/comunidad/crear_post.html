@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Crear Publicación{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Crear Nueva Publicación</h2>
+    <p>Comparte tus ideas y preguntas con la comunidad.</p>
+
+    <form method="post" class="post-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_titulo">Título:</label>
+            <input type="text" name="titulo" id="id_titulo" placeholder="Escribe un título para tu publicación" required>
+        </div>
+        <div class="form-group">
+            <label for="id_contenido">Contenido:</label>
+            <textarea name="contenido" id="id_contenido" rows="10" placeholder="Escribe aquí tu publicación..." required></textarea>
+        </div>
+        <button type="submit" class="cta-button">Publicar</button>
+    </form>
+</div>
+
+<style>
+    /* Estilos adicionales para esta página */
+    .post-form label {
+        color: var(--primary-color);
+        font-weight: bold;
+    }
+    .post-form input,
+    .post-form textarea {
+        background-color: var(--code-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        padding: 10px;
+        border-radius: 5px;
+        width: 100%;
+        margin-top: 5px;
+    }
+</style>
+{% endblock %}

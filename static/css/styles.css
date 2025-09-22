@@ -1,0 +1,1906 @@
+/* ==========================================================================
+   1. FUENTES Y VARIABLES GLOBALES
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Montserrat:wght@500;700&display=swap');
+
+:root {
+    --bg-color: #1a1a1d; 
+    --card-bg: #2b2b2e; 
+    --code-bg: #1c1c1f; 
+    --text-color: #f5f5f5; 
+    --secondary-text-color: #aaaaaa; 
+    --primary-color: #58a6ff; 
+    --secondary-color: #2ea44f; 
+    --border-color: #3b3b3e; 
+    --sidebar-bg: #232326; 
+    --highlight-color: #f0c419;
+}
+/* --- Estilos para las tarjetas de publicaciones en la lista --- */
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative; /* Importante para posicionar el contador de "Me gusta" */
+    transition: all 0.3s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.post-card a {
+    text-decoration: none;
+    color: inherit; /* Heredar el color del texto */
+}
+
+.post-card h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.post-card p {
+    color: var(--text-color);
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.post-meta {
+    font-size: 0.9em;
+    color: var(--secondary-text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- ESTILOS PARA EL CONTADOR DE "ME GUSTA" EN LA LISTA DE POSTS --- */
+.post-likes-count {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background-color: var(--highlight-color); /* Un color que destaque */
+    color: white;
+    padding: 5px 12px;
+    border-radius: 15px; /* Bordes redondeados para un aspecto de "pastilla" */
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Espacio entre el ícono y el número */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.post-likes-count i.fas.fa-thumbs-up {
+    color: white; /* Asegura que el ícono sea blanco */
+}
+
+.delete-post-btn {
+    background-color: var(--delete-button-bg); /* Define esta variable en tu ':root' si no existe */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.8em;
+    transition: background-color 0.3s ease;
+}
+
+.delete-post-btn:hover {
+    background-color: #d9534f; /* Un rojo más oscuro al pasar el ratón */
+}
+
+/* ==========================================================================
+   2. ESTRUCTURA Y LAYOUT PRINCIPAL (CON CSS GRID)
+   ========================================================================== */
+html, body {
+    height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Evita el scroll en la página entera */
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* Columna fija para sidebar, resto flexible */
+    grid-template-rows: auto auto 1fr auto; /* Header, Navbar, Contenido (ocupa el resto), Footer */
+    grid-template-areas:
+        "header header"
+        "navbar navbar"
+        "sidebar main"
+        "footer footer";
+}
+
+.header-banner { grid-area: header; }
+.main-navbar { grid-area: navbar; }
+.sidebar { grid-area: sidebar; overflow-y: auto; } /* Scroll por si el menú lateral es muy largo */
+.main-content { 
+    grid-area: main; 
+    overflow-y: auto; /* AÑADE EL SCROLL SOLAMENTE AL ÁREA DE CONTENIDO */
+    padding: 20px;
+}
+.footer { grid-area: footer; }
+
+/* ==========================================================================
+   ESTILOS FINALES: PÁGINA PRINCIPAL COMPACTA Y ELEGANTE (V2)
+   ========================================================================== */
+
+/* --- 1. Contenedor Principal y Ancho Angosto --- */
+.homepage-wrapper .container {
+    max-width: 960px; /* Hacemos el contenido principal aún más angosto */
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* --- 2. Secciones Compactas --- */
+.page-section.compact {
+    padding: 35px 0; /* Espaciado vertical MÍNIMO entre secciones */
+    border-bottom: 1px solid var(--border-color); /* Separador sutil */
+}
+.section-header {
+    text-align: center;
+    margin-bottom: 2px; /* Menos espacio debajo del título */
+}
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8em; /* Títulos más pequeños y elegantes */
+    color: var(--text-color);
+    display: inline-block;
+}
+
+/* --- 3. Hero Section (Bienvenida) Compacta --- */
+.hero-section.compact {
+    height: 450px; /* Altura fija y mucho más baja */
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinea el contenido a la izquierda */
+    text-align: left;
+}
+.hero-content {
+    background-color: transparent; /* Sin fondo negro */
+    padding: 0;
+    max-width: 450px; /* Caja de texto más angosta */
+}
+.hero-content h1 {
+    font-size: 2.8em;
+    text-shadow: 1px 1px 10px rgba(0,0,0,0.8);
+}
+.hero-content p {
+    font-size: 1.1em;
+    color: #e0e0e0;
+    background-color: rgba(0,0,0,0.5); /* Fondo sutil solo para el párrafo */
+    padding: 10px;
+    border-radius: 5px;
+}
+.hero-content .cta-button {
+    padding: 12px 25px; /* Botón más pequeño */
+    font-size: 0.9em;
+}
+
+
+/* --- 4. Tarjetas del Blog y Cursos (Más Pequeñas) --- */
+.blog-grid, .course-card-list {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Siempre 3 columnas */
+    gap: 20px; /* Espacio reducido entre tarjetas */
+}
+.blog-card, .course-card {
+    background-color: var(--card-bg);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    color: var(--text-color);
+}
+.blog-card:hover, .course-card:hover {
+    transform: scale(1.05);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
+}
+.blog-card-image img {
+    height: 20px; /* Imágenes de blog más bajas */
+    width: 50%;
+    object-fit: contain;
+}
+.blog-card-content { padding: 15px; }
+.blog-card-content h3 a { font-size: 1.2em; color: var(--primary-color); text-decoration: none;}
+.blog-card-content p { font-size: 0.9em; margin: 5px 0 0; color: var(--secondary-text-color); }
+
+.course-card {
+    padding: 20px;
+    text-align: center;
+}
+.course-card img {
+    width: 80px; /* Logos más pequeños */
+    height: 80px;
+    margin-bottom: 10px;
+}
+.course-card h3 { font-size: 1.2em; color: var(--primary-color); }
+
+
+/* --- 5. Sección "Acerca de" --- */
+.about-us-section {
+    background-color: var(--sidebar-bg);
+}
+.about-us-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.about-us-text .section-title { text-align: left; }
+/* ==========================================================================
+   ESTILOS FINALES PARA IMÁGENES (TAMAÑOS CONTROLADOS)
+   ========================================================================== */
+
+/* --- Regla general para que las imágenes no se desborden --- */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Evita espacios extra debajo de las imágenes */
+}
+
+/* --- 1. Sección de Bienvenida (Hero) más compacta --- */
+.hero-section.compact {
+    height: 0px; /* <-- MODIFICA AQUÍ para cambiar la altura del bloque de bienvenida */
+    min-height: auto;
+    display: flex;
+    align-items: center;
+}
+
+/* --- 2. Imagen de la Tarjeta del Blog (más pequeña) --- */
+.blog-card-image img {
+    width: 100%; /* La imagen ocupa todo el ancho de la tarjeta */
+    
+    /* --- DETALLES DE TAMAÑO --- */
+    height: 150px; /* <-- MODIFICA ESTE VALOR para hacerla más alta o baja */
+
+    object-fit: cover; /* Recorta la imagen para que encaje sin deformarse (muy importante) */
+}
+
+/* --- 3. Imagen de los Cursos Destacados (pequeña y consistente) --- */
+.course-card img {
+    /* --- DETALLES DE TAMAÑO --- */
+    width: 70px;  /* <-- Ancho del logo */
+    height: 70px; /* <-- Alto del logo */
+
+    object-fit: contain; /* 'contain' es mejor para logos, asegura que se vea completo */
+    margin: 0 auto 10px auto;
+}
+
+/* --- 4. Imagen de la sección "Acerca de Nosotros" (controlada) --- */
+.about-us-image img {
+    width: 50%;
+    border-radius: 50px;
+    object-fit: contain; /* Recorta para mantener la proporción */
+}
+
+/* ==========================================================================
+   3. COMPONENTES DE LA INTERFAZ
+   ========================================================================== */
+
+/* --- Encabezado con Banner --- */
+.header-banner {
+    height:120px; 
+    background-image: url('/static/img/header_banner.png');
+    background-size: 400px auto; 
+    background-repeat: no-repeat;
+    background-position: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+.header-banner h1 {
+    font-size: 3.2em;
+    margin: 0;
+    color: white;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
+}
+.header-banner h2 {
+    font-size: 1.2em;
+    margin: 8px 0 0;
+    color: var(--highlight-color);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* --- Barra de Navegación Principal --- */
+.main-navbar {
+    background-color: var(--card-bg);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+.navbar-links a {
+    background-color: #3c3f41;
+    color: var(--text-color);
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+    font-size: 1.05em;
+    margin: 0 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.navbar-links a:hover {
+    transform: translateY(-2px);
+    color: var(--highlight-color);
+    box-shadow: 0 0 15px var(--primary-color);
+    border-color: var(--primary-color);
+}
+.navbar-links a.active {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.7);
+    border-color: var(--primary-color);
+    transform: none;
+}
+.auth-buttons a { padding: 8px 15px; border-radius: 5px; font-weight: bold; color: white; }
+.nav-button-login { background-color: var(--primary-color); }
+.nav-button-signup { background-color: var(--secondary-color); margin-left: 10px; }
+.nav-button-logout { background-color: var(--secondary-text-color); }
+
+/* --- Barra Lateral (Sidebar) --- */
+.sidebar {
+    background-color: var(--sidebar-bg);
+    padding: 20px;
+    border-right: 1px solid var(--border-color);
+}
+.sidebar h4 { color: var(--primary-color); }
+.sidebar a { display: block; color: var(--secondary-text-color); padding: 8px 0; }
+.sidebar a:hover { color: var(--highlight-color); }
+
+/* --- Pie de Página (Footer) --- */
+.footer {
+    background-color: var(--card-bg);
+    color: var(--secondary-text-color);
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid var(--border-color);
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+
+/* ==========================================================================
+   4. ESTILOS DE PÁGINAS (HOMEPAGE, CATÁLOGO, ETC.)
+   ========================================================================== */
+
+/* --- Nueva Sección "Hero" de la Homepage --- */
+.hero-section {
+    text-align: center;
+    padding:2px 2px;
+    border-radius: 12px;
+    margin-bottom: 60px;
+}
+.hero-section h1 {
+    font-size: 2em;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    color: white;
+    margin-bottom: 15px;
+}
+.hero-section p {
+    font-size: 1em;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+    color: var(--secondary-text-color);
+}
+.cta-button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.cta-button:hover {
+    background-color: #238636;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(46, 164, 79, 0.4);
+}
+
+/* --- Título para "Cursos Destacados" --- */
+.featured-courses h2 {
+    text-align: center;
+    font-size:1.5em;
+    margin-bottom: 30px;
+}
+
+/* --- Tarjetas de Cursos con Efecto Glassmorphism --- */
+.course-card-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+.course-card {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(91, 183, 245, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    width: 250px;
+    padding: 25px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(88, 166, 255, 0.5);
+}
+.course-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin: 0 auto 15px auto;
+}
+.course-card h3 {
+    color: var(--primary-color);
+    font-size: 1.5em;
+}
+.course-card p {
+    color: var(--secondary-text-color);
+    font-size: 0.9em;
+    flex-grow: 1;
+    margin-bottom: 15px;
+}
+
+
+/* ==========================================================================
+   ESTILOS PARA PÁGINA DE DETALLE DE MÓDULO (LISTA DE LECCIONES)
+   ========================================================================== */
+
+.back-to-modules-btn {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+.back-to-modules-btn:hover {
+    background-color: #238636;
+    color: white;
+}
+
+.lesson-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* Estilo para cada lección como una tarjeta */
+.lesson-list li {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.lesson-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
+}
+
+/* Contenedor para el título y la descripción */
+.lesson-info {
+    flex-grow: 1;
+}
+.lesson-info a {
+    text-decoration: none;
+}
+.lesson-info h4 {
+    color: var(--primary-color);
+    margin: 0 0 5px 0;
+    font-size: 1.2em;
+}
+.lesson-info p {
+    color: var(--secondary-text-color);
+    font-size: 0.9em;
+    margin: 0;
+}
+
+/* Ícono de estado (palomita) más grande */
+.status-icon {
+    margin-left: 25px;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+.status-icon.completed {
+    color: var(--secondary-color);
+}
+.status-icon.incomplete {
+    color: var(--border-color);
+}
+/* ==========================================================================
+   6. FORMULARIOS DE AUTENTICACIÓN
+   ========================================================================== */
+.form-container { max-width: 400px; margin: 50px auto; background-color: var(--card-bg); padding: 30px 40px; border-radius: 12px; border: 1px solid var(--border-color); }
+.form-container h2 { text-align: center; }
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--code-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1em;
+    box-sizing: border-box;
+}
+.form-group input:focus { outline: none; border-color: var(--primary-color); }
+
+/* ==========================================================================
+   7. ESTILOS PARA LA SECCIÓN DE MÓDULOS EN ÓRBITA (AJUSTADO Y CORREGIDO)
+   ========================================================================== */
+
+.modules-orbit-container {
+    position: relative;
+    width: 1100px; /* Mantener este tamaño para el espacio general */
+    height: 1000px; /* Mantener este tamaño para el espacio general */
+    margin: 50px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-course-image {
+    position: absolute;
+    width: 500px;
+    height: auto;
+    z-index: 2;
+    animation: pulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.03); }
+}
+
+.modules-orbit-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Estilo base para todas las tarjetas en la órbita */
+.module-card.orbit-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 220px;
+    padding: 20px;
+    font-size: 1em;
+    z-index: 1;
+    background-color: rgba(43, 43, 46, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s ease-in-out;
+    text-align: center; /* Aseguramos que el contenido esté centrado */
+}
+.module-card.orbit-item h4 {
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    font-size: 1.2em;
+}
+.module-card.orbit-item a { text-decoration: none; color: inherit; display: block; }
+
+/* CORRECCIÓN: Quitamos el efecto de "movimiento" en el hover, solo escala */
+.module-card.orbit-item:hover {
+    box-shadow: 0 0 25px var(--highlight-color), 0 0 10px var(--highlight-color);
+    border-color: var(--highlight-color);
+}
+
+/* --- POSICIONES FIJAS PARA CADA MÓDULO (CON AJUSTES PARA ESPACIADO) --- */
+/* (Radio de la órbita: 440px) */
+
+/* Módulo 1: Superior Central */
+.module-pos-1 { transform: rotate(-90deg) translateX(350px) rotate(90deg) translateY(-50%) translateX(-50%); }
+
+/* Lado Izquierdo */
+.module-pos-2 { transform: rotate(-145deg) translateX(350px) rotate(145deg) translateY(-50%) translateX(-50%); }
+.module-pos-4 { transform: rotate(-190deg) translateX(350px) rotate(190deg) translateY(-50%) translateX(-50%); }
+.module-pos-6 { transform: rotate(-240deg) translateX(350px) rotate(240deg) translateY(-50%) translateX(-50%); }
+
+/* Lado Derecho */
+.module-pos-3 { transform: rotate(-35deg) translateX(350px) rotate(35deg) translateY(-50%) translateX(-50%); }
+.module-pos-5 { transform: rotate(10deg) translateX(350px) rotate(-10deg) translateY(-50%) translateX(-50%); }
+.module-pos-7 { transform: rotate(55deg) translateX(350px) rotate(-55deg) translateY(-50%) translateX(-50%); }
+
+
+/* Estilos para la barra de progreso dentro de los módulos */
+.progress-container { 
+    width: 100%; 
+    background-color: var(--code-bg); 
+    border-radius: 5px; 
+    margin-top: 10px; 
+    height: 10px; /* Un poco más delgada */
+    overflow: hidden; 
+}
+.progress-bar { 
+    height: 100%; 
+    background-color: var(--secondary-color); /* Color secundario para el progreso */
+    border-radius: 5px; 
+    transition: width 0.5s ease-out; /* Animación de progreso */
+}
+
+/* ==========================================================================
+   AJUSTES PARA LA PÁGINA DE DETALLE DE CURSO
+   ========================================================================== */
+
+/* Contenedor principal del detalle del curso */
+.course-landing {
+    /* Esta línea centra todo el contenido: título, descripción y la línea hr */
+    text-align: center;
+}
+
+/* Regla específica para el color del título en esta página */
+.course-landing h1 {
+    /* --- ¡AQUÍ PUEDES CAMBIAR EL COLOR! --- */
+    /* Lo cambiamos a tu color de resalte amarillo. */
+    color: var(--highlight-color); 
+}
+/* ==========================================================================
+   5. ESTILOS DE PÁGINA DE LECCIÓN
+   ========================================================================== */
+
+/* --- Barra de Navegación de Lección (Fija/Sticky) --- */
+.lesson-navigation {
+    position: sticky;
+    top: -20px; /* Se pega al inicio del contenedor .main-content */
+    background-color: var(--bg-color); 
+    z-index: 900;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin: -20px -20px 30px -20px; /* Ocupa todo el ancho */
+    border-bottom: 1px solid var(--border-color);
+}
+.lesson-nav-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    transition: all 0.3s ease;
+}
+.lesson-nav-button:hover {
+    background-color: #4a91e2; /* Azul más claro */
+    transform: translateY(-2px);
+    color: white;
+}
+.lesson-nav-button.disabled {
+    background-color: var(--border-color);
+    color: var(--secondary-text-color);
+    cursor: not-allowed;
+    transform: none;
+}
+.lesson-nav-button.index {
+    background-color: var(--secondary-color);
+}
+.lesson-nav-button.index:hover {
+    background-color: #238636;
+}
+
+
+/* --- Contenedores de Contenido (Conceptos, Ejercicios) --- */
+.lesson-intro { font-size: 1.1em; color: var(--secondary-text-color); }
+
+.concept-card {
+    background-color: var(--card-bg);
+    border-left: 4px solid var(--primary-color);
+    padding: 15px 20px;
+    margin: 25px 0;
+    border-radius: 0 5px 5px 0;
+}
+.concept-card h3, .exercise h3 {
+    margin-top: 0;
+    color: var(--highlight-color);
+}
+
+.exercise {
+    background-color: #263238; /* Un fondo ligeramente diferente */
+    border: 1px solid #4A555A;
+    padding: 20px;
+    margin: 25px 0;
+    border-radius: 8px;
+}
+
+.solution-toggle {
+    display: inline-block;
+    background-color: var(--secondary-text-color);
+    color: var(--bg-color);
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.exercise-solution {
+    display: none;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--border-color);
+}
+
+/* --- Bloques de Código con Sintaxis Resaltada --- */
+.code-block {
+    background-color: var(--code-bg);
+    color: var(--text-color);
+    padding: 1.2em;
+    border-radius: 8px;
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 1.4em;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 20px 0;
+    border: 1px solid var(--border-color);
+}
+.code-block pre { margin: 0; }
+
+/* Paleta de colores para el código */
+.code-block .comment { color: #6272A4; font-style: italic; }
+.code-block .keyword { color: #FF79C6; font-weight: bold; }
+.code-block .function { color: #50FA7B; }
+.code-block .variable { color: #8BE9FD; }
+.code-block .string { color: #F1FA8C; }
+.code-block .number, .code-block .boolean { color: #BD93F9; }
+.code-block .highlight { background-color: #44475A; }
+
+
+/* --- Sección para Completar Lección --- */
+.completion-section {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+}
+
+.nav-button {
+    background-color: var(--secondary-color);
+    color: #f5f5f5;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+}
+.nav-button:hover {
+    background-color: #238636;
+    transform: scale(1.05);
+}
+.leccion-completada {
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+/* ==========================================================================
+   ESTILOS PARA LA PÁGINA DEL CATÁLOGO DE CURSOS
+   ========================================================================== */
+.catalog-header h1 {
+    margin-bottom: 1px; /* Reduce el espacio debajo del título principal */
+}
+.catalog-header {
+    text-align: center;
+    margin-bottom: 2px;
+}
+
+.course-catalog-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    /* NUEVO: Centra las tarjetas en la grilla */
+    justify-items: center; 
+}
+
+/* Estilo para cada tarjeta del catálogo */
+.course-card-item {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 25px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+    
+    /* --- ¡AQUÍ ESTÁ LA CORRECCIÓN! --- */
+    /* Le damos un ancho máximo para que no ocupe toda la pantalla */
+    width: 100%;
+    max-width: 250px; 
+}
+
+
+/* Efecto de brillo al pasar el cursor */
+.course-card-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(88, 166, 255, 0.5);
+}
+
+/* Estilo para el logo dentro de la tarjeta */
+.course-card-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin: 0 auto 20px auto; /* Centra el logo */
+    display: block;
+}
+
+.course-card-item h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.course-card-item p {
+    color: var(--secondary-text-color);
+    font-size: 0.95em;
+    flex-grow: 1; /* Hace que el párrafo ocupe el espacio disponible, alineando las barras de progreso */
+    text-align: center;
+}
+
+.course-card-item .progress-container {
+    margin-top: auto; /* Empuja la barra de progreso al final de la tarjeta */
+}
+
+/* --- ESTILOS PARA BOTONES SOCIALES --- */
+.social-login {
+    display: flex;
+    justify-content: center;
+}
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    border: none;
+}
+.social-btn i {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+.social-btn.google {
+    background-color: #4285F4;
+}
+.social-btn.google:hover {
+    background-color: #357ae8;
+    transform: scale(1.02);
+    color: white;
+}
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--secondary-text-color);
+    margin: 30px 0;
+}
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+.separator:not(:empty)::before { margin-right: .5em; }
+.separator:not(:empty)::after { margin-left: .5em; }
+
+
+
+/* Estilos para el contenedor del contador de visitas */
+.counter-container {
+  perspective: 800px;
+  transform-style: preserve-3d;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px 40px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(0, 255, 255, 0.5),
+              0 0 20px rgba(0, 255, 255, 0.3) inset;
+  transition: transform 0.5s ease;
+}
+
+.counter-container:hover {
+  transform: rotateY(30deg) rotateX(15deg);
+}
+
+.counter-title {
+  color: #00e5ff;
+  font-size: 1.2rem;
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #00e5ff;
+}
+
+.counter-display {
+  color: #f0f0f0;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 10px;
+  background: linear-gradient(45deg, #00e5ff, #8a2be2, #f39c12);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(138, 43, 226, 0.8),
+               0 0 40px rgba(243, 156, 18, 0.6);
+}
+
+/* --- Estilos para el botón de "Me Gusta" --- */
+.me-gusta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: transparent;
+    border: 1px solid var(--secondary-text-color);
+    padding: 8px 15px;
+    border-radius: 20px; /* Bordes más redondeados */
+    color: var(--secondary-text-color);
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+/* Estado al pasar el ratón */
+.me-gusta-btn:hover {
+    background-color: rgba(88, 166, 255, 0.1); /* Fondo sutil al hacer hover */
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Estado activo (cuando se le ha dado "Me gusta") */
+.me-gusta-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
+}
+
+/* Ícono del botón de "Me Gusta" */
+.me-gusta-btn i.fa-thumbs-up {
+    font-size: 1em;
+}
+
+/* Estilos para los comentarios */
+.comment-card {
+    position: relative; /* Para el botón de "Me Gusta" */
+}
+
+
+/* Esto es para las tarjetas de herramientas */
+
+/* --- Estilos para la Grilla de Herramientas (similar a cursos) --- */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    justify-items: center; /* Centra las tarjetas en el espacio disponible */
+    padding: 20px 0;
+}
+
+/* --- Estilos para la Tarjeta Individual de Herramientas (similar a cursos) --- */
+.tool-card {
+    background-color: var(--card-bg); /* Color de fondo de tarjeta global */
+    border: 1px solid var(--border-color); /* Borde de tarjeta global */
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+    max-width: 200px; /* Limita el ancho para que sea una tarjeta */
+    display: flex;
+    flex-direction: column;
+}
+
+.tool-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(88, 166, 255, 0.5);
+}
+
+.tool-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    object-fit: contain;
+}
+
+.tool-card h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+
+.tool-card p {
+    color: var(--secondary-text-color);
+    font-size: 0.95em;
+    flex-grow: 1; /* Esto asegura que las tarjetas tengan la misma altura si la descripción es más larga */
+    margin-bottom: 15px;
+}
+
+.tool-link {
+    display: block;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-top: auto; /* Empuja el botón al final de la tarjeta */
+}
+
+.tool-link:hover {
+    background-color: #235186;
+}
+/* Estilos para todas las tarjetas (cursos, posts, herramientas, juegos) */
+.course-card:hover,
+.post-card:hover,
+.tool-card:hover,
+.game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px var(--primary-color);
+}
+
+/* Estilo de brillo para todas las tarjetas */
+.tool-card:hover,
+.game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px var(--primary-color);
+}
+
+.delete-button {
+    background-color: var(--delete-button-bg);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+/* ==========================================================================
+   MEJORAS PARA FORMULARIOS Y TARJETAS DE JUEGOS/HERRAMIENTAS
+   ========================================================================== */
+
+/* --- Estilo 3D para Formularios --- */
+.form-container {
+    background-color: #2D2D2D;
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid #444;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5), 
+                inset 0px 2px 2px rgba(255, 255, 255, 0.1);
+}
+
+.form-container p {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-container .form-group {
+    margin-bottom: 20px;
+}
+
+/* Etiquetas del formulario */
+.form-container label {
+    display: block;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Campos de entrada */
+.form-container input[type="text"],
+.form-container input[type="url"],
+.form-container textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: #1E1E1E;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.form-container input:focus,
+.form-container textarea:focus {
+    outline: none;
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 10px var(--highlight-color);
+}
+
+/* Botones de acción en tarjetas (Editar/Eliminar) */
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.btn-edit, .btn-delete {
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    background-color: var(--primary-color);
+}
+.btn-edit:hover {
+    background-color: #4a91e2;
+}
+
+.btn-delete {
+    background-color: #dc3545; /* Rojo para eliminar */
+}
+.btn-delete:hover {
+    background-color: #c82333;
+}
+/* ==========================================================================
+   ESTILOS PARA PÁGINAS DE RECURSOS (JUEGOS Y HERRAMIENTAS)
+   ========================================================================== */
+
+/* Contenedor de la grilla */
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    justify-items: center;
+}
+
+/* Estilo de la tarjeta individual */
+.resource-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    
+    /* --- AJUSTE DE TAMAÑO --- */
+    /* Reducimos el ancho máximo para hacer la tarjeta más compacta */
+    max-width: 220px; 
+    
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Efecto de brillo al pasar el cursor */
+.resource-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 35px rgba(22, 197, 224, 0.958);
+}
+
+.resource-card img {
+    /* --- AJUSTE DE TAMAÑO --- */
+    /* Hacemos la imagen más pequeña */
+    width: 60;
+    height: 60px;
+
+    object-fit: contain;
+    margin: 0 auto 2px auto;
+}
+
+.resource-card h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.resource-card p {
+    color: var(--secondary-text-color);
+    font-size: 0.95em;
+    flex-grow: 1; /* Empuja los botones hacia abajo */
+    margin-bottom: 10px;
+}
+
+/* Botón principal (Jugar / Visitar) */
+.resource-link {
+    display: block;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+.resource-link:hover {
+    background-color: #238636;
+    color: white;
+}
+
+/* Contenedor para los botones de Editar/Eliminar */
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.btn-edit, .btn-delete {
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: white !important; /* Importante para anular otros estilos de 'a' */
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    flex-grow: 1; /* Para que ocupen el mismo espacio */
+}
+
+.btn-edit {
+    background-color: var(--primary-color);
+}
+.btn-edit:hover {
+    background-color: #4a91e2;
+}
+
+.btn-delete {
+    background-color: #dc3545; /* Rojo */
+}
+.btn-delete:hover {
+    background-color: #c82333;
+}
+/* ==========================================================================
+   ESTILOS PARA BOTONES DE ACCIÓN (SUBIR JUEGO/HERRAMIENTA)
+   ========================================================================== */
+
+.resource-actions {
+    text-align: center; /* Centra el botón */
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.resource-actions .nav-button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.resource-actions .nav-button:hover {
+    background-color: #238636; /* Verde más oscuro */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(46, 164, 79, 0.4); /* Brillo verde */
+}
+
+/* ==========================================================================
+   ESTILOS PARA FORMULARIOS (DISEÑO DE DOS COLUMNAS)
+   ========================================================================== */
+
+.form-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #2D2D2D;
+    padding: 30px 40px;
+    border-radius: 15px;
+    border: 1px solid #444;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5), inset 0px 2px 2px rgba(255, 255, 255, 0.1);
+}
+
+.form-container h2 { text-align: center; margin-bottom: 10px; }
+.form-container p { text-align: center; margin-bottom: 30px; }
+
+/* Usamos Flexbox para crear las dos columnas */
+.two-column-form {
+    display: flex;
+    flex-wrap: wrap; /* Permite que el botón se vaya abajo */
+    gap: 30px; /* Espacio entre las columnas */
+}
+
+/* Columna izquierda para los campos principales */
+.form-main-column {
+    flex: 2; /* Ocupa 2/3 del espacio */
+}
+
+/* Columna derecha para la imagen */
+.form-image-column {
+    flex: 1; /* Ocupa 1/3 del espacio */
+}
+
+.form-group { margin-bottom: 20px; }
+
+.form-container label {
+    display: block;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-container input[type="text"],
+.form-container input[type="url"],
+.form-container input[type="file"],
+.form-container textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: #1E1E1E;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.form-container input:focus,
+.form-container textarea:focus {
+    outline: none;
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 10px var(--highlight-color);
+}
+
+/* Vista previa de la imagen */
+.image-preview-box {
+    width: 100%;
+    height: 200px;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: var(--code-bg);
+    overflow: hidden;
+}
+.image-preview-image {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.image-preview-text {
+    color: var(--secondary-text-color);
+    font-style: italic;
+}
+
+/* Botón de Enviar */
+.form-container .cta-button {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    margin-top: 20px;
+}
+/* ==========================================================================
+   ESTILOS PARA LA ZONA DE PRÁCTICA INTERACTIVA (VERSIÓN DEFINITIVA)
+   ========================================================================== */
+
+.ide-container {
+    display: grid;
+    grid-template-columns: 350px 1fr; /* Columna fija para instrucciones, resto para el editor */
+    gap: 20px;
+    height: calc(100vh - 180px); /* Ocupa el alto disponible de la pantalla */
+}
+
+/* Sidebar de instrucciones */
+.ide-sidebar {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    
+    /* --- LÍNEAS AÑADIDAS PARA CONTROLAR EL TAMAÑO Y SCROLL --- */
+    max-height: calc(100vh - 220px); /* Altura máxima para la sidebar */
+    overflow-y: auto; /* Muestra la barra de scroll SÓLO si es necesario */
+}
+.ide-sidebar h4 { color: var(--primary-color); font-size: 1.2em; margin-top: 0; }
+.ide-sidebar .exercise-instructions { flex-grow: 1; overflow-y: auto; padding-right: 10px; }
+.ide-sidebar .back-to-lesson-btn {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    margin-top: 15px; /* Separa el botón del contenido */
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.ide-sidebar .back-to-lesson-btn:hover { background-color: #4a91e2; }
+
+.ide-main {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.ide-editor-wrapper {
+    flex-grow: 1; /* El editor ocupa el espacio vertical sobrante */
+    position: relative;
+    min-height: 200px; /* Altura mínima para que nunca desaparezca */
+}
+.ide-editor-wrapper .CodeMirror {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    height: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 1.1em;
+}
+.ide-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.ide-controls .cta-button { font-size: 1em; padding: 10px 20px; }
+.ide-controls .clear-btn { background-color: var(--secondary-text-color); color: var(--bg-color); }
+.ide-controls .clear-btn:hover { background-color: #888888; }
+
+.ide-console-wrapper {
+    background-color: var(--code-bg);
+    border-radius: 8px;
+    padding: 15px;
+    height: 200px; /* Altura fija para la consola */
+    flex-shrink: 0; /* Evita que la consola se encoja */
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+}
+.ide-console-wrapper pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    color: #f8f8f2;
+}
+.exercise-instructions .exercise { font-size: 0.9em; padding: 15px; margin: 10px 0; background-color: var(--code-bg); border-radius: 5px;}
+.exercise-instructions .exercise h4 { display: none; }
+
+/* --- ESTILOS PARA BARRA DE FILTROS Y BÚSQUEDA --- */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-form input {
+    width: 250px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background-color: var(--code-bg);
+    color: var(--text-color);
+}
+
+.search-form button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sort-options span {
+    margin-right: 15px;
+    color: var(--secondary-text-color);
+}
+
+.sort-options a {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+/* --- ESTILOS PARA CONTENIDO BLOQUEADO PARA INVITADOS --- */
+.lesson-list li.bloqueada {
+    background-color: var(--code-bg);
+    border-left-color: var(--secondary-text-color);
+    opacity: 0.6;
+}
+
+.lesson-list li.bloqueada:hover {
+    transform: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.lesson-list li.bloqueada h4 {
+    color: var(--secondary-text-color);
+}
+
+.lesson-list li.bloqueada .status-icon {
+    font-size: 2em; /* Hacemos el candado un poco más pequeño que la palomita */
+}
+
+/* Envolvemos el enlace normal para evitar conflictos de estilo */
+.lesson-link-wrapper {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+/* ==========================================================================
+   ESTILOS PARA AVISO DE REGISTRO EN HOMEPAGE
+   ========================================================================== */
+
+.guest-prompt-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 25px;
+    margin: 60px 0;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+}
+
+.prompt-icon i {
+    font-size: 3em;
+    color: var(--primary-color);
+}
+
+.prompt-text h3 {
+    margin-top: 0;
+    color: var(--highlight-color);
+}
+
+.prompt-text p {
+    margin-bottom: 0;
+    color: var(--text-color);
+}
+
+.prompt-text a {
+    color: var(--secondary-color); /* Verde para el enlace */
+    font-weight: bold;
+    text-decoration: underline;
+}
+/* ==========================================================================
+   ESTILOS MEJORADOS PARA LA PÁGINA DE PERFIL
+   ========================================================================== */
+
+/* --- Contenedor Principal y Encabezado --- */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 25px 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.profile-info h1 {
+    margin: 0 0 5px 0;
+    font-size: 2.8em;
+    color: var(--text-color);
+}
+
+.profile-info p {
+    margin: 0;
+    color: var(--secondary-text-color);
+    font-size: 1em;
+}
+
+/* --- Nivel y Barra de XP --- */
+.profile-level {
+    text-align: right;
+}
+
+.level-badge {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1em;
+    display: inline-block;
+    margin-bottom: 12px;
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.5);
+}
+
+.xp-bar-container {
+    width: 220px;
+    height: 12px;
+    background-color: var(--code-bg);
+    border-radius: 6px;
+    overflow: hidden; /* Asegura que el relleno no se salga */
+    border: 1px solid var(--border-color);
+}
+
+.xp-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--highlight-color) 100%);
+    border-radius: 6px;
+    transition: width 0.5s ease-in-out;
+}
+
+.profile-level small {
+    font-size: 0.9em;
+    color: var(--secondary-text-color);
+    margin-top: 5px;
+    display: block;
+}
+
+/* --- Sección de Contribuciones --- */
+.profile-contributions {
+    margin-top: 40px;
+}
+
+.profile-contributions h2 {
+    color: var(--text-color);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 25px;
+    text-decoration: underline;
+    text-decoration-color: var(--primary-color);
+    text-underline-offset: 8px;
+}
+
+.contributions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* --- Estilo Base para las Tarjetas de Contribución --- */
+.contribution-column {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 8px;
+    border-top: 4px solid var(--border-color); /* Borde superior base */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contribution-column:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Colores Específicos para cada Tarjeta --- */
+.contribution-column.posts {
+    border-top-color: var(--primary-color); /* Azul para posts */
+}
+
+.contribution-column.tools {
+    border-top-color: var(--highlight-color); /* Amarillo para herramientas */
+}
+
+.contribution-column.games {
+    border-top-color: var(--secondary-color); /* Verde para juegos */
+}
+
+/* --- Contenido de las Tarjetas --- */
+.contribution-column h3 {
+    font-size: 1.3em;
+    color: var(--text-color);
+    margin: 0 0 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre icono y texto */
+}
+
+/* Coloreamos los iconos con el mismo color del borde superior */
+.contribution-column.posts h3 i { color: var(--primary-color); }
+.contribution-column.tools h3 i { color: var(--highlight-color); }
+.contribution-column.games h3 i { color: var(--secondary-color); }
+
+.contribution-list {
+    list-style: none;
+    padding: 0;
+}
+
+.contribution-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.contribution-list li:last-child {
+    border-bottom: none; /* Quitamos el borde al último elemento */
+}
+
+/* --- Estilo para los Enlaces dentro de las Tarjetas --- */
+.contribution-list li a {
+    color: var(--primary-color); /* Usamos el azul primario para todos los enlaces */
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contribution-list li a:hover {
+    color: var(--highlight-color); /* Cambia a amarillo al pasar el mouse */
+    text-decoration: underline;
+}
+/* --- Estilo para los Enlaces dentro de las Tarjetas --- */
+.contribution-list li a {
+    color: var(--primary-color); /* Usamos el azul primario para todos los enlaces */
+    text-decoration: none; /* Quitamos el subrayado por defecto */
+    transition: color 0.2s ease, text-decoration 0.2s ease; /* Suavizamos la transición */
+    display: flex; /* Para alinear si añadimos iconos más tarde */
+    align-items: center;
+    gap: 5px; /* Espacio si añadimos iconos */
+}
+
+.contribution-list li a:hover {
+    color: var(--highlight-color); /* Cambia a amarillo al pasar el mouse */
+    text-decoration: underline; /* Añade subrayado al pasar el mouse */
+}
+/* ==========================================================================
+   ESTILOS MEJORADOS PARA BOTONES DE AUTENTICACIÓN
+   ========================================================================== */
+
+/* --- Estilo Base para los Botones de la Navbar --- */
+.auth-buttons a {
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid transparent; /* Borde transparente por defecto */
+    margin-left: 10px;
+}
+
+.auth-buttons a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Botón "Mi Perfil" --- */
+.nav-button-profile {
+    background-color: var(--highlight-color); /* Amarillo */
+    color: var(--bg-color); /* Texto oscuro para contraste */
+    font-weight: 700;
+}
+
+.nav-button-profile:hover {
+    background-color: #ffd74b; /* Amarillo un poco más claro */
+    color: var(--bg-color);
+}
+
+/* --- Botón "Cerrar Sesión" --- */
+.nav-button-logout {
+    background-color: var(--card-bg); /* Gris oscuro de las tarjetas */
+    color: var(--secondary-text-color); /* Texto gris claro */
+    border: 1px solid var(--border-color);
+}
+
+.nav-button-logout:hover {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+
+/* --- Estilos para los botones de Login/Signup (para mantener consistencia) --- */
+.nav-button-login { background-color: var(--primary-color); }
+.nav-button-signup { background-color: var(--secondary-color); }
+
+/* ==========================================================================
+   ESTILOS PARA LA ZONA DE VALIDACIÓN DE CÓDIGO
+   ========================================================================== */
+
+/* --- Estilo para el nuevo botón "Validar" --- */
+.ide-controls .validate-btn {
+    background-color: var(--secondary-color); /* Verde */
+}
+
+.ide-controls .validate-btn:hover {
+    background-color: #238636; /* Verde más oscuro */
+}
+
+/* --- Contenedor de resultados de validación --- */
+#validation-results h4 {
+    margin-top: 0;
+    color: var(--highlight-color);
+}
+
+#validation-results #validation-summary {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+#validation-results ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#validation-results li {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.9em;
+}
+
+#validation-results li span {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+#validation-results li small {
+    color: var(--secondary-text-color);
+}
+
+/* --- Colores para pruebas pasadas o fallidas --- */
+.test-pass {
+    background-color: rgba(46, 164, 79, 0.15);
+    border-left: 4px solid var(--secondary-color);
+}
+
+.test-fail {
+    background-color: rgba(220, 53, 69, 0.15);
+    border-left: 4px solid #dc3545;
+}
+
+.completion-toast {
+    margin-top: 20px;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.1em;
+}

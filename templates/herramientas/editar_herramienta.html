@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Editar Herramienta{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Editar Herramienta: {{ herramienta.nombre }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="cta-button">Guardar Cambios</button>
+    </form>
+</div>
+{% endblock %}

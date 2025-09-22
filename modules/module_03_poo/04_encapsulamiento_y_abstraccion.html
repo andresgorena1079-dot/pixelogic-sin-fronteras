@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 3, Lección 4: Encapsulamiento y Abstracción - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 4: Encapsulamiento y Abstracción</h1>
+        <p class="lesson-intro">
+            En esta lección final del módulo de POO, exploraremos dos principios que, aunque más abstractos, son cruciales para escribir código seguro, mantenible y fácil de usar: el **encapsulamiento**, que protege los datos de un objeto, y la **abstracción**, que oculta la complejidad innecesaria.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Encapsulamiento - Protegiendo tus Datos</h2>
+        <p>El **encapsulamiento** es el principio de restringir el acceso directo a los atributos de un objeto y agruparlos con los métodos que operan sobre ellos. La idea es proteger el estado interno del objeto para evitar modificaciones accidentales o inválidas.</p>
+        <p><strong>Analogía del Coche:</strong> Tú no interactúas directamente con los pistones del motor para acelerar. En su lugar, usas una interfaz pública (el pedal del acelerador). El coche **encapsula** la complejidad del motor y solo expone los controles necesarios.</p>
+        
+        <div class="concept-card">
+            <h3>Atributos "Privados" en Python</h3>
+            <p>A diferencia de otros lenguajes, Python no tiene atributos verdaderamente privados. Sin embargo, usa una convención de nomenclatura para indicar que un atributo no debe ser modificado desde fuera de la clase:</p>
+            <ul>
+                <li><strong>Un guion bajo (<code>_nombre</code>):</strong> Indica que el atributo es para uso interno. Es una señal de "no tocar", pero técnicamente todavía se puede acceder.</li>
+                <li><strong>Dos guiones bajos (<code>__nombre</code>):</strong> Activa un mecanismo llamado "Name Mangling", que hace más difícil acceder al atributo desde fuera. Es la forma más cercana a un atributo privado.</li>
+            </ul>
+            <div class="code-block"><pre>
+<span class="keyword">class</span> <span class="variable">CuentaBancaria</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="variable">self</span>, <span class="variable">saldo_inicial</span>):
+        <span class="variable">self</span>.<span class="variable">__saldo</span> = <span class="variable">saldo_inicial</span> <span class="comment"># Atributo "privado"</span>
+
+    <span class="keyword">def</span> <span class="function">depositar</span>(<span class="variable">self</span>, <span class="variable">monto</span>):
+        <span class="keyword">if</span> <span class="variable">monto</span> > <span class="number">0</span>:
+            <span class="variable">self</span>.<span class="variable">__saldo</span> += <span class="variable">monto</span>
+            <span class="function">print</span>(<span class="highlight">"Depósito exitoso."</span>)
+        <span class="keyword">else</span>:
+            <span class="function">print</span>(<span class="highlight">"El monto debe ser positivo."</span>)
+
+    <span class="keyword">def</span> <span class="function">ver_saldo</span>(<span class="variable">self</span>):
+        <span class="keyword">return</span> <span class="variable">self</span>.<span class="variable">__saldo</span>
+
+<span class="variable">mi_cuenta</span> = <span class="variable">CuentaBancaria</span>(<span class="number">1000</span>)
+<span class="comment"># No podemos hacer esto: mi_cuenta.__saldo = -500 (rompería la lógica)</span>
+<span class="variable">mi_cuenta</span>.<span class="function">depositar</span>(<span class="number">500</span>)
+<span class="function">print</span>(<span class="highlight">f"Saldo actual: ${mi_cuenta.ver_saldo()}"</span>)
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <h2>Tema 2: Abstracción - Ocultando la Complejidad</h2>
+        <p>La **abstracción** consiste en ocultar los detalles complejos de implementación y exponer solo la funcionalidad esencial al usuario. Está muy relacionada con el encapsulamiento.</p>
+        <p><strong>Analogía del Control Remoto:</strong> Para cambiar de canal, solo necesitas presionar un botón. No necesitas saber nada sobre las frecuencias, las señales infrarrojas o los circuitos internos del televisor. El control remoto te ofrece una **abstracción** simple de una operación compleja.</p>
+        
+        <div class="concept-card">
+            <h3>Clases y Métodos Abstractos</h3>
+            <p>En Python, la abstracción se implementa a menudo con **Clases Base Abstractas (ABC)**. Una clase abstracta es como una plantilla: define qué métodos deben tener sus clases hijas, pero no dice cómo deben implementarlos. Obliga a las clases hijas a seguir un contrato.</p>
+            <div class="code-block"><pre>
+<span class="keyword">from</span> <span class="variable">abc</span> <span class="keyword">import</span> <span class="variable">ABC</span>, <span class="variable">abstractmethod</span>
+
+<span class="comment"># Clase Abstracta (la plantilla)</span>
+<span class="keyword">class</span> <span class="variable">Vehiculo</span>(<span class="variable">ABC</span>):
+    @<span class="function">abstractmethod</span>
+    <span class="keyword">def</span> <span class="function">acelerar</span>(<span class="variable">self</span>):
+        <span class="keyword">pass</span>
+
+<span class="comment"># Clases Concretas (la implementación)</span>
+<span class="keyword">class</span> <span class="variable">Coche</span>(<span class="variable">Vehiculo</span>):
+    <span class="keyword">def</span> <span class="function">acelerar</span>(<span class="variable">self</span>): <span class="comment"># Obligado a implementar este método</span>
+        <span class="function">print</span>(<span class="highlight">"El coche acelera en el asfalto."</span>)
+
+<span class="keyword">class</span> <span class="variable">Barco</span>(<span class="variable">Vehiculo</span>):
+    <span class="keyword">def</span> <span class="function">acelerar</span>(<span class="variable">self</span>): <span class="comment"># Obligado a implementar este método</span>
+        <span class="function">print</span>(<span class="highlight">"El barco acelera en el agua."</span>)
+
+<span class="comment"># No puedes crear un objeto de una clase abstracta: vehiculo = Vehiculo() -> Dará error</span>
+<span class="variable">mi_coche</span> = <span class="variable">Coche</span>()
+<span class="variable">mi_coche</span>.<span class="function">acelerar</span>()
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicio: Sistema de Base de Datos Abstracto</h3>
+            <p><strong>Objetivo:</strong> Usar la abstracción para definir una interfaz común para diferentes tipos de bases de datos y el encapsulamiento para proteger los datos de conexión.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `04_database.py`.</li>
+                <li>Importa `ABC` y `abstractmethod` del módulo `abc`.</li>
+                <li>Crea una clase abstracta `BaseDeDatos` que herede de `ABC`.
+                    <ul>
+                        <li>En su `__init__`, debe aceptar `host` y `puerto` y guardarlos como atributos "privados" (ej: `self.__host`).</li>
+                        <li>Debe tener dos métodos abstractos: `conectar()` y `desconectar()`.</li>
+                    </ul>
+                </li>
+                <li>Crea dos clases hijas concretas, `PostgreSQL` y `MongoDB`, que hereden de `BaseDeDatos`.</li>
+                <li>Implementa los métodos `conectar()` y `desconectar()` en ambas clases hijas. Cada uno debe imprimir un mensaje específico (ej: `"Conectando a PostgreSQL en [host]:[puerto]"`).</li>
+                <li>Crea una instancia de `PostgreSQL` y otra de `MongoDB`. Llama a sus métodos `conectar()` y `desconectar()` para probar que la abstracción funciona.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM3L4-1')">Ver Solución</span>
+            <div id="solucionM3L4-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">from</span> <span class="variable">abc</span> <span class="keyword">import</span> <span class="variable">ABC</span>, <span class="variable">abstractmethod</span>
+
+<span class="keyword">class</span> <span class="variable">BaseDeDatos</span>(<span class="variable">ABC</span>):
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="variable">self</span>, <span class="variable">host</span>, <span class="variable">puerto</span>):
+        <span class="variable">self</span>.<span class="variable">__host</span> = <span class="variable">host</span>
+        <span class="variable">self</span>.<span class="variable">__puerto</span> = <span class="variable">puerto
+    
+    @<span class="function">abstractmethod</span>
+    <span class="keyword">def</span> <span class="function">conectar</span>(<span class="variable">self</span>):
+        <span class="keyword">pass</span>
+
+    @<span class="function">abstractmethod</span>
+    <span class="keyword">def</span> <span class="function">desconectar</span>(<span class="variable">self</span>):
+        <span class="keyword">pass</span>
+
+<span class="keyword">class</span> <span class="variable">PostgreSQL</span>(<span class="variable">BaseDeDatos</span>):
+    <span class="keyword">def</span> <span class="function">conectar</span>(<span class="variable">self</span>):
+        <span class="function">print</span>(<span class="highlight">f"Conectando a PostgreSQL en {self._BaseDeDatos__host}:{self._BaseDeDatos__puerto}"</span>)
+    
+    <span class="keyword">def</span> <span class="function">desconectar</span>(<span class="variable">self</span>):
+        <span class="function">print</span>(<span class="highlight">"Desconectado de PostgreSQL."</span>)
+
+<span class="keyword">class</span> <span class="variable">MongoDB</span>(<span class="variable">BaseDeDatos</span>):
+    <span class="keyword">def</span> <span class="function">conectar</span>(<span class="variable">self</span>):
+        <span class="function">print</span>(<span class="highlight">f"Conectando a MongoDB en {self._BaseDeDatos__host}:{self._BaseDeDatos__puerto}"</span>)
+    
+    <span class="keyword">def</span> <span class="function">desconectar</span>(<span class="variable">self</span>):
+        <span class="function">print</span>(<span class="highlight">"Desconectado de MongoDB."</span>)
+
+<span class="variable">db1</span> = <span class="variable">PostgreSQL</span>(<span class="highlight">"localhost"</span>, <span class="number">5432</span>)
+<span class="variable">db2</span> = <span class="variable">MongoDB</span>(<span class="highlight">"cluster1.mongo.com"</span>, <span class="number">27017</span>)
+
+<span class="variable">db1</span>.<span class="function">conectar</span>()
+<span class="variable">db2</span>.<span class="function">conectar</span>()
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="03_polimorfismo.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="../module_04_errores_y_archivos/01_manejo_de_excepciones.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<h1>Lección 1: Clases y Objetos</h1>
+<p class="lesson-intro">
+    Bienvenido a la <strong>Programación Orientada a Objetos (POO)</strong>. Este es un paradigma que nos permite estructurar nuestro código de una manera que imita el mundo real. En lugar de tener datos y funciones por separado, la POO los agrupa en "objetos" que tienen tanto datos (<strong>atributos</strong>) como comportamientos (<strong>métodos</strong>).
+</p>
+<hr>
+<h2>Tema 1: El Plano y la Construcción (Clases y Objetos)</h2>
+<p>La mejor forma de entender la POO es con una analogía del mundo real:</p>
+<ul>
+    <li><strong>Clase:</strong> Es el <strong>plano arquitectónico</strong> de una casa. No es la casa en sí, sino el diseño que define sus características (número de habitaciones, color) y sus funcionalidades (abrir puertas, encender luces).</li>
+    <li><strong>Objeto:</strong> Es la <strong>casa real y tangible</strong> que construyes a partir de ese plano. Puedes construir múltiples casas (objetos) a partir del mismo plano (clase), y cada una será una instancia independiente.</li>
+</ul>
+<div class="concept-card">
+    <h3>Definición de una Clase en Python</h3>
+    <p>Se usa la palabra clave <code>class</code> para definir el "plano". Dentro de la clase, definimos sus atributos y métodos.</p>
+    <ul>
+        <li><strong>El constructor <code>__init__(self, ...)</code>:</strong> Es un método especial que se ejecuta automáticamente al crear un nuevo objeto. Su trabajo es "construir" el objeto, asignando los valores iniciales a sus atributos.</li>
+        <li><strong>El parámetro <code>self</code>:</strong> Se refiere a la instancia específica (al objeto) que se está creando. Se usa para acceder a los atributos y métodos de ese objeto. Por ejemplo, <code>self.marca</code> se refiere a la marca <em>de este objeto en particular</em>.</li>
+    </ul>
+    <div class="code-block"><pre>
+<span class="comment"># 1. Definición de la Clase (el plano)</span>
+<span class="keyword">class</span> <span class="variable">Coche</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="variable">self</span>, <span class="variable">marca</span>, <span class="variable">modelo</span>):
+        <span class="variable">self</span>.<span class="variable">marca</span> = <span class="variable">marca</span>      <span class="comment"># Atributo de instancia</span>
+        <span class="variable">self</span>.<span class="variable">modelo</span> = <span class="variable">modelo</span>     <span class="comment"># Atributo de instancia</span>
+        <span class="variable">self</span>.<span class="variable">encendido</span> = <span class="boolean">False</span> <span class="comment"># Atributo con valor inicial fijo</span>
+    <span class="keyword">def</span> <span class="function">arrancar</span>(<span class="variable">self</span>): <span class="comment"># Método de instancia</span>
+        <span class="variable">self</span>.<span class="variable">encendido</span> = <span class="boolean">True</span>
+        <span class="keyword">return</span> <span class="string">"El coche ha arrancado."</span>
+<span class="comment"># 2. Creación de Objetos (las casas construidas)</span>
+<span class="variable">mi_coche</span> = <span class="variable">Coche</span>(<span class="string">"Toyota"</span>, <span class="string">"Corolla"</span>)
+<span class="variable">coche_de_ana</span> = <span class="variable">Coche</span>(<span class="string">"Ford"</span>, <span class="string">"Fiesta"</span>)
+<span class="comment"># 3. Uso de los objetos</span>
+<span class="function">print</span>(<span class="string">f"Mi coche es un {mi_coche.marca} {mi_coche.modelo}."</span>)
+<span class="function">print</span>(<span class="variable">mi_coche</span>.<span class="function">arrancar</span>())
+<span class="comment"># Salida Esperada en la Consola:</span>
+<span class="highlight">Mi coche es un Toyota Corolla.</span>
+<span class="highlight">El coche ha arrancado.</span>
+    </pre></div>
+</div>
+<hr>
+<div class="exercise">
+    <h3>🚀 Ejercicio: Modelando un Estudiante</h3>
+    <p><strong>Objetivo:</strong> Crear una clase para representar a un estudiante, con sus atributos y un método para mostrar su información.</p>
+    <p><strong>Instrucciones:</strong></p>
+    <ol>
+        <li>Define una clase llamada <code><span class="variable">Estudiante</span></code>.</li>
+        <li>En el constructor <code><span class="function">__init__</span></code>, la clase debe aceptar dos parámetros: <code><span class="variable">nombre</span></code> y <code><span class="variable">edad</span></code>, y guardarlos como atributos.</li>
+        <li>Añade un atributo de instancia llamado <code><span class="variable">cursos</span></code>, que debe ser una lista vacía <code><span class="string">[]</span></code>.</li>
+        <li>Crea un método llamado <code><span class="function">agregar_curso</span>(<span class="variable">nombre_curso</span>)</code> que añada un curso a la lista <code><span class="variable">cursos</span></code> del estudiante.</li>
+        <li>Crea un método llamado <code><span class="function">mostrar_info</span>()</code> que imprima el nombre, la edad y la lista de cursos del estudiante de forma formateada.</li>
+        <li>Crea una instancia de <code><span class="variable">Estudiante</span></code>, agrega dos cursos y luego llama a <code><span class="function">mostrar_info</span>()</code>.</li>
+    </ol>
+    <span class="solution-toggle" onclick="toggleSolution('solucion1')">Ver Solución</span>
+    <div id="solucion1" class="exercise-solution">
+        <div class="code-block"><pre>
+<span class="keyword">class</span> <span class="variable">Estudiante</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="variable">self</span>, <span class="variable">nombre</span>, <span class="variable">edad</span>):
+        <span class="variable">self</span>.<span class="variable">nombre</span> = <span class="variable">nombre</span>
+        <span class="variable">self</span>.<span class="variable">edad</span> = <span class="variable">edad</span>
+        <span class="variable">self</span>.<span class="variable">cursos</span> = []
+    
+    <span class="keyword">def</span> <span class="function">agregar_curso</span>(<span class="variable">self</span>, <span class="variable">nombre_curso</span>):
+        <span class="variable">self</span>.<span class="variable">cursos</span>.<span class="function">append</span>(<span class="variable">nombre_curso</span>)
+        <span class="function">print</span>(<span class="string">f"Curso '{nombre_curso}' añadido."</span>)
+
+    <span class="keyword">def</span> <span class="function">mostrar_info</span>(<span class="variable">self</span>):
+        <span class="function">print</span>(<span class="string">"--- Ficha del Estudiante ---"</span>)
+        <span class="function">print</span>(<span class="string">f"Nombre: {self.nombre}"</span>)
+        <span class="function">print</span>(<span class="string">f"Edad: {self.edad}"</span>)
+        <span class="function">print</span>(<span class="string">f"Cursos: {self.cursos}"</span>)
+
+<span class="comment"># Probando la clase</span>
+<span class="variable">estudiante1</span> = <span class="variable">Estudiante</span>(<span class="string">"Laura"</span>, <span class="number">22</span>)
+<span class="variable">estudiante1</span>.<span class="function">agregar_curso</span>(<span class="string">"Matemáticas"</span>)
+<span class="variable">estudiante1</span>.<span class="function">agregar_curso</span>(<span class="string">"Historia"</span>)
+<span class="variable">estudiante1</span>.<span class="function">mostrar_info</span>()
+        </pre></div>
+    </div>
+</div>
+<script>
+function toggleSolution(id) {
+    var solution = document.getElementById(id);
+    if (solution.style.display === "none" || solution.style.display === "") {
+        solution.style.display = "block";
+    } else {
+        solution.style.display = "none";
+    }
+}

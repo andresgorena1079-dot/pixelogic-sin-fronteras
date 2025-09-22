@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bienvenido - Pixelogic Sin Fronteras{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <section class="hero-section" style="background-image: url('{% static 'img/hero_background.jpg' %}');">
+        <div class="hero-content">
+            <h1>Bienvenidos</h1>
+            <p>Bienvenidos a Pyxcelogic Sin Fronteras, donde ofrecemos cursos gratuitos de programación, incluido un curso de Python para principiantes. Nuestra plataforma mejora el aprendizaje con una ventana de práctica incorporada.</p>
+            <a href="#cursos" class="cta-button">Explora Más</a>
+        </div>
+    </section>
+
+    <section id="blog" class="page-section section-border-blue">
+        <div class="container">
+            <h2 class="section-title">Nuestro Blog</h2>
+            <div class="blog-grid">
+                {% for post in ultimos_posts %}
+                <a href="{{ post.get_absolute_url }}" class="blog-card-link">
+                    <div class="blog-card">
+                        <div class="blog-card-image">
+                            <img src="{% static 'img/placeholder_blog.png' %}" alt="{{ post.titulo }}">
+                        </div>
+                        <div class="blog-card-content">
+                            <p class="blog-author">Por: {{ post.autor.username }}</p>
+                            <h3>{{ post.titulo }}</h3>
+                            <p>{{ post.contenido|truncatewords:20 }}</p>
+                            <div class="blog-meta">
+                                <span><i class="fas fa-heart"></i> {{ post.me_gusta.count }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% empty %}
+                <p>Aún no hay publicaciones en el blog.</p>
+                {% endfor %}
+            </div>
+            <div class="section-cta">
+                <a href="{% url 'cursos:lista_posts' %}" class="cta-button-secondary">Visita Nuestra Comunidad</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="cursos" class="page-section featured-courses section-border-yellow">
+        <div class="container">
+            <h2 class="section-title">Cursos Destacados</h2>
+            <div class="course-card-list">
+                {% for curso in cursos_destacados %}
+                    <a href="{% url 'cursos:detalle_curso' curso.id %}" class="course-card">
+                        {% if curso.logo %}
+                            <img src="{{ curso.logo.url }}" alt="Logo del curso {{ curso.titulo }}">
+                        {% endif %}
+                        <h3>{{ curso.titulo }}</h3>
+                        <p>{{ curso.descripcion }}</p>
+                    </a>
+                {% empty %}
+                    <p>Aún no hay cursos destacados disponibles.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section id="acerca" class="page-section about-us-section section-border-green">
+        <div class="container">
+            <div class="about-us-content">
+                <div class="about-us-image">
+                    <img src="{% static 'img/about_us_image.jpg' %}" alt="Equipo de Pyxcelogic">
+                </div>
+                <div class="about-us-text">
+                    <h2 class="section-title">Acerca de Nosotros</h2>
+                    <h4>Nuestra Misión</h4>
+                    <p>Pyxcelogic Sin Fronteras ofrece cursos gratuitos de programación, incluido un curso de Python para principiantes. Nuestra plataforma mejora el aprendizaje con una ventana de práctica incorporada. Estamos comprometidos a brindar oportunidades educativas accesibles para todos, fomentando el crecimiento en el mundo de la programación y las habilidades tecnológicas.</p>
+                    <a href="#" class="cta-button-secondary">Conoce Más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacto" class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Pyxcelogic Sin Fronteras</h3>
+                    <h4>Mantente en Contacto</h4>
+                    <form action="#">
+                        <label for="email_subscribe">Suscríbete a nuestro newsletter:</label>
+                        <input type="email" id="email_subscribe" name="email_subscribe" required>
+                        <button type="submit" class="cta-button">Suscribirse</button>
+                    </form>
+                </div>
+                <div class="footer-column">
+                    <p><i class="fab fa-whatsapp"></i> +54 9 11 3116 0543</p>
+                    <p><i class="fas fa-envelope"></i> andresgorena1079@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Buenos Aires, Argentina</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 by Pyxcelogic Sin Fronteras. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 2, Lección 1: Listas - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+    <style>
+        /* Estilo simple para las tablas de indexado */
+        .indexing-table { width: 100%; text-align: center; border-collapse: collapse; margin-top: 15px; }
+        .indexing-table td, .indexing-table th { border: 1px solid var(--border-color); padding: 8px; }
+        .indexing-table th { background-color: var(--code-bg); color: var(--accent-color); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 1: Listas</h1>
+        <p class="lesson-intro">
+            Una **lista** es la estructura de datos más fundamental de Python. Es una colección **ordenada** de elementos (cada uno con una posición o índice) y **mutable** (puedes cambiar su contenido en cualquier momento).
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Indexado y Acceso a Elementos</h2>
+        <p>Cada elemento en una lista tiene una posición específica, identificada por un número llamado **índice**.</p>
+        
+        <div class="concept-card">
+            <h3>Indexado Positivo (desde el principio)</h3>
+            <p>El conteo de los índices en Python siempre empieza en **cero**.</p>
+            <table class="indexing-table">
+                <tr><th>Índice</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+                <tr><td>Elemento</td><td>"Ana"</td><td>"Luis"</td><td>"Marta"</td><td>"Juan"</td></tr>
+            </table>
+            <div class="code-block"><pre>
+<span class="variable">jugadores</span> = [<span class="highlight">"Ana"</span>, <span class="highlight">"Luis"</span>, <span class="highlight">"Marta"</span>, <span class="highlight">"Juan"</span>]
+<span class="function">print</span>(<span class="highlight">f"El jugador en el índice 0 es: {jugadores[0]}"</span>) <span class="comment"># Salida: Ana</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>Indexado Negativo (desde el final)</h3>
+            <p>Permite acceder a los elementos empezando desde el final. El último elemento es el índice `-1`.</p>
+             <table class="indexing-table">
+                <tr><td>Elemento</td><td>"Ana"</td><td>"Luis"</td><td>"Marta"</td><td>"Juan"</td></tr>
+                <tr><th>Índice</th><th>-4</th><th>-3</th><th>-2</th><th>-1</th></tr>
+            </table>
+            <div class="code-block"><pre>
+<span class="variable">jugadores</span> = [<span class="highlight">"Ana"</span>, <span class="highlight">"Luis"</span>, <span class="highlight">"Marta"</span>, <span class="highlight">"Juan"</span>]
+<span class="function">print</span>(<span class="highlight">f"El último jugador es: {jugadores[-1]}"</span>) <span class="comment"># Salida: Juan</span>
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 2: Métodos de Listas</h2>
+        <p>Las listas vienen con métodos para manipular su contenido.</p>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>list.append(elemento)</code></h3>
+            <p><strong>Descripción:</strong> Añade un único elemento al **final** de la lista.</p>
+            <div class="code-block"><pre>
+<span class="variable">tareas</span> = [<span class="highlight">"Limpiar"</span>]
+<span class="variable">tareas</span>.<span class="function">append</span>(<span class="highlight">"Estudiar"</span>)
+<span class="function">print</span>(tareas) <span class="comment"># Salida: ['Limpiar', 'Estudiar']</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>list.extend(iterable)</code></h3>
+            <p><strong>Descripción:</strong> Une una lista con otro iterable (como otra lista), añadiendo cada elemento al final.</p>
+            <div class="code-block"><pre>
+<span class="variable">lista_a</span> = [<span class="number">1</span>, <span class="number">2</span>]; <span class="variable">lista_b</span> = [<span class="number">3</span>, <span class="number">4</span>]
+<span class="variable">lista_a</span>.<span class="function">extend</span>(<span class="variable">lista_b</span>)
+<span class="function">print</span>(<span class="variable">lista_a</span>) <span class="comment"># Salida: [1, 2, 3, 4]</span>
+            </pre></div>
+        </div>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>list.insert(indice, elemento)</code></h3>
+            <p><strong>Descripción:</strong> Inserta un elemento en una posición específica, desplazando el resto.</p>
+            <div class="code-block"><pre>
+<span class="variable">ranking</span> = [<span class="highlight">"Oro"</span>, <span class="highlight">"Bronce"</span>]
+<span class="variable">ranking</span>.<span class="function">insert</span>(<span class="number">1</span>, <span class="highlight">"Plata"</span>)
+<span class="function">print</span>(<span class="variable">ranking</span>) <span class="comment"># Salida: ['Oro', 'Plata', 'Bronce']</span>
+            </pre></div>
+        </div>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>list.remove(valor)</code></h3>
+            <p><strong>Descripción:</strong> Elimina la **primera ocurrencia** de un valor especificado.</p>
+            <div class="code-block"><pre>
+<span class="variable">frutas</span> = [<span class="highlight">'manzana'</span>, <span class="highlight">'pera'</span>, <span class="highlight">'manzana'</span>]
+<span class="variable">frutas</span>.<span class="function">remove</span>(<span class="highlight">'manzana'</span>)
+<span class="function">print</span>(<span class="variable">frutas</span>) <span class="comment"># Salida: ['pera', 'manzana']</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>list.pop(indice)</code></h3>
+            <p><strong>Descripción:</strong> Elimina y **retorna** el elemento de la posición especificada. Si se omite el índice, elimina el último.</p>
+            <div class="code-block"><pre>
+<span class="variable">baraja</span> = [<span class="highlight">"As"</span>, <span class="highlight">"Rey"</span>, <span class="highlight">"Reina"</span>]
+<span class="variable">carta_tomada</span> = <span class="variable">baraja</span>.<span class="function">pop</span>()
+<span class="function">print</span>(<span class="highlight">f"Carta: {carta_tomada}, Baraja: {baraja}"</span>) <span class="comment"># Salida: Carta: Reina, Baraja: ['As', 'Rey']</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>list.sort()</code></h3>
+            <p><strong>Descripción:</strong> Ordena los elementos de la lista. **Modifica la lista original**.</p>
+            <div class="code-block"><pre>
+<span class="variable">puntuaciones</span> = [<span class="number">95</span>, <span class="number">88</span>, <span class="number">100</span>]
+<span class="variable">puntuaciones</span>.<span class="function">sort</span>()
+<span class="function">print</span>(<span class="variable">puntuaciones</span>) <span class="comment"># Salida: [88, 95, 100]</span>
+            </pre></div>
+        </div>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>list.reverse()</code></h3>
+            <p><strong>Descripción:</strong> Invierte el orden de los elementos. **Modifica la lista original**.</p>
+            <div class="code-block"><pre>
+<span class="variable">numeros</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]
+<span class="variable">numeros</span>.<span class="function">reverse</span>()
+<span class="function">print</span>(<span class="variable">numeros</span>) <span class="comment"># Salida: [4, 3, 2, 1]</span>
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <h2>Ejemplo Integrador: Gestión de una Playlist Musical</h2>
+        <p>Este script funcional aplica todos los conceptos de la lección para gestionar una lista que representa una playlist.</p>
+        <div class="code-block"><pre>
+<span class="variable">playlist</span> = [<span class="highlight">"Bohemian Rhapsody"</span>, <span class="highlight">"Stairway to Heaven"</span>, <span class="highlight">"Hotel California"</span>]
+<span class="function">print</span>(<span class="highlight">f"Playlist inicial: {playlist}\n"</span>)
+
+<span class="comment"># Añadir canciones</span>
+<span class="variable">playlist</span>.<span class="function">append</span>(<span class="highlight">"Imagine"</span>)
+<span class="variable">playlist</span>.<span class="function">insert</span>(<span class="number">1</span>, <span class="highlight">"Like a Rolling Stone"</span>)
+<span class="function">print</span>(<span class="highlight">f"Playlist actualizada: {playlist}\n"</span>)
+
+<span class="comment"># Eliminar una canción por nombre y otra por posición</span>
+<span class="variable">playlist</span>.<span class="function">remove</span>(<span class="highlight">"Stairway to Heaven"</span>)
+<span class="variable">cancion_eliminada</span> = <span class="variable">playlist</span>.<span class="function">pop</span>(<span class="number">0</span>)
+<span class="function">print</span>(<span class="highlight">f"Se eliminó '{cancion_eliminada}'."</span>)
+<span class="function">print</span>(<span class="highlight">f"Playlist después de eliminar: {playlist}\n"</span>)
+
+<span class="comment"># Buscar y contar</span>
+<span class="variable">posicion</span> = <span class="variable">playlist</span>.<span class="function">index</span>(<span class="highlight">"Hotel California"</span>)
+<span class="function">print</span>(<span class="highlight">f"'Hotel California' está en la posición: {posicion}"</span>)
+<span class="variable">playlist</span>.<span class="function">append</span>(<span class="highlight">"Imagine"</span>)
+<span class="variable">veces_imagine</span> = <span class="variable">playlist</span>.<span class="function">count</span>(<span class="highlight">"Imagine"</span>)
+<span class="function">print</span>(<span class="highlight">f"'Imagine' aparece {veces_imagine} veces.\n"</span>)
+
+<span class="comment"># Ordenar y revertir</span>
+<span class="variable">playlist</span>.<span class="function">sort</span>()
+<span class="function">print</span>(<span class="highlight">f"Playlist ordenada: {playlist}"</span>)
+<span class="variable">playlist</span>.<span class="function">reverse</span>()
+<span class="function">print</span>(<span class="highlight">f"Playlist invertida: {playlist}"</span>)
+        </pre></div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicio: Gestión de Lista de Tareas (To-Do List) Avanzada</h3>
+            <p><strong>Objetivo:</strong> Aplicar múltiples métodos de listas para crear un gestor de tareas funcional.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea una lista de `tareas` inicial.</li>
+                <li>Usa `append()` para añadir una nueva tarea.</li>
+                <li>Usa `insert()` para añadir una tarea de alta prioridad al principio (índice 0).</li>
+                <li>Usa `remove()` para "completar" una tarea por su nombre.</li>
+                <li>Usa `sort()` para ordenar las tareas restantes alfabéticamente.</li>
+                <li>Busca la posición de una tarea específica usando `index()`.</li>
+                <li>Imprime la lista final de tareas y la posición de la tarea que buscaste.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM2L1')">Ver Solución</span>
+            <div id="solucionM2L1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="variable">tareas</span> = [<span class="highlight">"Hacer la compra"</span>, <span class="highlight">"Llamar al banco"</span>, <span class="highlight">"Estudiar Python"</span>]
+<span class="variable">tareas</span>.<span class="function">append</span>(<span class="highlight">"Pasear al perro"</span>)
+<span class="variable">tareas</span>.<span class="function">insert</span>(<span class="number">0</span>, <span class="highlight">"URGENTE: Enviar email"</span>)
+<span class="variable">tareas</span>.<span class="function">remove</span>(<span class="highlight">"Llamar al banco"</span>)
+<span class="variable">tareas</span>.<span class="function">sort</span>()
+<span class="variable">posicion_estudiar</span> = <span class="variable">tareas</span>.<span class="function">index</span>(<span class="highlight">"Estudiar Python"</span>)
+<span class="function">print</span>(<span class="highlight">f"Tareas pendientes ordenadas: {tareas}"</span>)
+<span class="function">print</span>(<span class="highlight">f"'Estudiar Python' está en la posición: {posicion_estudiar}"</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="../module_01_fundamentos/05_funciones_y_modulos.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="02_tuplas_y_sets.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Práctica: {{ leccion.titulo }}{% endblock %}
+
+{% block content %}
+<div class="ide-container">
+    <div class="ide-sidebar">
+        <h4><i class="fas fa-tasks"></i> Instrucciones del Ejercicio</h4>
+        <div class="exercise-instructions">
+            {{ leccion.instrucciones_ejercicio|safe }}
+        </div>
+        <a href="{% url 'cursos:detalle_leccion' leccion.id %}" class="nav-button back-to-lesson-btn">
+            <i class="fas fa-arrow-left"></i> Volver a la Lección
+        </a>
+    </div>
+
+    <div class="ide-main">
+        <div class="ide-editor-wrapper">
+            <textarea id="code-editor">{{ leccion.codigo_ejercicio }}</textarea>
+        </div>
+        <div class="ide-controls">
+            <button id="run-button" type="button" class="cta-button"><i class="fas fa-play"></i> Ejecutar</button>
+            <button id="validate-button" type="button" class="cta-button validate-btn"><i class="fas fa-check-double"></i> Validar Solución</button>
+        </div>
+        <div id="validation-results" class="ide-console-wrapper" style="display: none;">
+            <h4>Resultados de la Validación</h4>
+            <div id="validation-summary"></div>
+            <ul id="validation-details"></ul>
+        </div>
+        <div id="console-wrapper" class="ide-console-wrapper">
+            <pre id="console-output"></pre>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // La inicialización de CodeMirror no cambia
+        var editor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+            lineNumbers: true,
+            mode: "python",
+            theme: "dracula",
+            indentUnit: 4,
+            matchBrackets: true,
+            autoCloseBrackets: true
+        });
+
+        const runButton = document.getElementById('run-button');
+        const validateButton = document.getElementById('validate-button');
+        const consoleOutput = document.getElementById('console-output');
+        const consoleWrapper = document.getElementById('console-wrapper');
+        const validationResults = document.getElementById('validation-results');
+        const validationSummary = document.getElementById('validation-summary');
+        const validationDetails = document.getElementById('validation-details');
+
+        // La lógica para el botón "Ejecutar" no cambia
+        runButton.addEventListener('click', function() {
+            validationResults.style.display = 'none';
+            consoleWrapper.style.display = 'block';
+            consoleOutput.textContent = 'Ejecutando...';
+
+            fetch("{% url 'cursos:execute_code' %}", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                body: JSON.stringify({ code: editor.getValue() })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    consoleOutput.style.color = '#ff5555';
+                    consoleOutput.textContent = data.error;
+                } else {
+                    consoleOutput.style.color = '#f8f8f2';
+                    consoleOutput.textContent = data.output;
+                }
+            })
+            .catch(error => {
+                consoleOutput.style.color = '#ff5555';
+                consoleOutput.textContent = 'Error de conexión con el servidor de ejecución.';
+            });
+        });
+
+        // --- NUEVA LÓGICA PARA EL BOTÓN "VALIDAR SOLUCIÓN" ---
+        validateButton.addEventListener('click', function() {
+            consoleWrapper.style.display = 'none';
+            validationResults.style.display = 'block';
+            validationSummary.textContent = 'Validando tu solución...';
+            validationDetails.innerHTML = '';
+
+            const userCode = editor.getValue();
+            const leccionId = "{{ leccion.id }}";
+
+            fetch("{% url 'cursos:validar_codigo' %}", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                body: JSON.stringify({ code: userCode, leccion_id: leccionId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    validationSummary.textContent = 'Error en la validación';
+                    validationDetails.innerHTML = `<li class="test-fail">${data.error}</li>`;
+                    return;
+                }
+
+                validationSummary.innerHTML = `Resultado: <b>${data.pruebas_pasadas} / ${data.total_pruebas}</b> pruebas superadas.`;
+                
+                data.resultados_detallados.forEach(res => {
+                    const li = document.createElement('li');
+                    li.className = res.paso ? 'test-pass' : 'test-fail';
+                    
+                    const icon = res.paso ? '✅' : '❌';
+                    li.innerHTML = `<span>${icon} Prueba: <code>${res.expresion}</code></span>
+                                  <small>Esperado: ${res.esperado} | Obtenido: ${res.obtenido}</small>`;
+                    validationDetails.appendChild(li);
+                });
+
+                // ¡Feedback de lección completada!
+                if (data.leccion_completada_ahora) {
+                    const successMsg = document.createElement('div');
+                    successMsg.className = 'test-pass completion-toast';
+                    successMsg.innerHTML = `🎉 ¡Felicidades! Has completado la lección y ganado <b>${data.xp_ganados} XP</b>.`;
+                    validationResults.appendChild(successMsg);
+                }
+            })
+            .catch(error => {
+                validationSummary.textContent = 'Error de conexión';
+                validationDetails.innerHTML = `<li class="test-fail">No se pudo conectar con el servidor de validación.</li>`;
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1>{{ modulo.titulo }}</h1>
+    <p class="lesson-intro">{{ modulo.descripcion }}</p>
+    <a href="{% url 'cursos:detalle_curso' modulo.curso.id %}" class="back-to-modules-btn">
+        <i class="fas fa-arrow-left"></i> Volver a los Módulos del Curso
+    </a>
+    <hr>
+    <h2>Lecciones del Módulo</h2>
+    <ul class="lesson-list">
+        {% for leccion in lecciones %}
+            {% if leccion.bloqueada %}
+                <li class="bloqueada">
+                    <div class="lesson-info">
+                        <a href="{% url 'account_signup' %}?next={{ request.path }}">
+                            <h4>Lección {{ leccion.orden }}: {{ leccion.titulo }}</h4>
+                            <p>Regístrate para acceder a esta lección y a todo el curso.</p>
+                        </a>
+                    </div>
+                    <span class="status-icon incomplete"><i class="fas fa-lock"></i></span>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url 'cursos:detalle_leccion' leccion.id %}" class="lesson-link-wrapper">
+                        <div class="lesson-info">
+                            <h4>Lección {{ leccion.orden }}: {{ leccion.titulo }}</h4>
+                            <p>{{ leccion.descripcion }}</p>
+                        </div>
+                    </a>
+                    {% if user.is_authenticated %}
+                        {% if leccion.id in lecciones_completadas_ids %}
+                            <span class="status-icon completed">✔</span>
+                        {% else %}
+                            <span class="status-icon incomplete">○</span>
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

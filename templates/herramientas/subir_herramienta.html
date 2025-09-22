@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Subir Herramienta{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Subir Nueva Herramienta</h2>
+    <p>Comparte una herramienta útil. Será revisada antes de publicarse.</p>
+
+    <form method="post" enctype="multipart/form-data" class="two-column-form">
+        {% csrf_token %}
+        
+        <div class="form-main-column">
+            <div class="form-group">{{ form.nombre.label_tag }} {{ form.nombre }}</div>
+            <div class="form-group">{{ form.descripcion.label_tag }} {{ form.descripcion }}</div>
+            <div class="form-group">{{ form.enlace.label_tag }} {{ form.enlace }}</div>
+            <div class="form-group">{{ form.archivo.label_tag }} {{ form.archivo }}</div>
+        </div>
+
+        <div class="form-image-column">
+            <div class="form-group">
+                {{ form.imagen.label_tag }}
+                {{ form.imagen }}
+                <div class="image-preview-box" id="imagePreview">
+                    <img src="" alt="Vista previa" class="image-preview-image">
+                    <span class="image-preview-text">Vista Previa</span>
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="cta-button">Enviar para Revisión</button>
+    </form>
+</div>
+
+<script>
+    // Tu script de vista previa de imagen va aquí (sin cambios)
+</script>
+{% endblock %}

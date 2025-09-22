@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device--width, initial-scale=1.0">
+    <title>Módulo 5, Lección 1: Comprensión y Lambdas - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 1: Comprensión de Colecciones y Lambdas</h1>
+        <p class="lesson-intro">
+            Bienvenido a los temas avanzados. En esta lección, aprenderás dos técnicas de Python que te permitirán escribir código mucho más compacto y elegante: la **comprensión de listas**, para crear listas a partir de otras existentes en una sola línea, y las **funciones lambda**, para crear pequeñas funciones anónimas sobre la marcha.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Comprensión de Listas (List Comprehensions)</h2>
+        <p>La comprensión de listas es una de las características más apreciadas de Python. Ofrece una sintaxis más corta y legible para crear una nueva lista a partir de un iterable existente, aplicando una expresión y, opcionalmente, un filtro.</p>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Sintaxis de Comprensión de Listas</h3>
+            <p><strong>Descripción:</strong> Es una forma compacta de crear listas. La estructura básica es `[expresion for elemento in iterable]`, y se le puede añadir un filtro con `if`.</p>
+            <p><strong>Sintaxis:</strong> <code>nueva_lista = [expresion for elemento in iterable if condicion]</code></p>
+            <p><strong>Ejemplo Práctico (sin filtro):</strong></p>
+            <div class="code-block"><pre>
+<span class="comment"># Forma tradicional con un bucle for</span>
+<span class="variable">cuadrados</span> = []
+<span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="number">6</span>):
+    <span class="variable">cuadrados</span>.<span class="function">append</span>(<span class="variable">x</span> ** <span class="number">2</span>)
+<span class="function">print</span>(<span class="variable">cuadrados</span>) <span class="comment"># Salida: [1, 4, 9, 16, 25]</span>
+
+<span class="comment"># La misma operación con comprensión de listas</span>
+<span class="variable">cuadrados_comp</span> = [<span class="variable">x</span> ** <span class="number">2</span> <span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="number">6</span>)]
+<span class="function">print</span>(<span class="variable">cuadrados_comp</span>) <span class="comment"># Salida: [1, 4, 9, 16, 25]</span>
+            </pre></div>
+            <p><strong>Ejemplo Práctico (con filtro):</strong></p>
+             <div class="code-block"><pre>
+<span class="comment"># Obtener solo los cuadrados de los números pares</span>
+<span class="variable">cuadrados_pares</span> = [<span class="variable">x</span> ** <span class="number">2</span> <span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="number">11</span>) <span class="keyword">if</span> <span class="variable">x</span> % <span class="number">2</span> == <span class="number">0</span>]
+<span class="function">print</span>(<span class="variable">cuadrados_pares</span>) <span class="comment"># Salida: [4, 16, 36, 64, 100]</span>
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <h2>Tema 2: Funciones Anónimas (Lambda)</h2>
+        <p>Una **función lambda** es una pequeña función anónima que se define con la palabra clave `lambda`. Puede tomar cualquier número de argumentos, pero solo puede tener una expresión. Se usan a menudo cuando necesitas una función simple por un corto período de tiempo.</p>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Sintaxis de <code>lambda</code></h3>
+            <p><strong>Descripción:</strong> Crea una función anónima en una sola línea. Son sintácticamente restringidas a una única expresión.</p>
+            <p><strong>Sintaxis:</strong> <code>lambda argumentos: expresion</code></p>
+            <p><strong>Ejemplo Práctico:</strong></p>
+            <div class="code-block"><pre>
+<span class="comment"># Forma tradicional con def</span>
+<span class="keyword">def</span> <span class="function">sumar</span>(<span class="variable">a</span>, <span class="variable">b</span>):
+    <span class="keyword">return</span> <span class="variable">a</span> + <span class="variable">b</span>
+
+<span class="comment"># La misma función como una lambda</span>
+<span class="variable">suma_lambda</span> = <span class="keyword">lambda</span> <span class="variable">a</span>, <span class="variable">b</span>: <span class="variable">a</span> + <span class="variable">b</span>
+
+<span class="function">print</span>(<span class="highlight">f"Resultado con def: {sumar(5, 3)}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Resultado con lambda: {suma_lambda(5, 3)}"</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">Resultado con def: 8</span>
+<span class="highlight">Resultado con lambda: 8</span>
+            </pre></div>
+            <p><strong>Aplicación en la Vida Real:</strong> Su verdadero poder se ve cuando se usan como argumento para funciones de orden superior como `map()`, `filter()` o `sorted()`.</p>
+        </div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección 1 (Módulo 5)</h3>
+
+            <h4>Ejercicio 1: Filtrado de Datos con Comprensión</h4>
+            <p><strong>Objetivo:</strong> Usar la comprensión de listas para filtrar y transformar datos de una lista existente.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `01_filtrado_listas.py`.</li>
+                <li>Define una lista de números, `numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`.</li>
+                <li>Usa una comprensión de listas para crear una nueva lista llamada `numeros_pares` que contenga solo los números pares de la lista original.</li>
+                <li>Usa otra comprensión de listas para crear una lista llamada `cuadrados_impares` que contenga el cuadrado de los números impares.</li>
+                <li>Imprime ambas listas resultantes.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM5L1-1')">Ver Solución</span>
+            <div id="solucionM5L1-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="variable">numeros</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]
+<span class="variable">numeros_pares</span> = [<span class="variable">num</span> <span class="keyword">for</span> <span class="variable">num</span> <span class="keyword">in</span> <span class="variable">numeros</span> <span class="keyword">if</span> <span class="variable">num</span> % <span class="number">2</span> == <span class="number">0</span>]
+<span class="variable">cuadrados_impares</span> = [<span class="variable">num</span>**<span class="number">2</span> <span class="keyword">for</span> <span class="variable">num</span> <span class="keyword">in</span> <span class="variable">numeros</span> <span class="keyword">if</span> <span class="variable">num</span> % <span class="number">2</span> != <span class="number">0</span>]
+
+<span class="function">print</span>(<span class="highlight">f"Números Pares: {numeros_pares}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Cuadrado de Impares: {cuadrados_impares}"</span>)
+                </pre></div>
+            </div>
+
+            <h4 style="margin-top: 30px;">Ejercicio 2: Ordenando con Lambdas</h4>
+            <p><strong>Objetivo:</strong> Usar una función lambda como clave para ordenar una estructura de datos compleja.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `01_ordenando_lambda.py`.</li>
+                <li>Define una lista de diccionarios, donde cada diccionario representa a un estudiante con "nombre" y "nota".</li>
+                <li>Usa la función `sorted()` para ordenar la lista de estudiantes.</li>
+                <li>Para el argumento `key` de `sorted()`, pasa una función `lambda` que le diga a Python que ordene los diccionarios basándose en el valor de la clave "nota".</li>
+                <li>Imprime la lista de estudiantes ordenada.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM5L1-2')">Ver Solución</span>
+            <div id="solucionM5L1-2" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="variable">estudiantes</span> = [
+    {<span class="highlight">'nombre'</span>: <span class="highlight">'Ana'</span>, <span class="highlight">'nota'</span>: <span class="number">95</span>},
+    {<span class="highlight">'nombre'</span>: <span class="highlight">'Luis'</span>, <span class="highlight">'nota'</span>: <span class="number">88</span>},
+    {<span class="highlight">'nombre'</span>: <span class="highlight">'Marta'</span>, <span class="highlight">'nota'</span>: <span class="number">100</span>},
+]
+
+<span class="variable">estudiantes_ordenados</span> = <span class="function">sorted</span>(<span class="variable">estudiantes</span>, <span class="variable">key</span>=<span class="keyword">lambda</span> <span class="variable">est</span>: <span class="variable">est</span>[<span class="highlight">'nota'</span>])
+
+<span class="function">print</span>(<span class="highlight">"Estudiantes ordenados por nota:"</span>)
+<span class="function">print</span>(<span class="variable">estudiantes_ordenados</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="../module_04_errores_y_archivos/02_manipulacion_de_archivos.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="02_programacion_asincronica.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

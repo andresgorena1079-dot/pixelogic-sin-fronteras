@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 5, Lección 3: Decoradores y Generadores - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 3: Decoradores y Generadores</h1>
+        <p class="lesson-intro">
+            En esta lección, exploraremos dos conceptos de nivel intermedio-avanzado que son clave en Python. Los **decoradores** nos permiten modificar o extender el comportamiento de funciones sin alterar su código. Los **generadores** nos ofrecen una forma increíblemente eficiente de trabajar con secuencias de datos, especialmente cuando son muy grandes.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Decoradores</h2>
+        <p>Un **decorador** es, en esencia, una función que toma otra función como argumento, le añade alguna funcionalidad y devuelve una nueva función modificada. Es una forma de "envolver" una función con otra.</p>
+        <p><strong>Analogía:</strong> Piensa en una función como un regalo. Un decorador es el papel de regalo y el lazo que le pones encima. El regalo original sigue siendo el mismo, pero ahora tiene una presentación (funcionalidad) adicional.</p>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Sintaxis de un Decorador</h3>
+            <p><strong>Descripción:</strong> Se utiliza la sintaxis del "azúcar sintáctico" con la arroba (`@`) para aplicar un decorador a una función de manera limpia y legible.</p>
+            <p><strong>Sintaxis:</strong> <code>@nombre_del_decorador</code></p>
+            <p><strong>Ejemplo Práctico:</strong> Un decorador que mide el tiempo de ejecución de una función.</p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">time</span>
+
+<span class="comment"># 1. Definimos el decorador</span>
+<span class="keyword">def</span> <span class="function">medidor_de_tiempo</span>(<span class="variable">funcion_original</span>):
+    <span class="keyword">def</span> <span class="function">wrapper</span>(*<span class="variable">args</span>, **<span class="variable">kwargs</span>):
+        <span class="variable">inicio</span> = <span class="variable">time</span>.<span class="function">time</span>()
+        <span class="variable">resultado</span> = <span class="variable">funcion_original</span>(*<span class="variable">args</span>, **<span class="variable">kwargs</span>)
+        <span class="variable">fin</span> = <span class="variable">time</span>.<span class="function">time</span>()
+        <span class="function">print</span>(<span class="highlight">f"La función '{funcion_original.__name__}' tardó {fin - inicio:.4f} segundos."</span>)
+        <span class="keyword">return</span> <span class="variable">resultado</span>
+    <span class="keyword">return</span> <span class="variable">wrapper</span>
+
+<span class="comment"># 2. Aplicamos el decorador a una función</span>
+@<span class="function">medidor_de_tiempo</span>
+<span class="keyword">def</span> <span class="function">proceso_lento</span>(<span class="variable">segundos</span>):
+    <span class="function">print</span>(<span class="highlight">"Iniciando proceso lento..."</span>)
+    <span class="variable">time</span>.<span class="function">sleep</span>(<span class="variable">segundos</span>)
+    <span class="function">print</span>(<span class="highlight">"Proceso finalizado."</span>)
+
+<span class="comment"># 3. Llamamos a la función decorada</span>
+<span class="function">proceso_lento</span>(<span class="number">2</span>)
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <h2>Tema 2: Generadores y la Palabra Clave `yield`</h2>
+        <p>Un **generador** es una función especial que no devuelve un único valor y termina, sino que "produce" (<code>yield</code>) una secuencia de valores, uno a la vez, pausando su estado entre cada uno. Son extremadamente eficientes con la memoria.</p>
+        <p><strong>Analogía:</strong> Una función normal con `return` es como un restaurante que te entrega todo tu pedido de una vez en una bolsa. Un generador con `yield` es como un dispensador de caramelos: te da un caramelo cada vez que lo accionas y guarda el resto para la próxima vez.</p>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: La Palabra Clave <code>yield</code></h3>
+            <p><strong>Descripción:</strong> `yield` es similar a `return`, pero en lugar de terminar la función, pausa su ejecución y guarda su estado interno. Cuando se le pide el siguiente valor, reanuda la ejecución desde donde se quedó.</p>
+            <p><strong>Ejemplo Práctico:</strong> Un generador para la secuencia de Fibonacci.</p>
+            <div class="code-block"><pre>
+<span class="comment"># Definimos la función generadora</span>
+<span class="keyword">def</span> <span class="function">generador_fibonacci</span>(<span class="variable">limite</span>):
+    <span class="variable">a</span>, <span class="variable">b</span> = <span class="number">0</span>, <span class="number">1</span>
+    <span class="keyword">while</span> <span class="variable">a</span> < <span class="variable">limite</span>:
+        <span class="keyword">yield</span> <span class="variable">a</span> <span class="comment"># Produce el valor actual y pausa</span>
+        <span class="variable">a</span>, <span class="variable">b</span> = <span class="variable">b</span>, <span class="variable">a</span> + <span class="variable">b</span>
+
+<span class="comment"># Usamos el generador en un bucle for</span>
+<span class="function">print</span>(<span class="highlight">"Secuencia de Fibonacci hasta 50:"</span>)
+<span class="keyword">for</span> <span class="variable">numero</span> <span class="keyword">in</span> <span class="function">generador_fibonacci</span>(<span class="number">50</span>):
+    <span class="function">print</span>(<span class="variable">numero</span>, <span class="variable">end</span>=<span class="highlight">" "</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">Secuencia de Fibonacci hasta 50:</span>
+<span class="highlight">0 1 1 2 3 5 8 13 21 34 </span>
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección 3 (Módulo 5)</h3>
+
+            <h4>Ejercicio 1: Decorador de Registro (Logging)</h4>
+            <p><strong>Objetivo:</strong> Crear un decorador que imprima un mensaje antes y después de que una función se ejecute.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `03_decorador_log.py`.</li>
+                <li>Define un decorador llamado `log_llamada` que:
+                    <ul>
+                        <li>Imprima "Llamando a la función '[nombre de la función]'...".</li>
+                        <li>Ejecute la función original.</li>
+                        <li>Imprima "La función '[nombre de la función]' ha finalizado.".</li>
+                    </ul>
+                </li>
+                <li>Crea una función simple `saludar(nombre)` que imprima un saludo.</li>
+                <li>Aplica el decorador `@log_llamada` a la función `saludar`.</li>
+                <li>Llama a `saludar("Mundo")`.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM5L3-1')">Ver Solución</span>
+            <div id="solucionM5L3-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">def</span> <span class="function">log_llamada</span>(<span class="variable">func</span>):
+    <span class="keyword">def</span> <span class="function">wrapper</span>(*<span class="variable">args</span>, **<span class="variable">kwargs</span>):
+        <span class="function">print</span>(<span class="highlight">f"Llamando a la función '{func.__name__}'..."</span>)
+        <span class="variable">resultado</span> = <span class="variable">func</span>(*<span class="variable">args</span>, **<span class="variable">kwargs</span>)
+        <span class="function">print</span>(<span class="highlight">f"La función '{func.__name__}' ha finalizado."</span>)
+        <span class="keyword">return</span> <span class="variable">resultado</span>
+    <span class="keyword">return</span> <span class="variable">wrapper</span>
+
+@<span class="function">log_llamada</span>
+<span class="keyword">def</span> <span class="function">saludar</span>(<span class="variable">nombre</span>):
+    <span class="function">print</span>(<span class="highlight">f"¡Hola, {nombre}!"</span>)
+
+<span class="function">saludar</span>(<span class="highlight">"Mundo"</span>)
+                </pre></div>
+            </div>
+
+            <h4 style="margin-top: 30px;">Ejercicio 2: Generador de Números Pares</h4>
+            <p><strong>Objetivo:</strong> Crear un generador para producir una secuencia de números pares de forma eficiente.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `03_generador_pares.py`.</li>
+                <li>Define una función generadora `generador_pares(limite)` que acepte un número `limite`.</li>
+                <li>La función debe usar un bucle y la palabra clave `yield` para producir todos los números pares desde 0 hasta `limite` (sin incluir el límite).</li>
+                <li>Usa un bucle `for` para iterar sobre el generador `generador_pares(10)` y imprime cada número par que produce.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM5L3-2')">Ver Solución</span>
+            <div id="solucionM5L3-2" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">def</span> <span class="function">generador_pares</span>(<span class="variable">limite</span>):
+    <span class="variable">num</span> = <span class="number">0</span>
+    <span class="keyword">while</span> <span class="variable">num</span> < <span class="variable">limite</span>:
+        <span class="keyword">if</span> <span class="variable">num</span> % <span class="number">2</span> == <span class="number">0</span>:
+            <span class="keyword">yield</span> <span class="variable">num</span>
+        <span class="variable">num</span> += <span class="number">1</span>
+
+<span class="function">print</span>(<span class="highlight">"Números pares hasta 10:"</span>)
+<span class="keyword">for</span> <span class="variable">par</span> <span class="keyword">in</span> <span class="function">generador_pares</span>(<span class="number">10</span>):
+    <span class="function">print</span>(<span class="variable">par</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="02_programacion_asincronica.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="../module_06_libreria_estandar/01_modulos_esenciales.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

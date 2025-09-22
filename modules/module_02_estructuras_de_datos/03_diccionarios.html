@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 2, Lección 3: Diccionarios - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 3: Diccionarios</h1>
+        <p class="lesson-intro">
+            Los **diccionarios** son el corazón de muchas aplicaciones en Python. Son colecciones **mutables** que, a diferencia de las listas, no usan índices numéricos. En su lugar, almacenan datos en pares `clave: valor`. Piensa en ellos como una agenda de contactos: buscas por el nombre (la **clave**) para obtener su número de teléfono (el **valor**).
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Creación y Manipulación Básica</h2>
+        <p>Un diccionario se crea con llaves `{}`. Las claves deben ser únicas e inmutables (generalmente se usan strings o números), y se usan para acceder, modificar y eliminar los valores asociados.</p>
+        
+        <div class="concept-card">
+            <h3>Acceso, Adición y Eliminación</h3>
+            <div class="code-block"><pre>
+<span class="comment"># Código de Entrada</span>
+<span class="variable">perfil_usuario</span> = {<span class="highlight">"nombre"</span>: <span class="highlight">"Ana"</span>, <span class="highlight">"edad"</span>: <span class="number">28</span>}
+
+<span class="comment"># Acceder a un valor</span>
+<span class="function">print</span>(<span class="highlight">f"Nombre: {perfil_usuario['nombre']}"</span>)
+
+<span class="comment"># Añadir un nuevo par clave-valor</span>
+<span class="variable">perfil_usuario</span>[<span class="highlight">"ciudad"</span>] = <span class="highlight">"Madrid"</span>
+
+<span class="comment"># Eliminar un par clave-valor</span>
+<span class="keyword">del</span> <span class="variable">perfil_usuario</span>[<span class="highlight">'edad'</span>]
+<span class="function">print</span>(<span class="highlight">f"Perfil final: {perfil_usuario}"</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">Nombre: Ana</span>
+<span class="highlight">Perfil final: {'nombre': 'Ana', 'ciudad': 'Madrid'}</span>
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 2: Métodos de Diccionarios</h2>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>.keys()</code>, <code>.values()</code>, <code>.items()</code></h3>
+            <p><strong>Descripción:</strong> Devuelven "vistas" para recorrer las claves (`keys`), los valores (`values`), o los pares clave-valor (`items`). `.items()` es el más usado en bucles `for`.</p>
+            <div class="code-block"><pre>
+<span class="variable">producto</span> = {<span class="highlight">"nombre"</span>: <span class="highlight">"Teclado"</span>, <span class="highlight">"precio"</span>: <span class="number">75</span>}
+<span class="keyword">for</span> <span class="variable">clave</span>, <span class="variable">valor</span> <span class="keyword">in</span> <span class="variable">producto</span>.<span class="function">items</span>():
+    <span class="function">print</span>(<span class="highlight">f"{clave.capitalize()}: {valor}"</span>)
+<span class="comment"># Salida:</span>
+<span class="comment"># Nombre: Teclado</span>
+<span class="comment"># Precio: 75</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>.get(clave, defecto)</code></h3>
+            <p><strong>Descripción:</strong> Obtiene el valor de una clave de forma segura. Si la clave no existe, devuelve `None` o el valor `defecto` especificado, sin dar error.</p>
+            <div class="code-block"><pre>
+<span class="variable">config</span> = {<span class="highlight">"idioma"</span>: <span class="highlight">"español"</span>}
+<span class="variable">tema</span> = <span class="variable">config</span>.<span class="function">get</span>(<span class="highlight">"tema"</span>, <span class="highlight">"oscuro"</span>) <span class="comment"># "tema" no existe, devuelve "oscuro"</span>
+<span class="function">print</span>(<span class="highlight">f"Tema: {tema}"</span>) <span class="comment"># Salida: oscuro</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>.pop(clave, defecto)</code></h3>
+            <p><strong>Descripción:</strong> Elimina una clave y **retorna** su valor. Si la clave no existe, lanza `KeyError` a menos que se proporcione un valor por `defecto`.</p>
+            <div class="code-block"><pre>
+<span class="variable">jugador</span> = {<span class="highlight">"nombre"</span>: <span class="highlight">"Alex"</span>, <span class="highlight">"puntos"</span>: <span class="number">1200</span>}
+<span class="variable">puntos_ganados</span> = <span class="variable">jugador</span>.<span class="function">pop</span>(<span class="highlight">"puntos"</span>)
+<span class="function">print</span>(<span class="highlight">f"Puntos ganados: {puntos_ganados}"</span>) <span class="comment"># Salida: 1200</span>
+<span class="function">print</span>(<span class="highlight">f"Jugador: {jugador}"</span>) <span class="comment"># Salida: {'nombre': 'Alex'}</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>.popitem()</code></h3>
+            <p><strong>Descripción:</strong> Elimina y retorna el último par (clave, valor) insertado en el diccionario (desde Python 3.7).</p>
+            <div class="code-block"><pre>
+<span class="variable">tareas</span> = {<span class="highlight">"lunes"</span>: <span class="highlight">"reunión"</span>, <span class="highlight">"martes"</span>: <span class="highlight">"reporte"</span>}
+<span class="variable">ultima_tarea</span> = <span class="variable">tareas</span>.<span class="function">popitem</span>()
+<span class="function">print</span>(<span class="highlight">f"Última tarea eliminada: {ultima_tarea}"</span>) <span class="comment"># Salida: ('martes', 'reporte')</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>.update(otro_dict)</code></h3>
+            <p><strong>Descripción:</strong> Fusiona un diccionario con otro. Si hay claves repetidas, los valores del `otro_dict` sobrescriben a los originales.</p>
+            <div class="code-block"><pre>
+<span class="variable">perfil</span> = {<span class="highlight">"nombre"</span>: <span class="highlight">"Ana"</span>, <span class="highlight">"ciudad"</span>: <span class="highlight">"Lima"</span>}
+<span class="variable">datos_nuevos</span> = {<span class="highlight">"ciudad"</span>: <span class="highlight">"Cusco"</span>, <span class="highlight">"profesion"</span>: <span class="highlight">"Ingeniera"</span>}
+<span class="variable">perfil</span>.<span class="function">update</span>(<span class="variable">datos_nuevos</span>)
+<span class="function">print</span>(<span class="variable">perfil</span>) <span class="comment"># Salida: {'nombre': 'Ana', 'ciudad': 'Cusco', 'profesion': 'Ingeniera'}</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>.clear()</code></h3>
+            <p><strong>Descripción:</strong> Elimina todos los elementos del diccionario, dejándolo vacío.</p>
+            <div class="code-block"><pre>
+<span class="variable">carrito</span> = {<span class="highlight">"manzanas"</span>: <span class="number">5</span>, <span class="highlight">"peras"</span>: <span class="number">3</span>}
+<span class="variable">carrito</span>.<span class="function">clear</span>()
+<span class="function">print</span>(<span class="variable">carrito</span>) <span class="comment"># Salida: {}</span>
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <h2>Ejemplo Integrador: Ficha de un Personaje de Videojuego</h2>
+        <p>Este script utiliza un diccionario para gestionar los atributos de un personaje y aplica varios métodos para actualizar y mostrar su estado.</p>
+        <div class="code-block"><pre>
+<span class="comment"># 1. Creación del personaje con un diccionario</span>
+<span class="variable">personaje</span> = {<span class="highlight">"nombre"</span>: <span class="highlight">"Gael"</span>, <span class="highlight">"clase"</span>: <span class="highlight">"Mago"</span>, <span class="highlight">"nivel"</span>: <span class="number">5</span>, "vida": <span class="number">100</span>}
+<span class="function">print</span>(<span class="highlight">"--- Estado Inicial ---"</span>)
+<span class="keyword">for</span> <span class="variable">k</span>, <span class="variable">v</span> <span class="keyword">in</span> <span class="variable">personaje</span>.<span class="function">items</span>(): <span class="function">print</span>(<span class="highlight">f"- {k.capitalize()}: {v}"</span>)
+
+<span class="comment"># 2. El personaje sube de nivel, actualizamos con .update()</span>
+<span class="variable">personaje</span>.<span class="function">update</span>({<span class="highlight">"nivel"</span>: <span class="number">6</span>, <span class="highlight">"vida"</span>: <span class="number">110</span>, <span class="highlight">"nuevo_hechizo"</span>: <span class="highlight">"Bola de Fuego"</span>})
+
+<span class="comment"># 3. El personaje consume un objeto temporal y lo eliminamos con .pop()</span>
+<span class="variable">personaje</span>[<span class="highlight">"buff"</span>] = <span class="highlight">"Poción de Fuerza"</span>
+<span class="variable">buff_usado</span> = <span class="variable">personaje</span>.<span class="function">pop</span>(<span class="highlight">"buff"</span>)
+<span class="function">print</span>(<span class="highlight">f"\nSe ha usado el objeto: {buff_usado}"</span>)
+
+<span class="comment"># 4. Mostramos el estado final</span>
+<span class="function">print</span>(<span class="highlight">"\n--- Estado Final ---"</span>)
+<span class="keyword">for</span> <span class="variable">clave</span> <span class="keyword">in</span> <span class="variable">personaje</span>.<span class="function">keys</span>():
+    <span class="variable">valor</span> = <span class="variable">personaje</span>.<span class="function">get</span>(<span class="variable">clave</span>)
+    <span class="function">print</span>(<span class="highlight">f"- {clave.capitalize()}: {valor}"</span>)
+        </pre></div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección 3 (Módulo 2)</h3>
+
+            <h4>Ejercicio 1: Contador de Frecuencia de Palabras</h4>
+            <p><strong>Objetivo:</strong> Usar un diccionario para contar las ocurrencias de cada palabra en una frase.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `03_contador_palabras.py`.</li>
+                <li>Define un string con una frase (ej: "hola mundo hola python").</li>
+                <li>Crea un diccionario vacío llamado `frecuencias`.</li>
+                <li>Usa el método `.split()` en la frase para obtener una lista de palabras.</li>
+                <li>Recorre la lista de palabras con un bucle `for`.</li>
+                <li>En cada iteración, usa `.get(palabra, 0)` para obtener la cuenta actual de esa palabra y súmale 1. Actualiza el diccionario con la nueva cuenta.</li>
+                <li>Al final, imprime el diccionario `frecuencias`.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM2L3-1')">Ver Solución</span>
+            <div id="solucionM2L3-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="variable">frase</span> = <span class="highlight">"hola mundo hola python python python"</span>
+<span class="variable">palabras</span> = <span class="variable">frase</span>.<span class="function">split</span>()
+<span class="variable">frecuencias</span> = {}
+<span class="keyword">for</span> <span class="variable">palabra</span> <span class="keyword">in</span> <span class="variable">palabras</span>:
+    <span class="variable">frecuencias</span>[<span class="variable">palabra</span>] = <span class="variable">frecuencias</span>.<span class="function">get</span>(<span class="variable">palabra</span>, <span class="number">0</span>) + <span class="number">1</span>
+<span class="function">print</span>(<span class="highlight">f"Frecuencia de palabras: {frecuencias}"</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="02_tuplas_y_sets.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="../module_03_poo/01_clases_y_objetos.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

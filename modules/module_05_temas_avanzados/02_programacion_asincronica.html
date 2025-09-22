@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 5, Lección 2: Programación Asincrónica - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 2: Programación Asincrónica</h1>
+        <p class="lesson-intro">
+            Imagina que estás en una cocina. La programación **síncrona** (lo que hemos hecho hasta ahora) es como preparar un plato a la vez: pones el pan en la tostadora, esperas a que salte, y solo entonces empiezas a freír un huevo. Es ineficiente. La **programación asincrónica** es como un chef profesional: pones el pan en la tostadora y, **mientras esperas**, empiezas a freír el huevo. Aprovechas los tiempos de espera para hacer otras cosas.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Conceptos Clave (Concurrencia vs. Paralelismo)</h2>
+        <p>
+            La programación asincrónica se basa en la **concurrencia**. Es importante no confundirla con el paralelismo.
+        </p>
+        <ul>
+            <li><strong>Concurrencia:</strong> Es la capacidad de **gestionar** múltiples tareas a la vez. El chef que alterna entre la tostadora y la sartén está trabajando de forma concurrente. Solo hay un chef, pero las tareas parecen progresar al mismo tiempo.</li>
+            <li><strong>Paralelismo:</strong> Es la capacidad de **ejecutar** múltiples tareas al mismo tiempo. Para esto, necesitarías varios chefs (o varios núcleos de CPU), cada uno trabajando en un plato diferente simultáneamente.</li>
+        </ul>
+        <p>La programación asincrónica en Python con `asyncio` se centra en la **concurrencia** en un solo hilo de ejecución.</p>
+        
+        <hr>
+
+        <h2>Tema 2: La Sintaxis `async` y `await`</h2>
+        <p>Python nos da dos palabras clave para trabajar con código asíncrono.</p>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>async def</code></h3>
+            <p><strong>Descripción:</strong> La palabra clave `async` antes de `def` convierte una función normal en una **corutina**. Una corutina es una función especial que puede ser pausada y reanudada. Es nuestra "tarea asíncrona".</p>
+            <div class="code-block"><pre><span class="keyword">async def</span> <span class="function">mi_tarea_asincrona</span>():
+    <span class="comment"># ... código asíncrono aquí ...</span>
+    <span class="keyword">pass</span></pre></div>
+        </div>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>await</code></h3>
+            <p><strong>Descripción:</strong> La palabra clave `await` se usa dentro de una corutina (`async def`). Le dice a Python: "Esta operación va a tardar (ej: una petición a una base de datos o una espera). **Pausa esta función aquí**, deja que otras tareas se ejecuten, y vuelve cuando esta operación haya terminado". Es el momento en que el chef deja la tostadora y se va a la sartén.</p>
+            <div class="code-block"><pre><span class="keyword">async def</span> <span class="function">obtener_datos</span>():
+    <span class="function">print</span>(<span class="highlight">"Iniciando descarga..."</span>)
+    <span class="keyword">await</span> <span class="variable">asyncio</span>.<span class="function">sleep</span>(<span class="number">2</span>) <span class="comment"># Simula una operación de red que tarda 2 segundos</span>
+    <span class="function">print</span>(<span class="highlight">"Descarga completada."</span>)
+    <span class="keyword">return</span> {<span class="highlight">"datos"</span>: <span class="highlight">"..."</span>}</pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>El Bucle de Eventos (Event Loop)</h3>
+            <p>El módulo `asyncio` de Python proporciona un "bucle de eventos". Este es el "director de orquesta" o el "jefe de cocina". Se encarga de gestionar todas las corutinas, pausar las que están esperando con `await` y ejecutar otras que estén listas.</p>
+        </div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicio: Simulador de Desayuno Asíncrono</h3>
+            <p><strong>Objetivo:</strong> Ver la concurrencia en acción creando varias tareas asíncronas que se ejecutan "a la vez".</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `02_desayuno_async.py`.</li>
+                <li>Importa el módulo `asyncio`.</li>
+                <li>Crea tres corutinas (`async def`): `hacer_tostadas()`, `preparar_cafe()` y `freir_huevos()`.</li>
+                <li>Dentro de cada una, imprime un mensaje de inicio (ej: "Poniendo el pan en la tostadora..."), luego usa `await asyncio.sleep()` con diferentes duraciones (ej: 3, 2 y 4 segundos), y finalmente imprime un mensaje de finalización (ej: "¡Tostadas listas!").</li>
+                <li>Crea una corutina principal `main()` donde uses `asyncio.gather()` para ejecutar las tres tareas de forma concurrente.</li>
+                <li>Al final del script, ejecuta la función `main()` con `asyncio.run(main())`.</li>
+                <li>Observa la salida en la consola: verás que todos los mensajes de inicio aparecen primero, y luego los de finalización van apareciendo a medida que sus "temporizadores" terminan.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM5L2-1')">Ver Solución</span>
+            <div id="solucionM5L2-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">asyncio</span>
+<span class="keyword">import</span> <span class="variable">time</span>
+
+<span class="keyword">async def</span> <span class="function">hacer_tostadas</span>():
+    <span class="function">print</span>(<span class="highlight">"Poniendo el pan en la tostadora..."</span>)
+    <span class="keyword">await</span> <span class="variable">asyncio</span>.<span class="function">sleep</span>(<span class="number">3</span>)
+    <span class="function">print</span>(<span class="highlight">"¡Tostadas listas!"</span>)
+
+<span class="keyword">async def</span> <span class="function">preparar_cafe</span>():
+    <span class="function">print</span>(<span class="highlight">"Iniciando la cafetera..."</span>)
+    <span class="keyword">await</span> <span class="variable">asyncio</span>.<span class="function">sleep</span>(<span class="number">2</span>)
+    <span class="function">print</span>(<span class="highlight">"¡Café listo!"</span>)
+
+<span class="keyword">async def</span> <span class="function">freir_huevos</span>():
+    <span class="function">print</span>(<span class="highlight">"Poniendo los huevos en la sartén..."</span>)
+    <span class="keyword">await</span> <span class="variable">asyncio</span>.<span class="function">sleep</span>(<span class="number">4</span>)
+    <span class="function">print</span>(<span class="highlight">"¡Huevos listos!"</span>)
+
+<span class="keyword">async def</span> <span class="function">main</span>():
+    <span class="variable">inicio</span> = <span class="variable">time</span>.<span class="function">time</span>()
+    <span class="keyword">await</span> <span class="variable">asyncio</span>.<span class="function">gather</span>(
+        <span class="function">hacer_tostadas</span>(),
+        <span class="function">preparar_cafe</span>(),
+        <span class="function">freir_huevos</span>()
+    )
+    <span class="variable">fin</span> = <span class="variable">time</span>.<span class="function">time</span>()
+    <span class="function">print</span>(<span class="highlight">f"\nDesayuno completo en {fin - inicio:.2f} segundos."</span>)
+
+<span class="variable">asyncio</span>.<span class="function">run</span>(<span class="function">main</span>())
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="01_comprension_y_lambdas.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="03_decoradores_y_generadores.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

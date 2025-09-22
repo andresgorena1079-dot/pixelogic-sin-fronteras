@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 0: Preparando tu Entorno Python</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 20px 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            color: #4A90E2;
+            text-align: center;
+            border-bottom: 2px solid #4A90E2;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            border-bottom: 1px dashed #bbb;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #4CAF50;
+            margin-top: 25px;
+        }
+        .step-card {
+            background-color: #eef;
+            border-left: 5px solid #4A90E2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .comment {
+            color: #75715E; /* Gris para comentarios */
+        }
+        .highlight {
+            color: #E6DB74; /* Amarillo para strings */
+        }
+        .terminal-command {
+            color: #A6E22E; /* Verde para comandos de terminal */
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.1em;
+            color: #4A90E2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Módulo 0: Preparando tu Entorno Python 🛠️</h1>
+        <p>Antes de sumergirnos en la programación, es crucial tener las herramientas adecuadas. Este módulo te guiará paso a paso para instalar y configurar todo lo que necesitas para comenzar a programar en Python de forma profesional.</p>
+
+        <h2>0.1. Instalación de Python: El cerebro de nuestro proyecto</h2>
+        <div class="step-card">
+            <h3>Paso a Paso</h3>
+            <p><strong>¿Para qué sirve?</strong> El intérprete de Python es el programa que lee y ejecuta tu código. Sin él, tu computadora no podría entender las instrucciones que le des.</p>
+            <p><strong>¿Cómo se emplea?</strong></p>
+            <ol>
+                <li>Ve al sitio web oficial de Python: <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a>. El sitio detectará automáticamente tu sistema operativo.</li>
+                <li>Haz clic en el botón de descarga. Se descargará el instalador.</li>
+                <li>Ejecuta el instalador.</li>
+            </ol>
+            <p class="note">⚠️ <strong>Atención para usuarios de Windows:</strong> Es vital marcar la casilla <strong>"Add Python to PATH"</strong> durante la instalación. Esto te permitirá ejecutar Python desde cualquier terminal sin problemas. Si olvidas este paso, la instalación no será completa.</p>
+            <p><strong>¿Cuándo se emplea?</strong> Se usa cada vez que se ejecuta un script de Python. El sistema operativo le pide al intérprete de Python que lea el archivo <code>.py</code> y ejecute las instrucciones que contiene.</p>
+            <h3>Verificando la instalación</h3>
+            <p>Para asegurarte de que todo se instaló correctamente, abre tu terminal (en Windows: <strong>CMD</strong> o <strong>PowerShell</strong>; en macOS/Linux: <strong>Terminal</strong>) y escribe el siguiente comando:</p>
+            <div class="code-block">
+                <pre><span class="terminal-command">python --version</span></pre>
+            </div>
+            <p>Deberías ver la versión de Python instalada, como por ejemplo: <code>Python 3.10.4</code>. Si ves un error, significa que Python no se agregó al PATH y necesitarás volver a instalarlo.</p>
+        </div>
+
+        <h2>0.2. Configurando Visual Studio Code: Tu taller de programación</h2>
+        <div class="step-card">
+            <h3>Paso a Paso</h3>
+            <p><strong>¿Para qué sirve?</strong> VS Code es un editor de código, no es un simple editor de texto como el Bloc de Notas. Te da herramientas inteligentes como el resaltado de sintaxis, autocompletado y depuración de código.</p>
+            <p><strong>¿Cómo se emplea?</strong></p>
+            <ol>
+                <li>Descarga VS Code desde su sitio oficial: <a href="https://code.visualstudio.com/" target="_blank">code.visualstudio.com</a>.</li>
+                <li>Una vez instalado, ábrelo.</li>
+                <li>Ve al ícono de **Extensiones** en la barra lateral izquierda (es un cuadrado con otro cuadrado saliendo).</li>
+                <li>Busca la extensión de **Python** (publicada por Microsoft) y haz clic en **Instalar**. Esto te dará todas las funcionalidades específicas para Python.</li>
+            </ol>
+            <p><strong>¿Por qué se emplea?</strong> VS Code es la opción preferida por su ligereza, su gran ecosistema de extensiones y su integración perfecta con Python. Te permite escribir código de manera más rápida y eficiente. </p>
+            <p><strong>¿Cuándo se emplea?</strong> Siempre que vayas a escribir, leer o modificar cualquier archivo de código. Es tu herramienta de trabajo diaria.</p>
+        </div>
+        
+        <h2>0.3. Tu Primer Código en un Entorno Profesional</h2>
+        <div class="step-card">
+            <h3>Paso a Paso</h3>
+            <p>Ahora que tenemos las dos herramientas principales instaladas, vamos a conectar el editor con el intérprete de Python.</p>
+            <ol>
+                <li>En VS Code, ve a **Archivo > Abrir Carpeta** y selecciona la carpeta <code>PythonSinFronteras</code> que creamos.</li>
+                <li>Haz clic derecho en el explorador de archivos y selecciona **Nuevo Archivo**.</li>
+                <li>Nombra el archivo <code>holamundo.py</code>. La extensión <code>.py</code> le dice a VS Code que es un archivo de Python.</li>
+                <li>Escribe el siguiente código:</li>
+            </ol>
+            <div class="code-block">
+                <pre>
+<span class="comment"># Este es nuestro primer archivo en Python</span>
+<span class="function">print</span>(<span class="highlight">"¡Hola, Mundo desde VS Code!"</span>)
+                </pre>
+            </div>
+            <p><strong>¿Cómo se ejecuta?</strong></p>
+            <p>Hay dos formas principales de ejecutar tu código desde VS Code:</p>
+            <ol>
+                <li>Haz clic derecho en el editor de código y selecciona **"Run Python File in Terminal"**. Esto abrirá una terminal en la parte inferior y mostrará el resultado.</li>
+                <li>O, en la terminal de VS Code (<strong>Terminal > Nuevo Terminal</strong>), escribe: <code><span class="terminal-command">python holamundo.py</span></code> y presiona Enter.</li>
+            </ol>
+        </div>
+        
+        <p class="back-link"><a href="index.html">← Volver al Índice Principal</a></p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+# Entorno virtual de Python
+/venv/
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc
+
+# Base de datos local
+db.sqlite3
+
+# Archivos de secretos y variables de entorno
+.env
+*.json
+
+# Archivos multimedia subidos por los usuarios
+/media/
+
+# Archivos estáticos generados por collectstatic
+/staticfiles/

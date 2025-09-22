@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 2, Lección 4: Conjuntos (Sets) - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 4: Conjuntos (Sets)</h1>
+        <p class="lesson-intro">
+            Los **conjuntos (sets)** son el tercer tipo de colección fundamental en Python. Son colecciones **mutables** con dos características únicas y poderosas: **no tienen un orden** específico y **no permiten elementos duplicados**. Su principal superpoder es realizar operaciones matemáticas de conjuntos (unión, intersección, etc.) de forma extremadamente eficiente.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Creación y Propiedades de los Conjuntos</h2>
+        <p>Un conjunto se crea con llaves `{}` o con la función `set()`. Si intentas añadir un elemento que ya existe, simplemente será ignorado, garantizando que cada elemento sea único.</p>
+        
+        <div class="concept-card">
+            <h3>Creación de un Conjunto</h3>
+            <p>La forma más común de crear un conjunto es a partir de una lista para eliminar duplicados.</p>
+            <div class="code-block"><pre>
+<span class="comment"># Código de Entrada</span>
+<span class="variable">lista_con_duplicados</span> = [<span class="highlight">"manzana"</span>, <span class="highlight">"pera"</span>, <span class="highlight">"manzana"</span>, <span class="highlight">"uva"</span>, <span class="highlight">"pera"</span>]
+
+<span class="comment"># Convertir la lista a un conjunto para obtener elementos únicos</span>
+<span class="variable">frutas_unicas</span> = <span class="function">set</span>(<span class="variable">lista_con_duplicados</span>)
+<span class="function">print</span>(<span class="highlight">f"Frutas únicas en la lista: {frutas_unicas}"</span>)
+
+<span class="comment"># Salida Esperada en la Consola (el orden puede variar)</span>
+<span class="highlight">Frutas únicas en la lista: {'pera', 'manzana', 'uva'}</span>
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 2: Métodos de Modificación de Conjuntos</h2>
+        <div class="concept-card">
+            <h3>Métodos Comunes de Modificación</h3>
+            <ul>
+                <li>
+                    <strong><code>.add(elemento)</code>:</strong> Añade un elemento. Si ya existe, no hace nada.
+                    <div class="code-block inline-example"><pre>
+<span class="variable">ingredientes</span> = {<span class="highlight">"tomate"</span>, <span class="highlight">"cebolla"</span>}
+<span class="variable">ingredientes</span>.<span class="function">add</span>(<span class="highlight">"ajo"</span>)
+<span class="function">print</span>(<span class="variable">ingredientes</span>) <span class="comment"># Salida (el orden puede variar): {'cebolla', 'ajo', 'tomate'}</span>
+                    </pre></div>
+                </li>
+                <li>
+                    <strong><code>.remove(elemento)</code>:</strong> Elimina un elemento. Lanza `KeyError` si el elemento no existe.
+                    <div class="code-block inline-example"><pre>
+<span class="variable">ingredientes</span> = {<span class="highlight">"tomate"</span>, <span class="highlight">"cebolla"</span>}
+<span class="variable">ingredientes</span>.<span class="function">remove</span>(<span class="highlight">"tomate"</span>)
+<span class="function">print</span>(<span class="variable">ingredientes</span>) <span class="comment"># Salida: {'cebolla'}</span>
+                    </pre></div>
+                </li>
+                <li>
+                    <strong><code>.discard(elemento)</code>:</strong> Elimina un elemento. Si no existe, **no hace nada** (es más seguro que `remove`).
+                     <div class="code-block inline-example"><pre>
+<span class="variable">ingredientes</span> = {<span class="highlight">"tomate"</span>, <span class="highlight">"cebolla"</span>}
+<span class="variable">ingredientes</span>.<span class="function">discard</span>(<span class="highlight">"pimiento"</span>) <span class="comment"># "pimiento" no existe, pero no da error</span>
+<span class="function">print</span>(<span class="variable">ingredientes</span>) <span class="comment"># Salida: {'cebolla', 'tomate'}</span>
+                    </pre></div>
+                </li>
+                 <li>
+                    <strong><code>.pop()</code>:</strong> Elimina y retorna un elemento aleatorio del conjunto (ya que no tienen orden).
+                     <div class="code-block inline-example"><pre>
+<span class="variable">tags</span> = {<span class="highlight">"python"</span>, <span class="highlight">"web"</span>, <span class="highlight">"dev"</span>}
+<span class="variable">tag_eliminado</span> = <span class="variable">tags</span>.<span class="function">pop</span>()
+<span class="function">print</span>(<span class="highlight">f"Tag eliminado: {tag_eliminado}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Tags restantes: {tags}"</span>)
+                    </pre></div>
+                </li>
+            </ul>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 3: Operaciones de Conjuntos</h2>
+        <div class="concept-card">
+            <h3>Operaciones Lógicas entre Conjuntos</h3>
+            <ul>
+                <li>
+                    <strong>Unión (<code>|</code> o <code>.union()</code>):</strong> Combina dos sets, devolviendo un nuevo set con todos los elementos únicos de ambos.
+                    <div class="code-block inline-example"><pre>
+<span class="variable">set_a</span> = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>}; <span class="variable">set_b</span> = {<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>}
+<span class="variable">union</span> = <span class="variable">set_a</span> | <span class="variable">set_b</span>
+<span class="function">print</span>(<span class="variable">union</span>) <span class="comment"># Salida: {1, 2, 3, 4, 5}</span>
+                    </pre></div>
+                </li>
+                <li>
+                    <strong>Intersección (<code>&</code> o <code>.intersection()</code>):</strong> Devuelve un nuevo set solo con los elementos que están presentes en ambos sets.
+                    <div class="code-block inline-example"><pre>
+<span class="variable">set_a</span> = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>}; <span class="variable">set_b</span> = {<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>}
+<span class="variable">interseccion</span> = <span class="variable">set_a</span> & <span class="variable">set_b</span>
+<span class="function">print</span>(<span class="variable">interseccion</span>) <span class="comment"># Salida: {3}</span>
+                    </pre></div>
+                </li>
+                <li>
+                    <strong>Diferencia (<code>-</code> o <code>.difference()</code>):</strong> Devuelve un nuevo set con los elementos que están en el primer set pero no en el segundo.
+                     <div class="code-block inline-example"><pre>
+<span class="variable">set_a</span> = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>}; <span class="variable">set_b</span> = {<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>}
+<span class="variable">diferencia</span> = <span class="variable">set_a</span> - <span class="variable">set_b</span>
+<span class="function">print</span>(<span class="variable">diferencia</span>) <span class="comment"># Salida: {1, 2}</span>
+                    </pre></div>
+                </li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <h2>Ejemplo Integrador: Análisis de Habilidades de Equipos</h2>
+        <p>Este script utiliza conjuntos para gestionar las habilidades de dos equipos de trabajo y realiza un análisis completo usando operaciones de conjuntos.</p>
+        <div class="code-block"><pre>
+<span class="comment"># 1. Definimos las habilidades de cada equipo como conjuntos</span>
+<span class="variable">habilidades_equipo_A</span> = {<span class="highlight">"Python"</span>, <span class="highlight">"SQL"</span>, <span class="highlight">"Git"</span>, <span class="highlight">"Docker"</span>}
+<span class="variable">habilidades_equipo_B</span> = {<span class="highlight">"JavaScript"</span>, <span class="highlight">"HTML/CSS"</span>, <span class="highlight">"Git"</span>, <span class="highlight">"Docker"</span>}
+
+<span class="function">print</span>(<span class="highlight">"--- Análisis de Habilidades de Equipos ---"</span>)
+
+<span class="comment"># 2. Se une un nuevo miembro al Equipo A</span>
+<span class="variable">habilidades_equipo_A</span>.<span class="function">add</span>(<span class="highlight">"React"</span>)
+<span class="function">print</span>(<span class="highlight">f"Equipo A (actualizado): {habilidades_equipo_A}"</span>)
+
+<span class="comment"># 3. 'SQL' ya no es un requisito para el Equipo B, lo eliminamos de forma segura</span>
+<span class="variable">habilidades_equipo_B</span>.<span class="function">discard</span>(<span class="highlight">"SQL"</span>)
+
+<span class="comment"># 4. Realizamos operaciones de conjuntos para el análisis</span>
+<span class="variable">habilidades_comunes</span> = <span class="variable">habilidades_equipo_A</span> & <span class="variable">habilidades_equipo_B</span>
+<span class="variable">todas_las_habilidades</span> = <span class="variable">habilidades_equipo_A</span> | <span class="variable">habilidades_equipo_B</span>
+<span class="variable">habilidades_solo_A</span> = <span class="variable">habilidades_equipo_A</span> - <span class="variable">habilidades_equipo_B</span>
+
+<span class="function">print</span>(<span class="highlight">f"\nHabilidades en común (intersección): {habilidades_comunes}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Conjunto total de habilidades en la empresa (unión): {todas_las_habilidades}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Habilidades que solo posee el Equipo A (diferencia): {habilidades_solo_A}"</span>)
+        </pre></div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección 4 (Módulo 2)</h3>
+
+            <h4>Ejercicio 1: Gestión de Ingredientes Únicos</h4>
+            <p><strong>Objetivo:</strong> Usar un conjunto para gestionar una lista de ingredientes de una receta, asegurando que no haya duplicados.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `04_receta.py`.</li>
+                <li>Crea una lista `ingredientes_receta` que contenga algunos ingredientes duplicados.</li>
+                <li>Convierte esta lista a un conjunto `ingredientes_unicos` para eliminar los duplicados.</li>
+                <li>Añade un nuevo ingrediente al conjunto usando `.add()`.</li>
+                <li>Elimina un ingrediente que sabes que existe usando `.remove()`.</li>
+                <li>Intenta eliminar un ingrediente que no existe usando `.discard()`.</li>
+                <li>Imprime el conjunto final de ingredientes únicos.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM2L4-1')">Ver Solución</span>
+            <div id="solucionM2L4-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="variable">ingredientes_receta</span> = [<span class="highlight">"tomate"</span>, <span class="highlight">"cebolla"</span>, <span class="highlight">"ajo"</span>, <span class="highlight">"tomate"</span>, <span class="highlight">"aceite"</span>]
+<span class="variable">ingredientes_unicos</span> = <span class="function">set</span>(<span class="variable">ingredientes_receta</span>)
+<span class="variable">ingredientes_unicos</span>.<span class="function">add</span>(<span class="highlight">"sal"</span>)
+<span class="variable">ingredientes_unicos</span>.<span class="function">remove</span>(<span class="highlight">"cebolla"</span>)
+<span class="variable">ingredientes_unicos</span>.<span class="function">discard</span>(<span class="highlight">"pimienta"</span>)
+<span class="function">print</span>(<span class="highlight">f"Ingredientes finales de la receta: {ingredientes_unicos}"</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="03_diccionarios.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="../module_03_poo/01_clases_y_objetos.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

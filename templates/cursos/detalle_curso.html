@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="course-landing">
+        
+        <h1>{{ curso.titulo }}</h1>
+        <p class="lesson-intro">{{ curso.descripcion }}</p>
+        <hr>
+        
+        <div class="modules-orbit-container">
+            
+            <img src="{% static 'img/python_logo_circuit.png' %}" alt="Logo del Curso" class="center-course-image">
+            
+            <div class="modules-orbit-wrapper">
+                {% for modulo in modulos %}
+                <div class="module-card orbit-item module-pos-{{ forloop.counter }}">
+                    <a href="{% url 'cursos:detalle_modulo' modulo.id %}">
+                        <h4>{{ modulo.titulo }}</h4>
+                        {% if user.is_authenticated %}
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: {{ modulo.progreso_porcentaje }}%;"></div>
+                            </div>
+                            <small>{{ modulo.progreso_porcentaje }}% completado</small>
+                        {% endif %}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1, Lección 3: Operadores en Python - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 3: Operadores en Python</h1>
+        <p class="lesson-intro">
+            Los programas no solo guardan datos; los manipulan, comparan y operan con ellos. Los **operadores** son los símbolos especiales que le dicen a Python que realice una operación. En esta lección, exploraremos las herramientas que nos permiten dar vida y lógica a nuestras variables.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Operadores Aritméticos</h2>
+        <p>Son los operadores que usas para realizar cálculos matemáticos. Te permiten ejecutar desde sumas simples hasta operaciones más complejas como el cálculo de potencias o el resto de una división, siendo la base de cualquier manipulación numérica en tu código.</p>
+        
+        <div class="concept-card">
+            <h3>Operadores Aritméticos Comunes</h3>
+            <ul>
+                <li><strong>Suma (<code>+</code>):</strong> Suma dos números.
+                    <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"10 + 5 = {10 + 5}"</span>) <span class="comment"># Salida: 15</span></pre></div>
+                </li>
+                <li><strong>Resta (<code>-</code>):</strong> Resta un número de otro.
+                    <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"20 - 8 = {20 - 8}"</span>) <span class="comment"># Salida: 12</span></pre></div>
+                </li>
+                <li><strong>Multiplicación (<code>*</code>):</strong> Multiplica dos números.
+                    <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"7 * 6 = {7 * 6}"</span>) <span class="comment"># Salida: 42</span></pre></div>
+                </li>
+                <li><strong>División (<code>/</code>):</strong> Divide. El resultado siempre es un `float`.
+                    <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"10 / 4 = {10 / 4}"</span>) <span class="comment"># Salida: 2.5</span></pre></div>
+                </li>
+                <li><strong>División Entera (<code>//</code>):</strong> Divide y redondea hacia abajo al entero más cercano.
+                    <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"10 // 4 = {10 // 4}"</span>) <span class="comment"># Salida: 2</span></pre></div>
+                </li>
+                 <li><strong>Módulo (<code>%</code>):</strong> Devuelve el resto de una división entera.
+                    <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"El resto de 10 / 4 es: {10 % 4}"</span>) <span class="comment"># Salida: 2</span></pre></div>
+                </li>
+                 <li><strong>Exponente (<code>**</code>):</strong> Eleva un número a la potencia de otro.
+                    <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"2 elevado a la 3 es: {2 ** 3}"</span>) <span class="comment"># Salida: 8</span></pre></div>
+                </li>
+            </ul>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 2: Operadores de Asignación</h2>
+        <p>Estos operadores se utilizan para asignar o actualizar el valor de una variable. El más común es `=`, pero existen versiones combinadas que actúan como atajos para modificar una variable basándose en su valor actual, haciendo el código más conciso.</p>
+        <div class="concept-card">
+            <h3>Operadores de Asignación Comunes</h3>
+            <ul>
+                <li><strong>Asignación (<code>=</code>):</strong> Asigna el valor de la derecha a la variable de la izquierda.</li>
+                <li><strong>Asignación Compuesta (<code>+=</code>, <code>-=</code>, <code>*=</code>, etc.):</strong> Realiza una operación y asigna el resultado a la misma variable. Es un atajo muy común.
+                    <div class="code-block inline-example"><pre>
+<span class="variable">puntos</span> = <span class="number">100</span>
+<span class="variable">puntos</span> += <span class="number">20</span>  <span class="comment"># Es lo mismo que: puntos = puntos + 20</span>
+<span class="function">print</span>(<span class="highlight">f"Puntos totales: {puntos}"</span>) <span class="comment"># Salida: 120</span></pre></div>
+                </li>
+            </ul>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 3: Operadores de Comparación</h2>
+        <p>Comparan dos valores y el resultado de la expresión es siempre un valor booleano: `True` o `False`. Son la base fundamental para la toma de decisiones y el control de flujo en cualquier programa.</p>
+        <div class="concept-card">
+            <h3>Operadores de Comparación Comunes</h3>
+             <ul>
+                <li><strong>Igual a (<code>==</code>):</strong> Comprueba si dos valores son iguales.
+                    <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"¿10 es igual a 10?: {(10 == 10)}"</span>) <span class="comment"># Salida: True</span></pre></div>
+                </li>
+                <li><strong>No igual a (<code>!=</code>):</strong> Comprueba si dos valores son diferentes.
+                    <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"¿'hola' es diferente de 'adios'?: {('hola' != 'adios')}"</span>) <span class="comment"># Salida: True</span></pre></div>
+                </li>
+                <li><strong>Mayor que (<code>></code>):</strong> Comprueba si el valor de la izquierda es mayor que el de la derecha.
+                     <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"¿20 es mayor que 10?: {(20 > 10)}"</span>) <span class="comment"># Salida: True</span></pre></div>
+                </li>
+                 <li><strong>Menor o igual que (<code><=</code>):</strong> Comprueba si el valor de la izquierda es menor o igual que el de la derecha.
+                     <div class="code-block inline-example"><pre><span class="function">print</span>(<span class="highlight">f"¿15 es menor o igual que 15?: {(15 <= 15)}"</span>) <span class="comment"># Salida: True</span></pre></div>
+                </li>
+            </ul>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 4: Operadores Lógicos</h2>
+        <p>Estos operadores te permiten combinar múltiples expresiones booleanas para crear condiciones más complejas y potentes. Son esenciales para construir una lógica de decisión que dependa de varios factores.</p>
+        <div class="concept-card">
+            <h3>Operadores Lógicos Comunes</h3>
+            <ul>
+                <li><strong>Y Lógico (<code>and</code>):</strong> Devuelve `True` solo si **ambas** condiciones son verdaderas.
+                    <div class="code-block inline-example"><pre>
+<span class="variable">puede_pasar</span> = (<span class="number">12</span> >= <span class="number">10</span>) <span class="keyword">and</span> (<span class="number">150</span> > <span class="number">140</span>)
+<span class="function">print</span>(<span class="highlight">f"¿Puede pasar?: {puede_pasar}"</span>) <span class="comment"># Salida: True</span></pre></div>
+                </li>
+                <li><strong>O Lógico (<code>or</code>):</strong> Devuelve `True` si **al menos una** de las condiciones es verdadera.
+                     <div class="code-block inline-example"><pre>
+<span class="variable">tiene_descuento</span> = (<span class="boolean">True</span> <span class="keyword">or</span> <span class="boolean">False</span>)
+<span class="function">print</span>(<span class="highlight">f"¿Tiene descuento?: {tiene_descuento}"</span>) <span class="comment"># Salida: True</span></pre></div>
+                </li>
+                <li><strong>Negación Lógica (<code>not</code>):</strong> Invierte el valor booleano de una condición.
+                     <div class="code-block inline-example"><pre>
+<span class="variable">esta_lloviendo</span> = <span class="boolean">False</span>
+<span class="variable">hay_sol</span> = <span class="keyword">not</span> <span class="variable">esta_lloviendo</span>
+<span class="function">print</span>(<span class="highlight">f"¿Hay sol?: {hay_sol}"</span>) <span class="comment"># Salida: True</span></pre></div>
+                </li>
+            </ul>
+        </div>
+
+        <hr>
+        
+        <h2>Ejemplo Integrador: Lógica de un Videojuego</h2>
+        <p>Este mini-programa funcional utiliza todos los operadores de la lección para analizar dos números y mostrar un reporte completo.</p>
+        <div class="code-block"><pre>
+<span class="comment"># --- INICIO DEL SCRIPT ---</span>
+<span class="variable">num1</span> = <span class="number">20</span>; <span class="variable">num2</span> = <span class="number">5</span>
+<span class="function">print</span>(<span class="highlight">f"--- Analizando los números: {num1} y {num2} ---\n"</span>)
+
+<span class="comment"># Tema 1: Operadores Aritméticos</span>
+<span class="function">print</span>(<span class="highlight">"** Operaciones Aritméticas **"</span>)
+<span class="function">print</span>(<span class="highlight">f"Suma: {num1 + num2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Resta: {num1 - num2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Multiplicación: {num1 * num2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"División: {num1 / num2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"División Entera: {num1 // num2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Módulo: {num1 % num2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Exponente (num2 ** 2): {num2 ** 2}\n"</span>)
+
+<span class="comment"># Tema 2: Operadores de Comparación</span>
+<span class="function">print</span>(<span class="highlight">"** Operaciones de Comparación **"</span>)
+<span class="function">print</span>(<span class="highlight">f"¿Son iguales? (==): {num1 == num2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"¿Son diferentes? (!=): {num1 != num2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"¿num1 > num2?: {num1 > num2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"¿num1 <= num2?: {num1 <= num2}\n"</span>)
+
+<span class="comment"># Tema 3: Operadores Lógicos</span>
+<span class="function">print</span>(<span class="highlight">"** Operaciones Lógicas **"</span>)
+<span class="variable">condicion1</span> = num1 > <span class="number">10</span>  <span class="comment"># True</span>
+<span class="variable">condicion2</span> = num2 < <span class="number">3</span>   <span class="comment"># False</span>
+<span class="function">print</span>(<span class="highlight">f"¿condicion1 Y condicion2? (and): {condicion1 and condicion2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"¿condicion1 O condicion2? (or): {condicion1 or condicion2}"</span>)
+<span class="function">print</span>(<span class="highlight">f"¿NO condicion2? (not): {not condicion2}\n"</span>)
+
+<span class="comment"># Tema 4: Operadores de Asignación</span>
+<span class="function">print</span>(<span class="highlight">"** Operaciones de Asignación **"</span>)
+<span class="variable">resultado</span> = <span class="number">100</span>
+<span class="variable">resultado</span> -= <span class="number">50</span>  <span class="comment"># resultado ahora es 50</span>
+<span class="variable">resultado</span> *= <span class="number">3</span>   <span class="comment"># resultado ahora es 150</span>
+<span class="function">print</span>(<span class="highlight">f"Resultado final de asignación compuesta: {resultado}"</span>)
+        </pre></div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección 3</h3>
+
+            <h4>Ejercicio 1: Sistema de Puntuación de Gimnasia</h4>
+            <p><strong>Objetivo:</strong> Crear un "mini-programa" que calcule la puntuación final de un gimnasta y determine si califica para una medalla, usando múltiples operadores.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Declara las puntuaciones de 3 jueces (ej: `juez1 = 9.5`, `juez2 = 9.8`, `juez3 = 9.2`).</li>
+                <li>Calcula la `puntuacion_total` sumando las tres puntuaciones.</li>
+                <li>Calcula la `puntuacion_promedio` dividiendo el total entre 3.</li>
+                <li>Declara una variable `puntuacion_minima_medalla` con valor `9.5`.</li>
+                <li>Crea una variable booleana `califica_para_medalla` que sea `True` si el promedio es mayor o igual a la puntuación mínima.</li>
+                <li>Imprime la puntuación de cada juez, la puntuación promedio final y un mensaje que diga "Califica para medalla: [True/False]".</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucion3-1')">Ver Solución</span>
+            <div id="solucion3-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="variable">juez1</span>, <span class="variable">juez2</span>, <span class="variable">juez3</span> = <span class="number">9.5</span>, <span class="number">9.8</span>, <span class="number">9.2</span>
+<span class="variable">puntuacion_total</span> = <span class="variable">juez1</span> + <span class="variable">juez2</span> + <span class="variable">juez3</span>
+<span class="variable">puntuacion_promedio</span> = <span class="variable">puntuacion_total</span> / <span class="number">3</span>
+<span class="variable">puntuacion_minima_medalla</span> = <span class="number">9.5</span>
+<span class="variable">califica_para_medalla</span> = <span class="variable">puntuacion_promedio</span> >= <span class="variable">puntuacion_minima_medalla</span>
+
+<span class="function">print</span>(<span class="highlight">"--- Evaluación de Gimnasia ---"</span>)
+<span class="function">print</span>(<span class="highlight">f"Puntuaciones: {juez1}, {juez2}, {juez3}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Promedio Final: {puntuacion_promedio}"</span>)
+<span class="function">print</span>(<span class="highlight">"-----------------------------"</span>)
+<span class="function">print</span>(<span class="highlight">f"¿Califica para medalla?: {califica_para_medalla}"</span>)
+                </pre></div>
+            </div>
+
+             <h4 style="margin-top: 30px;">Ejercicio 2: Simulador de Compra con Cupón</h4>
+            <p><strong>Objetivo:</strong> Usar operadores lógicos para aplicar un descuento solo si se cumplen varias condiciones.</p>
+            <p><strong>Instrucciones:</strong></p>
+             <ol>
+                <li>Declara las variables `total_compra` (float), `es_cliente_vip` (bool) y `tiene_cupon` (bool).</li>
+                <li>Un descuento del 15% se aplica si el `total_compra` es mayor a 100 **Y** (el cliente `es_cliente_vip` **O** `tiene_cupon`).</li>
+                <li>Crea una variable booleana `aplica_descuento` que contenga el resultado de esa lógica.</li>
+                <li>Usa un `if` para imprimir el precio final: si `aplica_descuento` es `True`, calcula y muestra el precio con descuento; si no, muestra el precio original.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucion3-2')">Ver Solución</span>
+            <div id="solucion3-2" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="variable">total_compra</span> = <span class="number">120.0</span>
+<span class="variable">es_cliente_vip</span> = <span class="boolean">False</span>
+<span class="variable">tiene_cupon</span> = <span class="boolean">True</span>
+
+<span class="variable">aplica_descuento</span> = <span class="variable">total_compra</span> > <span class="number">100</span> <span class="keyword">and</span> (<span class="variable">es_cliente_vip</span> <span class="keyword">or</span> <span class="variable">tiene_cupon</span>)
+
+<span class="function">print</span>(<span class="highlight">"--- Resumen de Compra ---"</span>)
+<span class="keyword">if</span> <span class="variable">aplica_descuento</span>:
+    <span class="variable">precio_final</span> = <span class="variable">total_compra</span> * <span class="number">0.85</span> <span class="comment"># 15% de descuento</span>
+    <span class="function">print</span>(<span class="highlight">"¡Descuento aplicado!"</span>)
+    <span class="function">print</span>(<span class="highlight">f"Total a pagar: ${precio_final}"</span>)
+<span class="keyword">else</span>:
+    <span class="function">print</span>(<span class="highlight">"No se aplicó ningún descuento."</span>)
+    <span class="function">print</span>(<span class="highlight">f"Total a pagar: ${total_compra}"</span>)
+                </pre></div>
+            </div>
+        </div>

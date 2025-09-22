@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Perfil de {{ perfil_usuario.username }}{% endblock %}
+
+{% block content %}
+<div class="container profile-container">
+    <div class="profile-header">
+        <div class="profile-info">
+            <h1>{{ perfil_usuario.username }}</h1>
+            <p>Miembro desde: {{ perfil_usuario.date_joined|date:"F Y" }}</p>
+        </div>
+        <div class="profile-level">
+            <div class="level-badge">Nivel {{ nivel }}</div>
+            <div class="xp-bar-container">
+                <div class="xp-bar" style="width: {{ progreso_nivel }}%;"></div>
+            </div>
+            <small>{{ perfil_usuario.perfil.total_xp }} / {{ xp_para_siguiente_nivel }} XP</small>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="profile-contributions">
+        <h2>Contribuciones a la Comunidad</h2>
+        <div class="contributions-grid">
+            <div class="contribution-column posts">
+                <h3><i class="fas fa-comments"></i> Posts Creados ({{ posts.count }})</h3>
+                <ul class="contribution-list">
+                    {% for post in posts %}
+                        <li><a href="{% url 'cursos:detalle_post' post.id %}">{{ post.titulo }}</a></li>
+                    {% empty %}
+                        <li>Aún no ha creado ninguna publicación.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="contribution-column tools">
+                <h3><i class="fas fa-tools"></i> Herramientas Compartidas ({{ herramientas.count }})</h3>
+                <ul class="contribution-list">
+                    {% for herramienta in herramientas %}
+                        <li><a href="{% url 'cursos:lista_herramientas' %}">{{ herramienta.nombre }}</a></li>
+                    {% empty %}
+                        <li>Aún no ha compartido ninguna herramienta.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="contribution-column games">
+                <h3><i class="fas fa-gamepad"></i> Juegos Compartidos ({{ juegos.count }})</h3>
+                <ul class="contribution-list">
+                    {% for juego in juegos %}
+                        <li><a href="{% url 'cursos:lista_juegos' %}">{{ juego.nombre }}</a></li>
+                    {% empty %}
+                        <li>Aún no ha compartido ningún juego.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

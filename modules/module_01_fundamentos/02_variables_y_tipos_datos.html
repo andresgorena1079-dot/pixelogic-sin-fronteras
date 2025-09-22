@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1, Lección 2: Variables y Tipos de Datos - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 2: Variables y Tipos de Datos</h1>
+        <p class="lesson-intro">
+            Los programas necesitan "recordar" información. En esta lección, aprenderás sobre las **variables**, que son como cajas con etiquetas para guardar datos, y los **tipos de datos** fundamentales, que definen qué clase de información podemos almacenar.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Variables y Tipos de Datos Fundamentales</h2>
+        <p>Una **variable** es un nombre que le asignamos a un valor. En Python, los tipos de datos básicos que usaremos al principio son los números (`int` para enteros, `float` para decimales), el texto (`str`) y los valores lógicos (`bool`).</p>
+        
+        <div class="concept-card">
+            <h3>Declaración y Uso de Variables</h3>
+            <p>Se usa el operador de asignación (`=`) para darle un valor a una variable. Python detecta automáticamente el tipo de dato.</p>
+            <div class="code-block"><pre>
+<span class="comment"># Declaración de variables de diferentes tipos</span>
+<span class="variable">nombre</span> = <span class="highlight">"Arion"</span>      <span class="comment"># str (string)</span>
+<span class="variable">puntos</span> = <span class="number">150</span>        <span class="comment"># int (integer)</span>
+<span class="variable">velocidad</span> = <span class="number">7.5</span>      <span class="comment"># float</span>
+<span class="variable">es_heroe</span> = <span class="boolean">True</span>     <span class="comment"># bool (boolean)</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Conversión de Tipos (Casting)</h3>
+            <p>A veces, necesitas convertir un dato de un tipo a otro. Para esto, se usan las funciones `int()`, `float()`, `str()` y `bool()`.</p>
+            <div class="code-block"><pre>
+<span class="variable">puntos_str</span> = <span class="highlight">"100"</span>
+<span class="variable">puntos_int</span> = <span class="function">int</span>(<span class="variable">puntos_str</span>) <span class="comment"># Convierte el string "100" a un número entero 100</span>
+<span class="function">print</span>(<span class="variable">puntos_int</span> + <span class="number">50</span>)   <span class="comment"># Salida: 150</span>
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección</h3>
+
+            <h4>Ejercicio 1: Ficha de Personaje (Conceptual)</h4>
+            <p><strong>Objetivo:</strong> Practicar la declaración de variables de diferentes tipos para describir a un personaje de videojuego.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Declara cuatro variables: `nombre_personaje` (str), `puntos_de_vida` (int), `velocidad_movimiento` (float) y `es_heroe` (bool), con valores inventados por ti.</li>
+                <li>Usa la función <code>print()</code> y f-strings para mostrar una ficha del personaje en la consola.</li>
+                <li>Ejecuta tu código en la zona de práctica para ver el resultado.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucion2-1')">Ver Solución</span>
+            <div id="solucion2-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="variable">nombre_personaje</span> = <span class="highlight">"Arion"</span>
+<span class="variable">puntos_de_vida</span> = <span class="number">150</span>
+<span class="variable">velocidad_movimiento</span> = <span class="number">7.5</span>
+<span class="variable">es_heroe</span> = <span class="boolean">True</span>
+
+<span class="function">print</span>(<span class="highlight">"--- Ficha de Personaje ---"</span>)
+<span class="function">print</span>(<span class="highlight">f"Nombre: {nombre_personaje}"</span>)
+<span class="function">print</span>(<span class="highlight">f"HP: {puntos_de_vida}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Velocidad: {velocidad_movimiento}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Es un héroe: {es_heroe}"</span>)
+                </pre></div>
+            </div>
+            
+            <h4 style="margin-top: 30px;">Ejercicio 2: Calculadora de Área (Validable)</h4>
+            <p><strong>Objetivo:</strong> Usar lo que aprendiste sobre variables y la función `print()` para mostrar el resultado de un cálculo.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea dos variables, <code>base</code> con valor <code>10</code> y <code>altura</code> con valor <code>5</code>.</li>
+                <li>Crea una tercera variable, <code>area</code>, y asígnale el resultado de multiplicar <code>base</code> por <code>altura</code>.</li>
+                <li>Usa la función <code>print()</code> para mostrar **solamente el valor** de la variable <code>area</code> en la consola.</li>
+                <li>Usa el botón **"Validar Solución"** para comprobar si tu código es correcto.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucion2-2')">Ver Solución</span>
+            <div id="solucion2-2" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="variable">base</span> = <span class="number">10</span>
+<span class="variable">altura</span> = <span class="number">5</span>
+<span class="variable">area</span> = <span class="variable">base</span> * <span class="variable">altura</span>
+<span class="function">print</span>(<span class="variable">area</span>)
+                </pre></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 4, Lección 2: Manipulación de Archivos - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 2: Manipulación de Archivos</h1>
+        <p class="lesson-intro">
+            Hasta ahora, los datos de nuestros programas han sido efímeros: existen solo mientras el programa se ejecuta. El **manejo de archivos** nos permite darles persistencia, guardando información en el disco duro para que pueda ser leída y utilizada en futuras ejecuciones.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Lectura y Escritura de Archivos de Texto</h2>
+        <p>La operación más fundamental es trabajar con archivos de texto simple (`.txt`). Python hace que este proceso sea muy sencillo y seguro a través del bloque <code>with open()</code>.</p>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Bloque <code>with open()</code></h3>
+            <p><strong>Descripción:</strong> Es la forma recomendada para abrir un archivo. Define un contexto que asegura que el archivo se cierre automáticamente al finalizar el bloque, incluso si ocurren errores. Esto previene la corrupción de datos y libera recursos del sistema.</p>
+            <p><strong>Sintaxis:</strong> <code>with open('nombre_archivo.txt', 'modo') as f:</code></p>
+            <p><strong>Parámetros:</strong>
+                <ul>
+                    <li><code>nombre_archivo.txt</code>: La ruta al archivo que quieres abrir.</li>
+                    <li><code>modo</code>: Un string que indica qué quieres hacer con el archivo.</li>
+                    <li><code>f</code>: La variable que usaremos para referirnos al objeto del archivo abierto.</li>
+                </ul>
+            </p>
+            <p><strong>Modos de Apertura Principales:</strong></p>
+            <ul>
+                <li><strong><code>'r'</code> (Read):</strong> Leer. Es el modo por defecto. Da error si el archivo no existe.</li>
+                <li><strong><code>'w'</code> (Write):</strong> Escribir. **Sobrescribe todo el contenido** si el archivo existe. Si no existe, lo crea.</li>
+                <li><strong><code>'a'</code> (Append):</strong> Añadir. Agrega contenido nuevo al final del archivo. Si no existe, lo crea.</li>
+            </ul>
+        </div>
+
+        <div class="concept-card">
+            <h3>Ejemplos de Lectura y Escritura</h3>
+            <p><strong>Escribir en un archivo (modo 'w'):</strong></p>
+            <div class="code-block"><pre>
+<span class="comment"># Código de Entrada</span>
+<span class="keyword">with</span> <span class="function">open</span>(<span class="highlight">'lista_compras.txt'</span>, <span class="highlight">'w'</span>) <span class="keyword">as</span> <span class="variable">f</span>:
+    <span class="variable">f</span>.<span class="function">write</span>(<span class="highlight">"Manzanas\n"</span>) <span class="comment"># \n es un salto de línea</span>
+    <span class="variable">f</span>.<span class="function">write</span>(<span class="highlight">"Pan\n"</span>)
+    <span class="variable">f</span>.<span class="function">write</span>(<span class="highlight">"Leche\n"</span>)
+<span class="function">print</span>(<span class="highlight">"Archivo 'lista_compras.txt' creado/actualizado."</span>)
+            </pre></div>
+
+            <p><strong>Leer un archivo completo (modo 'r'):</strong></p>
+            <div class="code-block"><pre>
+<span class="keyword">with</span> <span class="function">open</span>(<span class="highlight">'lista_compras.txt'</span>, <span class="highlight">'r'</span>) <span class="keyword">as</span> <span class="variable">f</span>:
+    <span class="variable">contenido</span> = <span class="variable">f</span>.<span class="function">read</span>()
+    <span class="function">print</span>(<span class="highlight">"--- Contenido del Archivo ---"</span>)
+    <span class="function">print</span>(<span class="variable">contenido</span>)
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 2: Archivos Estructurados (JSON y CSV)</h2>
+        <p>A menudo, no guardamos texto simple, sino datos estructurados. Python tiene módulos en su librería estándar para trabajar fácilmente con los formatos más comunes.</p>
+
+        <div class="concept-card">
+            <h3>Módulo <code>json</code></h3>
+            <p><strong>JSON (JavaScript Object Notation)</strong> es un formato de texto ligero ideal para intercambiar datos. Es muy similar a los diccionarios de Python.</p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">json</span>
+
+<span class="variable">datos_usuario</span> = {<span class="highlight">"nombre"</span>: <span class="highlight">"Carlos"</span>, <span class="highlight">"edad"</span>: <span class="number">30</span>, <span class="highlight">"suscrito"</span>: <span class="boolean">True</span>}
+
+<span class="comment"># Escribir un diccionario a un archivo JSON</span>
+<span class="keyword">with</span> <span class="function">open</span>(<span class="highlight">'usuario.json'</span>, <span class="highlight">'w'</span>) <span class="keyword">as</span> <span class="variable">f</span>:
+    <span class="variable">json</span>.<span class="function">dump</span>(<span class="variable">datos_usuario</span>, <span class="variable">f</span>, <span class="variable">indent</span>=<span class="number">4</span>)
+
+<span class="comment"># Leer un archivo JSON y convertirlo de nuevo a un diccionario</span>
+<span class="keyword">with</span> <span class="function">open</span>(<span class="highlight">'usuario.json'</span>, <span class="highlight">'r'</span>) <span class="keyword">as</span> <span class="variable">f</span>:
+    <span class="variable">datos_leidos</span> = <span class="variable">json</span>.<span class="function">load</span>(<span class="variable">f</span>)
+    <span class="function">print</span>(<span class="highlight">f"Datos leídos del JSON: {datos_leidos}"</span>)
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección 2 (Módulo 4)</h3>
+
+            <h4>Ejercicio 1: Gestor de Tareas Persistente</h4>
+            <p><strong>Objetivo:</strong> Crear un programa que guarde una lista de tareas en un archivo de texto y pueda leerlas al iniciar.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `02_gestor_tareas.py`.</li>
+                <li>Define una lista de `tareas` con algunas tareas iniciales.</li>
+                <li>Usa el modo `'w'` para escribir cada tarea de la lista en un archivo `tareas.txt`. Cada tarea debe estar en una nueva línea.</li>
+                <li>Luego, crea una nueva lista vacía `tareas_leidas`.</li>
+                <li>Abre `tareas.txt` en modo `'r'` y usa un bucle `for` para leer el archivo línea por línea. En cada iteración, añade la línea (sin el salto de línea, usa `.strip()`) a la lista `tareas_leidas`.</li>
+                <li>Imprime la lista `tareas_leidas` para verificar que el proceso fue exitoso.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM4L2-1')">Ver Solución</span>
+            <div id="solucionM4L2-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="comment"># Escribir el archivo</span>
+<span class="variable">tareas</span> = [<span class="highlight">"Comprar leche"</span>, <span class="highlight">"Pasear al perro"</span>, <span class="highlight">"Estudiar POO"</span>]
+<span class="keyword">with</span> <span class="function">open</span>(<span class="highlight">'tareas.txt'</span>, <span class="highlight">'w'</span>) <span class="keyword">as</span> <span class="variable">f</span>:
+    <span class="keyword">for</span> <span class="variable">tarea</span> <span class="keyword">in</span> <span class="variable">tareas</span>:
+        <span class="variable">f</span>.<span class="function">write</span>(<span class="variable">tarea</span> + <span class="highlight">'\n'</span>)
+<span class="function">print</span>(<span class="highlight">"Tareas guardadas en tareas.txt"</span>)
+
+<span class="comment"># Leer el archivo</span>
+<span class="variable">tareas_leidas</span> = []
+<span class="keyword">with</span> <span class="function">open</span>(<span class="highlight">'tareas.txt'</span>, <span class="highlight">'r'</span>) <span class="keyword">as</span> <span class="variable">f</span>:
+    <span class="keyword">for</span> <span class="variable">linea</span> <span class="keyword">in</span> <span class="variable">f</span>:
+        <span class="variable">tareas_leidas</span>.<span class="function">append</span>(<span class="variable">linea</span>.<span class="function">strip</span>())
+<span class="function">print</span>(<span class="highlight">f"Tareas leídas del archivo: {tareas_leidas}"</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="01_manejo_de_excepciones.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="../module_05_temas_avanzados/01_comprension_y_lambdas.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

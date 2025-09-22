@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 3, Lección 2: Herencia - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 2: Herencia</h1>
+        <p class="lesson-intro">
+            La **herencia** es un pilar fundamental de la POO que nos permite crear nuevas clases a partir de otras existentes. Es un mecanismo para **reutilizar código** y crear una jerarquía lógica entre clases, basándose en la relación "es un tipo de". Por ejemplo, un `Perro` es un tipo de `Animal`.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Conceptos Fundamentales de la Herencia</h2>
+        <p>La herencia permite que una clase hija (subclase) adquiera los atributos y métodos de una clase padre (superclase). La clase hija puede, a su vez, añadir nueva funcionalidad o modificar la heredada.</p>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica / Las 5 Cuestionantes de la Herencia</h3>
+            
+            <h4>¿Para qué sirve? (El Propósito)</h4>
+            <p>Su función principal es permitir la **reutilización de código**. En lugar de reescribir la misma lógica en múltiples clases, se define una vez en una clase padre. Esto organiza el código en jerarquías lógicas, haciéndolo más modular y fácil de mantener.</p>
+
+            <h4>¿Cómo funciona? (La Sintaxis)</h4>
+            <p>Se define una nueva clase y se especifica el nombre de la clase padre entre paréntesis. Para asegurar que la clase hija inicialice correctamente los atributos del padre, se utiliza la función <strong><code>super()</code></strong>.</p>
+            <div class="code-block"><pre>
+<span class="comment"># Clase Padre</span>
+<span class="keyword">class</span> <span class="variable">Animal</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="variable">self</span>, <span class="variable">nombre</span>):
+        <span class="variable">self</span>.<span class="variable">nombre</span> = <span class="variable">nombre</span>
+    
+    <span class="keyword">def</span> <span class="function">hacer_sonido</span>(<span class="variable">self</span>):
+        <span class="keyword">return</span> <span class="highlight">"Este animal no hace un sonido específico."</span>
+
+<span class="comment"># Clase Hija que hereda de Animal</span>
+<span class="keyword">class</span> <span class="variable">Perro</span>(<span class="variable">Animal</span>):
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="variable">self</span>, <span class="variable">nombre</span>, <span class="variable">raza</span>):
+        <span class="function">super</span>().__<span class="function">init__</span>(<span class="variable">nombre</span>) <span class="comment"># Llama al constructor del padre</span>
+        <span class="variable">self</span>.<span class="variable">raza</span> = <span class="variable">raza</span>
+    
+    <span class="comment"># Sobrescribimos el método del padre</span>
+    <span class="keyword">def</span> <span class="function">hacer_sonido</span>(<span class="variable">self</span>):
+        <span class="keyword">return</span> <span class="highlight">"¡Guau!"</span>
+
+<span class="variable">mi_perro</span> = <span class="variable">Perro</span>(<span class="highlight">"Fido"</span>, <span class="highlight">"Labrador"</span>)
+<span class="function">print</span>(<span class="highlight">f"{mi_perro.nombre} es un {mi_perro.raza} y dice: {mi_perro.hacer_sonido()}"</span>)
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <h2>Tema 2: Tipos de Herencia en Python</h2>
+        <p>Python soporta varios tipos de herencia, lo que le da una gran flexibilidad para modelar diferentes tipos de relaciones.</p>
+
+        <div class="concept-card">
+            <h3>1. Herencia Única (Simple)</h3>
+            <p>Una clase hija hereda de una única clase padre. Es el tipo de herencia más común y el que vimos en el ejemplo anterior.</p>
+        </div>
+
+        <div class="concept-card">
+            <h3>2. Herencia Múltiple</h3>
+            <p>Una clase hija puede heredar de varias clases padre, combinando sus funcionalidades.</p>
+            <div class="code-block"><pre>
+<span class="keyword">class</span> <span class="variable">Vuela</span>:
+    <span class="keyword">def</span> <span class="function">volar</span>(<span class="variable">self</span>): <span class="keyword">return</span> <span class="highlight">"Estoy volando."</span>
+
+<span class="keyword">class</span> <span class="variable">Nada</span>:
+    <span class="keyword">def</span> <span class="function">nadar</span>(<span class="variable">self</span>): <span class="keyword">return</span> <span class="highlight">"Estoy nadando."</span>
+
+<span class="keyword">class</span> <span class="variable">Pato</span>(<span class="variable">Vuela</span>, <span class="variable">Nada</span>): <span class="comment"># Hereda de dos clases</span>
+    <span class="keyword">pass</span>
+
+<span class="variable">pato</span> = <span class="variable">Pato</span>()
+<span class="function">print</span>(<span class="highlight">f"El pato dice: {pato.volar()} y {pato.nadar()}"</span>)
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>3. Herencia Multinivel</h3>
+            <p>Se crea una cadena de herencia, donde una clase hereda de una clase hija. Se parece a la relación abuelo-padre-hijo.</p>
+            <div class="code-block"><pre>
+<span class="keyword">class</span> <span class="variable">Abuelo</span>:
+    <span class="keyword">def</span> <span class="function">habilidad_abuelo</span>(<span class="variable">self</span>): <span class="keyword">return</span> <span class="highlight">"Tengo mucha experiencia."</span>
+
+<span class="keyword">class</span> <span class="variable">Padre</span>(<span class="variable">Abuelo</span>):
+    <span class="keyword">def</span> <span class="function">habilidad_padre</span>(<span class="variable">self</span>): <span class="keyword">return</span> <span class="highlight">"Tengo fuerza."</span>
+    
+<span class="keyword">class</span> <span class="variable">Hijo</span>(<span class="variable">Padre</span>):
+    <span class="keyword">pass</span>
+
+<span class="variable">nieto</span> = <span class="variable">Hijo</span>()
+<span class="function">print</span>(nieto.<span class="function">habilidad_abuelo</span>()) <span class="comment"># Hereda del Abuelo</span>
+<span class="function">print</span>(nieto.<span class="function">habilidad_padre</span>()) <span class="comment"># Hereda del Padre</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>4. Herencia Jerárquica</h3>
+            <p>Múltiples clases hijas heredan de una única clase padre.</p>
+            <div class="code-block"><pre>
+<span class="keyword">class</span> <span class="variable">Figura</span>: <span class="comment"># Padre único</span>
+    <span class="keyword">pass</span>
+
+<span class="keyword">class</span> <span class="variable">Circulo</span>(<span class="variable">Figura</span>): <span class="comment"># Hija 1</span>
+    <span class="keyword">pass</span>
+
+<span class="keyword">class</span> <span class="variable">Cuadrado</span>(<span class="variable">Figura</span>): <span class="comment"># Hija 2</span>
+    <span class="keyword">pass</span>
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicio: Creando una Jerarquía de Vehículos</h3>
+            <p><strong>Objetivo:</strong> Aplicar los diferentes tipos de herencia para modelar una jerarquía de vehículos, demostrando la reutilización de código y la especialización de clases.</p>
+            <p><strong>Instrucciones Progresivas:</strong></p>
+            <ol>
+                <li><strong>Herencia Simple:</strong>
+                    <ul>
+                        <li>Crea una clase base `Vehiculo` con un método `__init__` que acepte `marca` y un método `moverse()` que imprima "El vehículo se está moviendo.".</li>
+                        <li>Crea una clase `Coche` que herede de `Vehiculo`.</li>
+                    </ul>
+                </li>
+                <li><strong>Herencia Multinivel:</strong>
+                    <ul>
+                        <li>Crea una clase `CocheDeportivo` que herede de `Coche`.</li>
+                        <li>Añádele un método `acelerar_rapido()` que imprima "¡Acelerando a máxima velocidad!".</li>
+                    </ul>
+                </li>
+                <li><strong>Herencia Jerárquica:</strong>
+                    <ul>
+                        <li>Crea otra clase `Camion` que también herede de `Vehiculo`.</li>
+                        <li>Añádele un método `cargar_mercancia()` que imprima "Cargando mercancía pesada.".</li>
+                    </ul>
+                </li>
+                 <li><strong>Herencia Múltiple:</strong>
+                    <ul>
+                        <li>Crea una clase `Radio` con un método `reproducir_musica()`.</li>
+                        <li>Crea una clase final `CocheConMusica` que herede de `Coche` y de `Radio`.</li>
+                    </ul>
+                </li>
+                <li>Crea una instancia de `CocheConMusica` y prueba que puede usar métodos de `Vehiculo` (`moverse`), `Coche` (ninguno propio en este caso), y `Radio` (`reproducir_musica`).</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM3L2-1')">Ver Solución</span>
+            <div id="solucionM3L2-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">class</span> <span class="variable">Vehiculo</span>: <span class="comment"># Clase Base</span>
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="variable">self</span>, <span class="variable">marca</span>):
+        <span class="variable">self</span>.<span class="variable">marca</span> = <span class="variable">marca</span>
+    <span class="keyword">def</span> <span class="function">moverse</span>(<span class="variable">self</span>):
+        <span class="function">print</span>(<span class="highlight">"El vehículo se está moviendo."</span>)
+
+<span class="comment"># Herencia Simple</span>
+<span class="keyword">class</span> <span class="variable">Coche</span>(<span class="variable">Vehiculo</span>):
+    <span class="keyword">pass</span>
+
+<span class="comment"># Herencia Multinivel</span>
+<span class="keyword">class</span> <span class="variable">CocheDeportivo</span>(<span class="variable">Coche</span>):
+    <span class="keyword">def</span> <span class="function">acelerar_rapido</span>(<span class="variable">self</span>):
+        <span class="function">print</span>(<span class="highlight">"¡Acelerando a máxima velocidad!"</span>)
+
+<span class="comment"># Herencia Jerárquica (Camion también hereda de Vehiculo)</span>
+<span class="keyword">class</span> <span class="variable">Camion</span>(<span class="variable">Vehiculo</span>):
+    <span class="keyword">def</span> <span class="function">cargar_mercancia</span>(<span class="variable">self</span>):
+        <span class="function">print</span>(<span class="highlight">"Cargando mercancía pesada."</span>)
+        
+<span class="keyword">class</span> <span class="variable">Radio</span>: <span class="comment"># Otra clase base para herencia múltiple</span>
+    <span class="keyword">def</span> <span class="function">reproducir_musica</span>(<span class="variable">self</span>):
+        <span class="function">print</span>(<span class="highlight">"Reproduciendo música..."</span>)
+
+<span class="comment"># Herencia Múltiple</span>
+<span class="keyword">class</span> <span class="variable">CocheConMusica</span>(<span class="variable">Coche</span>, <span class="variable">Radio</span>):
+    <span class="keyword">pass</span>
+
+<span class="comment"># Prueba final</span>
+<span class="variable">mi_auto_completo</span> = <span class="variable">CocheConMusica</span>(<span class="highlight">"Audi"</span>)
+<span class="variable">mi_auto_completo</span>.<span class="function">moverse</span>() <span class="comment"># Heredado de Vehiculo</span>
+<span class="variable">mi_auto_completo</span>.<span class="function">reproducir_musica</span>() <span class="comment"># Heredado de Radio</span>
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="01_clases_y_objetos.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="03_polimorfismo.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

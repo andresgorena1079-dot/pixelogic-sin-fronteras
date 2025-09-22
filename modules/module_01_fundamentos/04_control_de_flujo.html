@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1, Lección 4: Control de Flujo - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 4: Control de Flujo</h1>
+        <p class="lesson-intro">
+            El **control de flujo** es lo que le da "inteligencia" a nuestro código, permitiéndole tomar decisiones con **condicionales** y repetir tareas con **bucles**. Es aquí donde tus programas empiezan a reaccionar y a adaptarse a diferentes situaciones.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Sentencias Condicionales (`if`, `elif`, `else`)</h2>
+        <p>Las estructuras `if`, `elif` y `else` controlan el flujo de un programa, permitiendo ejecutar bloques de código diferentes según se cumplan o no ciertas condiciones. `if` evalúa una condición principal, `elif` comprueba condiciones adicionales solo si el `if` anterior fue falso, y `else` ejecuta su bloque si ninguna de las condiciones anteriores se cumplió.</p>
+        
+        <div class="concept-card">
+            <h3>Detalle de cada sentencia:</h3>
+            <ul>
+                <li>
+                    <strong><code>if</code> (Si):</strong> Es la primera y principal sentencia. Evalúa una condición, y si esta es `True`, ejecuta el bloque de código que le sigue.
+                    <div class="code-block inline-example"><pre>
+<span class="variable">edad</span> = <span class="number">18</span>
+<span class="keyword">if</span> <span class="variable">edad</span> >= <span class="number">18</span>:
+    <span class="function">print</span>(<span class="highlight">"Eres mayor de edad."</span>) <span class="comment"># Se ejecuta</span></pre></div>
+                </li>
+                <li>
+                    <strong><code>elif</code> (Si no, si):</strong> Se usa para verificar condiciones adicionales. Solo se evalúa si la condición del `if` (o `elif`) anterior fue `False`. Puedes tener múltiples `elif`.
+                    <div class="code-block inline-example"><pre>
+<span class="variable">nota</span> = <span class="number">75</span>
+<span class="keyword">if</span> <span class="variable">nota</span> >= <span class="number">90</span>:
+    <span class="function">print</span>(<span class="highlight">"Sobresaliente"</span>)
+<span class="keyword">elif</span> <span class="variable">nota</span> >= <span class="number">70</span>:
+    <span class="function">print</span>(<span class="highlight">"Notable"</span>) <span class="comment"># Se ejecuta este bloque</span></pre></div>
+                </li>
+                <li>
+                    <strong><code>else</code> (Si no):</strong> Es la sentencia final y opcional. Su bloque de código se ejecuta únicamente si ninguna de las condiciones anteriores (`if` o `elif`) fue verdadera.
+                     <div class="code-block inline-example"><pre>
+<span class="variable">temperatura</span> = <span class="number">15</span>
+<span class="keyword">if</span> <span class="variable">temperatura</span> > <span class="number">25</span>:
+    <span class="function">print</span>(<span class="highlight">"Hace calor"</span>)
+<span class="keyword">else</span>:
+    <span class="function">print</span>(<span class="highlight">"No hace calor"</span>) <span class="comment"># Se ejecuta</span></pre></div>
+                </li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <h2>Tema 2: Bucles (`for` y `while`)</h2>
+        <p>Los bucles son herramientas para ejecutar un bloque de código múltiples veces. La diferencia clave es cómo controlan la repetición: el `for` está diseñado para un número conocido de iteraciones, mientras que el `while` se basa en una condición que puede ser indeterminada.</p>
+
+        <div class="concept-card">
+            <h3>Bucle `for`</h3>
+            <p>Se utiliza para iterar sobre una secuencia de elementos (como una lista o un rango de números). Es ideal cuando se sabe cuántas veces se necesita repetir una acción.</p>
+            <div class="code-block"><pre>
+<span class="comment"># Código de Entrada: Iterar sobre una lista</span>
+<span class="variable">frutas</span> = [<span class="highlight">"manzana"</span>, <span class="highlight">"banana"</span>, <span class="highlight">"cereza"</span>]
+<span class="keyword">for</span> <span class="variable">fruta</span> <span class="keyword">in</span> <span class="variable">frutas</span>:
+    <span class="function">print</span>(<span class="highlight">f"Me gusta la {fruta}"</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">Me gusta la manzana</span>
+<span class="highlight">Me gusta la banana</span>
+<span class="highlight">Me gusta la cereza</span>
+            </pre></div>
+        </div>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Función <code>range()</code></h3>
+            <p><strong>Categoría:</strong> Función Incorporada (Built-in)</p>
+            <p><strong>Descripción:</strong> Genera una secuencia inmutable de números. Es la compañera más común del bucle `for` para repetir una acción un número específico de veces.</p>
+            <p><strong>Sintaxis:</strong> <code>range(inicio, fin, paso)</code></p>
+            <p><strong>Ejemplo Práctico:</strong></p>
+            <div class="code-block"><pre>
+<span class="comment"># Imprimir números pares del 2 al 10</span>
+<span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="number">2</span>, <span class="number">11</span>, <span class="number">2</span>):
+    <span class="function">print</span>(i)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">2</span>
+<span class="highlight">4</span>
+<span class="highlight">6</span>
+<span class="highlight">8</span>
+<span class="highlight">10</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>Bucle `while`</h3>
+            <p>Ejecuta repetidamente un bloque de código siempre que una condición booleana especificada sea `True`. Es útil cuando no se sabe de antemano cuántas iteraciones serán necesarias.</p>
+             <div class="code-block"><pre>
+<span class="comment"># Código de Entrada: Simulación de una cuenta atrás</span>
+<span class="variable">contador</span> = <span class="number">3</span>
+<span class="keyword">while</span> <span class="variable">contador</span> > <span class="number">0</span>:
+    <span class="function">print</span>(<span class="highlight">f"{contador}..."</span>)
+    <span class="variable">contador</span> -= <span class="number">1</span> <span class="comment"># Actualizar la condición</span>
+<span class="function">print</span>(<span class="highlight">"¡Despegue!"</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">3...</span>
+<span class="highlight">2...</span>
+<span class="highlight">1...</span>
+<span class="highlight">¡Despegue!</span>
+            </pre></div>
+            <p>⚠️ **Error Común:** Olvidar actualizar la variable de la condición dentro del bucle, lo que provoca un **bucle infinito**.</p>
+        </div>
+
+        <hr>
+
+        <h2>Tema 3: Control Avanzado de Bucles (`break` y `continue`)</h2>
+        <p>Estas sentencias te dan un control más fino sobre el comportamiento de tus bucles, permitiéndote alterar su flujo normal.</p>
+
+        <div class="concept-card">
+            <h3>Sentencia `break`</h3>
+            <p><strong>Función:</strong> Termina el bucle de forma inmediata y por completo.</p>
+            <div class="code-block"><pre>
+<span class="comment"># Buscar el primer número divisible por 7</span>
+<span class="keyword">for</span> <span class="variable">numero</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="number">20</span>):
+    <span class="keyword">if</span> <span class="variable">numero</span> % <span class="number">7</span> == <span class="number">0</span>:
+        <span class="function">print</span>(<span class="highlight">f"Encontrado: {numero}."</span>)
+        <span class="keyword">break</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>Sentencia `continue`</h3>
+            <p><strong>Función:</strong> Salta a la siguiente iteración del bucle, ignorando el resto del código en la iteración actual.</p>
+            <div class="code-block"><pre>
+<span class="comment"># Imprimir solo los números impares</span>
+<span class="keyword">for</span> <span class="variable">numero</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="number">6</span>):
+    <span class="keyword">if</span> <span class="variable">numero</span> % <span class="number">2</span> == <span class="number">0</span>:
+        <span class="keyword">continue</span>
+    <span class="function">print</span>(<span class="highlight">f"Impar: {numero}"</span>)
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <h2>Ejemplo Integrador: Mini-Juego "Adivina el Número"</h2>
+        <p>Este mini-programa funcional combina `while`, `for`, `if/elif/else` y `break` para crear un juego completo y interactivo.</p>
+        <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">random</span>
+<span class="variable">numero_secreto</span> = <span class="variable">random</span>.<span class="function">randint</span>(<span class="number">1</span>, <span class="number">20</span>)
+<span class="variable">intentos_maximos</span> = <span class="number">5</span>
+<span class="variable">adivinado</span> = <span class="boolean">False</span>
+
+<span class="function">print</span>(<span class="highlight">"--- ¡Adivina el Número (1-20)! ---"</span>)
+<span class="function">print</span>(<span class="highlight">f"Tienes {intentos_maximos} intentos."</span>)
+
+<span class="keyword">for</span> <span class="variable">intento_actual</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="variable">intentos_maximos</span> + <span class="number">1</span>):
+    <span class="function">print</span>(<span class="highlight">f"\n--- Intento #{intento_actual} ---"</span>)
+    <span class="keyword">while</span> <span class="boolean">True</span>:
+        <span class="variable">entrada_usuario</span> = <span class="function">input</span>(<span class="highlight">"Introduce tu número: "</span>)
+        <span class="keyword">if</span> <span class="variable">entrada_usuario</span>.<span class="function">isdigit</span>():
+            <span class="variable">numero_usuario</span> = <span class="function">int</span>(<span class="variable">entrada_usuario</span>)
+            <span class="keyword">break</span>
+        <span class="keyword">else</span>:
+            <span class="function">print</span>(<span class="highlight">"Entrada inválida."</span>)
+
+    <span class="keyword">if</span> <span class="variable">numero_usuario</span> == <span class="variable">numero_secreto</span>:
+        <span class="function">print</span>(<span class="highlight">f"¡Felicidades! ¡Has adivinado el número {numero_secreto}!"</span>)
+        <span class="variable">adivinado</span> = <span class="boolean">True</span>
+        <span class="keyword">break</span>
+    <span class="keyword">elif</span> <span class="variable">numero_usuario</span> < <span class="variable">numero_secreto</span>:
+        <span class="function">print</span>(<span class="highlight">"El número secreto es MÁS ALTO."</span>)
+    <span class="keyword">else</span>:
+        <span class="function">print</span>(<span class="highlight">"El número secreto es MÁS BAJO."</span>)
+
+<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">adivinado</span>:
+    <span class="function">print</span>(<span class="highlight">f"\nLo siento, te has quedado sin intentos. El número era {numero_secreto}."</span>)
+        </pre></div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección 4</h3>
+            <h4>Ejercicio 1: Procesador de Pedidos de Pizza</h4>
+            <p><strong>Objetivo:</strong> Usar bucles y condicionales para procesar una lista de pedidos y calcular el total.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Define una lista de `pedidos` y los precios de cada pizza.</li>
+                <li>Inicializa una variable `total_ventas` en `0.0`.</li>
+                <li>Usa un bucle `for` para recorrer la lista de `pedidos`.</li>
+                <li>Dentro del bucle, usa `if/elif/else` para comprobar qué pizza es y añadir el precio correspondiente a `total_ventas`.</li>
+                <li>Si el pedido no es uno de los conocidos, imprime un mensaje de "Pedido inválido".</li>
+                <li>Al final, imprime el `total_ventas` del día.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucion4-1')">Ver Solución</span>
+            <div id="solucion4-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="variable">pedidos</span> = [<span class="highlight">"margarita"</span>, <span class="highlight">"pepperoni"</span>, <span class="highlight">"desconocida"</span>, <span class="highlight">"vegetariana"</span>]
+<span class="variable">total_ventas</span> = <span class="number">0.0</span>
+<span class="keyword">for</span> <span class="variable">pizza</span> <span class="keyword">in</span> <span class="variable">pedidos</span>:
+    <span class="keyword">if</span> <span class="variable">pizza</span> == <span class="highlight">"margarita"</span>: <span class="variable">total_ventas</span> += <span class="number">8</span>
+    <span class="keyword">elif</span> <span class="variable">pizza</span> == <span class="highlight">"pepperoni"</span>: <span class="variable">total_ventas</span> += <span class="number">10</span>
+    <span class="keyword">elif</span> <span class="variable">pizza</span> == <span class="highlight">"vegetariana"</span>: <span class="variable">total_ventas</span> += <span class="number">9</span>
+    <span class="keyword">else</span>: <span class="function">print</span>(<span class="highlight">f"Pedido '{pizza}' inválido."</span>)
+<span class="function">print</span>(<span class="highlight">f"\nTotal de ventas: ${total_ventas}"</span>)
+                </pre></div>
+            </div>
+        </div>

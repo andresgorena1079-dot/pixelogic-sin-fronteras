@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1, Lección 5: Funciones y Módulos - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 5: Funciones y Módulos</h1>
+        <p class="lesson-intro">
+            A medida que tus programas crecen, la organización se vuelve crucial. En esta lección, aprenderás a crear **funciones** para empaquetar y reutilizar bloques de código, y a usar **módulos** para dividir tu proyecto en archivos lógicos y manejables.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Funciones - Creando Código Reutilizable</h2>
+        <p>Una **función** es un bloque de código con nombre que realiza una tarea específica. En lugar de escribir el mismo código varias veces, lo defines una vez en una función y luego la "llamas" cada vez que la necesites. Esto sigue el principio **DRY (Don't Repeat Yourself - No te Repitas)**.</p>
+        
+        <div class="concept-card">
+            <h3>Definición y Llamada de una Función</h3>
+            <ul>
+                <li>
+                    <strong>Definición (<code>def</code>):</strong> Se usa la palabra clave `def` para crear una función. Dentro de los paréntesis se definen los **parámetros** (variables que la función espera recibir).
+                </li>
+                <li>
+                    <strong>Retorno (<code>return</code>):</strong> La palabra clave `return` se usa para que la función devuelva un resultado. Una vez que se ejecuta, la función termina.
+                </li>
+                <li>
+                    <strong>Llamada:</strong> Para ejecutar la función, simplemente escribes su nombre con los **argumentos** (los valores reales para los parámetros) entre paréntesis.
+                </li>
+            </ul>
+            <div class="code-block"><pre>
+<span class="comment"># 1. Definición de la función</span>
+<span class="keyword">def</span> <span class="function">sumar</span>(<span class="variable">numero1</span>, <span class="variable">numero2</span>):
+    <span class="variable">resultado</span> = <span class="variable">numero1</span> + <span class="variable">numero2</span>
+    <span class="keyword">return</span> <span class="variable">resultado</span>
+
+<span class="comment"># 2. Llamada a la función</span>
+<span class="variable">suma_total</span> = <span class="function">sumar</span>(<span class="number">10</span>, <span class="number">5</span>) <span class="comment"># 10 y 5 son los argumentos</span>
+<span class="function">print</span>(<span class="highlight">f"El resultado es: {suma_total}"</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">El resultado es: 15</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>Argumentos por Defecto</h3>
+            <p>Puedes asignar un valor por defecto a un parámetro. Si no se proporciona un argumento para ese parámetro al llamar a la función, usará el valor por defecto, haciendo que ese argumento sea opcional.</p>
+            <div class="code-block"><pre>
+<span class="comment"># El parámetro 'saludo' tiene un valor por defecto</span>
+<span class="keyword">def</span> <span class="function">saludar_usuario</span>(<span class="variable">nombre</span>, <span class="variable">saludo</span>=<span class="highlight">"Hola"</span>):
+    <span class="function">print</span>(<span class="highlight">f"{saludo}, {nombre}!"</span>)
+
+<span class="function">saludar_usuario</span>(<span class="highlight">"Ana"</span>) <span class="comment"># Usa el saludo por defecto</span>
+<span class="function">saludar_usuario</span>(<span class="highlight">"Luis"</span>, <span class="highlight">"Bienvenido"</span>) <span class="comment"># Proporciona un saludo diferente</span>
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">Hola, Ana!</span>
+<span class="highlight">Bienvenido, Luis!</span>
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <h2>Tema 2: Módulos - Organizando tu Código</h2>
+        <p>Un **módulo** es simplemente un archivo de Python (`.py`) que contiene funciones, clases y variables. Sirven para organizar el código de forma lógica y para reutilizarlo en diferentes proyectos. Python viene con una enorme **Biblioteca Estándar** llena de módulos listos para usar.</p>
+        
+        <div class="concept-card">
+            <h3>Importando Módulos</h3>
+            <p>Se usa la palabra clave `import` para traer las funcionalidades de un módulo a tu script actual.</p>
+             <ul>
+                <li>
+                    <strong><code>import modulo</code>:</strong> Importa el módulo completo. Para usar sus funciones, debes escribir `modulo.funcion()`.
+                    <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">random</span> <span class="comment"># Importa el módulo para generar números aleatorios</span>
+<span class="variable">numero_aleatorio</span> = <span class="variable">random</span>.<span class="function">randint</span>(<span class="number">1</span>, <span class="number">10</span>)
+<span class="function">print</span>(<span class="highlight">f"Número aleatorio entre 1 y 10: {numero_aleatorio}"</span>)</pre></div>
+                </li>
+                <li>
+                    <strong><code>from modulo import funcion</code>:</strong> Importa solo un elemento específico del módulo. Puedes llamarlo directamente sin el prefijo del módulo.
+                    <div class="code-block"><pre>
+<span class="keyword">from</span> <span class="variable">math</span> <span class="keyword">import</span> <span class="variable">sqrt</span> <span class="comment"># Importa solo la función de raíz cuadrada</span>
+<span class="variable">raiz_cuadrada</span> = <span class="function">sqrt</span>(<span class="number">25</span>)
+<span class="function">print</span>(<span class="highlight">f"La raíz cuadrada de 25 es: {raiz_cuadrada}"</span>) <span class="comment"># Salida: 5.0</span></pre></div>
+                </li>
+            </ul>
+        </div>
+        
+        <hr>
+
+        <h2>Ejemplo Integrador: Calculadora de Descuentos Modulariada</h2>
+        <p>Este ejemplo práctico muestra cómo separar la lógica en un módulo y usarla desde un script principal.</p>
+        
+        <div class="concept-card">
+            <h4>Paso 1: Crear el Módulo (`calculos.py`)</h4>
+            <p>Este archivo contendrá nuestra función reutilizable.</p>
+            <div class="code-block"><pre>
+<span class="comment"># Archivo: calculos.py</span>
+<span class="keyword">def</span> <span class="function">calcular_precio_final</span>(<span class="variable">precio_original</span>, <span class="variable">porcentaje_descuento</span>):
+    <span class="variable">monto_descuento</span> = <span class="variable">precio_original</span> * (<span class="variable">porcentaje_descuento</span> / <span class="number">100</span>)
+    <span class="variable">precio_con_descuento</span> = <span class="variable">precio_original</span> - <span class="variable">monto_descuento</span>
+    <span class="keyword">return</span> <span class="variable">precio_con_descuento</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h4>Paso 2: Crear el Script Principal (`app.py`)</h4>
+            <p>Este archivo importará y usará la función del módulo `calculos`.</p>
+            <div class="code-block"><pre>
+<span class="comment"># Archivo: app.py</span>
+<span class="keyword">from</span> <span class="variable">calculos</span> <span class="keyword">import</span> <span class="function">calcular_precio_final</span> <span class="comment"># Importamos nuestra función</span>
+
+<span class="variable">precio_tv</span> = <span class="number">500</span>
+<span class="variable">descuento_oferta</span> = <span class="number">20</span> <span class="comment"># 20% de descuento</span>
+
+<span class="comment"># Usamos la función importada</span>
+<span class="variable">precio_final_tv</span> = <span class="function">calcular_precio_final</span>(<span class="variable">precio_tv</span>, <span class="variable">descuento_oferta</span>)
+
+<span class="function">print</span>(<span class="highlight">"--- Tienda de Electrónica ---"</span>)
+<span class="function">print</span>(<span class="highlight">f"Precio original de la TV: ${precio_tv}"</span>)
+<span class="function">print</span>(<span class="highlight">f"Precio final con {descuento_oferta}% de descuento: ${precio_final_tv}"</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">--- Tienda de Electrónica ---</span>
+<span class="highlight">Precio original de la TV: $500</span>
+<span class="highlight">Precio final con 20% de descuento: $400.0</span>
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección 5</h3>
+
+            <h4>Ejercicio 1: Módulo de Conversiones de Temperatura</h4>
+            <p><strong>Objetivo:</strong> Crear un módulo reutilizable con funciones de conversión y usarlo desde otro script.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un archivo llamado `conversor.py`. Dentro, define dos funciones: `celsius_a_fahrenheit(celsius)` y `fahrenheit_a_celsius(fahrenheit)`.
+                    <div class="note">Fórmulas: `F = C * 9/5 + 32` y `C = (F - 32) * 5/9`.</div>
+                </li>
+                <li>Crea un segundo archivo llamado `clima_app.py`.</li>
+                <li>En `clima_app.py`, importa las dos funciones desde tu módulo `conversor`.</li>
+                <li>Usa las funciones importadas para convertir 25 grados Celsius a Fahrenheit y 77 grados Fahrenheit a Celsius.</li>
+                <li>Imprime los resultados de forma clara.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucion5-1')">Ver Solución</span>
+            <div id="solucion5-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="comment"># Archivo: conversor.py</span>
+<span class="keyword">def</span> <span class="function">celsius_a_fahrenheit</span>(<span class="variable">celsius</span>):
+    <span class="keyword">return</span> <span class="variable">celsius</span> * <span class="number">9</span>/<span class="number">5</span> + <span class="number">32</span>
+<span class="keyword">def</span> <span class="function">fahrenheit_a_celsius</span>(<span class="variable">fahrenheit</span>):
+    <span class="keyword">return</span> (<span class="variable">fahrenheit</span> - <span class="number">32</span>) * <span class="number">5</span>/<span class="number">9</span>
+
+<span class="comment"># Archivo: clima_app.py</span>
+<span class="keyword">from</span> <span class="variable">conversor</span> <span class="keyword">import</span> <span class="function">celsius_a_fahrenheit</span>, <span class="function">fahrenheit_a_celsius</span>
+<span class="variable">temp_c</span> = <span class="number">25</span>
+<span class="variable">temp_f</span> = <span class="number">77</span>
+<span class="function">print</span>(<span class="highlight">f"{temp_c}°C son {celsius_a_fahrenheit(temp_c)}°F"</span>)
+<span class="function">print</span>(<span class="highlight">f"{temp_f}°F son {fahrenheit_a_celsius(temp_f)}°C"</span>)
+                </pre></div>
+            </div>
+        </div>

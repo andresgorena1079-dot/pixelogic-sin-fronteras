@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 6, Lección 1: Módulos Esenciales - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 1: Módulos Esenciales de la Librería Estándar</h1>
+        <p class="lesson-intro">
+            Python es famoso por su filosofía de "baterías incluidas". Esto significa que viene con una enorme **Librería Estándar**, una colección de módulos listos para usar que resuelven problemas comunes sin necesidad de instalar nada extra. En esta lección, exploraremos algunos de los más importantes.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Módulo <code>os</code> - Interactuando con el Sistema Operativo</h2>
+        <p>El módulo `os` te proporciona una forma de interactuar con el sistema operativo. Es tu herramienta para trabajar con archivos y directorios: crear carpetas, listar contenidos, comprobar si un archivo existe, etc.</p>
+        
+        <div class="concept-card">
+            <h3>Funciones Comunes del Módulo <code>os</code></h3>
+            <ul>
+                <li><strong><code>os.path.exists(ruta)</code>:</strong> Comprueba si un archivo o directorio existe.</li>
+                <li><strong><code>os.makedirs(ruta)</code>:</strong> Crea un directorio (y todos los intermedios).</li>
+                <li><strong><code>os.listdir(ruta)</code>:</strong> Devuelve una lista con los nombres de los archivos y carpetas en una ruta.</li>
+            </ul>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 2: Módulo <code>sys</code> - Interactuando con el Intérprete</h2>
+        <p>El módulo `sys` te da acceso a variables y funciones que están fuertemente relacionadas con el intérprete de Python, como los argumentos pasados a tu script desde la línea de comandos.</p>
+
+        <div class="concept-card">
+            <h3>Argumentos de la Línea de Comandos: <code>sys.argv</code></h3>
+            <p><code>sys.argv</code> es una lista que contiene los argumentos pasados a tu script al ejecutarlo desde la terminal. El primer elemento (`sys.argv[0]`) es siempre el nombre del propio script.</p>
+            <div class="code-block"><pre>
+<span class="comment"># Imagina un archivo llamado 'mi_script.py' con este código:</span>
+<span class="keyword">import</span> <span class="variable">sys</span>
+<span class="function">print</span>(<span class="highlight">f"Argumentos recibidos: {sys.argv}"</span>)
+
+<span class="comment"># Si lo ejecutas desde la terminal así:</span>
+<span class="comment">> python mi_script.py hola mundo 123</span>
+
+<span class="comment"># La Salida Esperada en la Consola sería:</span>
+<span class="highlight">Argumentos recibidos: ['mi_script.py', 'hola', 'mundo', '123']</span>
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <h2>Tema 3: Módulo <code>datetime</code> - Manejando Fechas y Horas</h2>
+        <p>El módulo `datetime` simplifica enormemente el trabajo con fechas y horas, permitiéndote obtener la fecha actual, formatearla y realizar cálculos.</p>
+
+        <div class="concept-card">
+            <h3>Obtener y Formatear la Fecha Actual</h3>
+            <p><code>datetime.datetime.now()</code> crea un objeto con la fecha y hora actuales. El método <code>.strftime("formato")</code> se usa para convertirlo a un string legible.</p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">datetime</span>
+<span class="variable">ahora</span> = <span class="variable">datetime</span>.<span class="variable">datetime</span>.<span class="function">now</span>()
+<span class="variable">fecha_formateada</span> = <span class="variable">ahora</span>.<span class="function">strftime</span>(<span class="highlight">"%Y-%m-%d %H:%M:%S"</span>)
+<span class="function">print</span>(<span class="highlight">f"Fecha y hora: {fecha_formateada}"</span>)
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <h2>Tema 4: Módulo <code>logging</code> - Registro de Eventos Profesional</h2>
+        <p>Usar `print()` para depurar está bien al principio, pero para aplicaciones serias, el módulo `logging` es la herramienta estándar. Te permite registrar mensajes con diferentes niveles de severidad (DEBUG, INFO, WARNING, ERROR) y dirigirlos a la consola o a un archivo.</p>
+        <div class="concept-card">
+            <h3>Configuración y Uso Básico de Logging</h3>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">logging</span>
+
+<span class="comment"># Configuración básica para que muestre mensajes de nivel INFO y superiores</span>
+<span class="variable">logging</span>.<span class="function">basicConfig</span>(<span class="variable">level</span>=<span class="variable">logging</span>.<span class="variable">INFO</span>, <span class="variable">format</span>=<span class="highlight">'%(asctime)s - %(levelname)s - %(message)s'</span>)
+
+<span class="variable">logging</span>.<span class="function">info</span>(<span class="highlight">"Este es un mensaje informativo."</span>)
+<span class="variable">logging</span>.<span class="function">warning</span>(<span class="highlight">"Cuidado, el disco está casi lleno."</span>)
+<span class="variable">logging</span>.<span class="function">error</span>(<span class="highlight">"No se pudo conectar a la base de datos."</span>)
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicio: Script de Backup Simple</h3>
+            <p><strong>Objetivo:</strong> Usar `sys`, `os`, `shutil` (un módulo para operaciones de alto nivel con archivos) y `logging` para crear un script de backup funcional que se ejecuta desde la terminal.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `01_backup.py`. Importa `sys`, `os`, `shutil` y `logging`.</li>
+                <li>Configura `logging` para que muestre mensajes de nivel INFO.</li>
+                <li>El script debe aceptar dos argumentos desde la terminal: el archivo de origen y el directorio de destino. Usa `sys.argv` para leerlos.</li>
+                <li>Verifica que se hayan proporcionado exactamente dos argumentos. Si no, muestra un error con `logging.error()` y sal del programa con `sys.exit()`.</li>
+                <li>Usa `os.path.exists()` para comprobar que el archivo de origen existe. Si no, loguea un error y sal.</li>
+                <li>Usa `os.makedirs()` con `exist_ok=True` para asegurarte de que el directorio de destino existe.</li>
+                <li>Usa `shutil.copy(origen, destino)` para copiar el archivo.</li>
+                <li>Loguea cada paso del proceso con `logging.info()` (ej: "Iniciando backup...", "Copia completada con éxito.").</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM6L1-1')">Ver Solución</span>
+            <div id="solucionM6L1-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">sys</span>, <span class="variable">os</span>, <span class="variable">shutil</span>, <span class="variable">logging</span>
+
+<span class="variable">logging</span>.<span class="function">basicConfig</span>(<span class="variable">level</span>=<span class="variable">logging</span>.<span class="variable">INFO</span>, <span class="variable">format</span>=<span class="highlight">'%(levelname)s: %(message)s'</span>)
+
+<span class="comment"># 1. Verificar argumentos</span>
+<span class="keyword">if</span> <span class="function">len</span>(<span class="variable">sys</span>.<span class="variable">argv</span>) != <span class="number">3</span>:
+    <span class="variable">logging</span>.<span class="function">error</span>(<span class="highlight">"Uso: python 01_backup.py &lt;archivo_origen&gt; &lt;dir_destino&gt;"</span>)
+    <span class="variable">sys</span>.<span class="function">exit</span>(<span class="number">1</span>)
+
+<span class="variable">origen</span> = <span class="variable">sys</span>.<span class="variable">argv</span>[<span class="number">1</span>]
+<span class="variable">destino</span> = <span class="variable">sys</span>.<span class="variable">argv</span>[<span class="number">2</span>]
+
+<span class="comment"># 2. Verificar origen y crear destino</span>
+<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">os</span>.<span class="variable">path</span>.<span class="function">exists</span>(<span class="variable">origen</span>):
+    <span class="variable">logging</span>.<span class="function">error</span>(<span class="highlight">f"El archivo de origen '{origen}' no existe."</span>)
+    <span class="variable">sys</span>.<span class="function">exit</span>(<span class="number">1</span>)
+
+<span class="variable">os</span>.<span class="function">makedirs</span>(<span class="variable">destino</span>, <span class="variable">exist_ok</span>=<span class="boolean">True</span>)
+
+<span class="comment"># 3. Copiar el archivo</span>
+<span class="keyword">try</span>:
+    <span class="variable">shutil</span>.<span class="function">copy</span>(<span class="variable">origen</span>, <span class="variable">destino</span>)
+    <span class="variable">logging</span>.<span class="function">info</span>(<span class="highlight">f"Backup de '{origen}' completado en '{destino}'."</span>)
+<span class="keyword">except</span> <span class="variable">Exception</span> <span class="keyword">as</span> <span class="variable">e</span>:
+    <span class="variable">logging</span>.<span class="function">error</span>(<span class="highlight">f"Ocurrió un error al copiar: {e}"</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="../module_05_temas_avanzados/03_decoradores_y_generadores.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="02_expresiones_regulares.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

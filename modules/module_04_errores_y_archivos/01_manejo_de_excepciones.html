@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 4, Lección 1: Manejo de Excepciones - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 1: Manejo de Excepciones</h1>
+        <p class="lesson-intro">
+            En el mundo real, las cosas a menudo salen mal: un usuario ingresa texto en lugar de un número, un archivo no existe, etc. Si no estás preparado, estos errores (llamados **excepciones**) detendrán tu programa bruscamente. El **manejo de excepciones** es el mecanismo que nos permite anticipar y gestionar estos problemas de forma elegante y controlada.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: El Bloque `try-except`</h2>
+        <p>La principal herramienta para manejar errores es el bloque `try-except`. La analogía es una **red de seguridad para un trapecista**. El código propenso a fallar es el trapecista (`try`). Si resbala (ocurre un error), no se estrella contra el suelo (el programa no crashea), sino que cae en la red (`except`), que lo gestiona de forma segura y permite que el espectáculo continúe.</p>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Bloque <code>try-except</code></h3>
+            <p><strong>Descripción:</strong> Define un bloque de código para "intentar" (`try`) una operación que podría fallar. Si ocurre una excepción, el programa salta al bloque `except` correspondiente en lugar de detenerse.</p>
+            <p><strong>Sintaxis:</strong></p>
+            <div class="code-block"><pre>
+<span class="keyword">try</span>:
+    <span class="comment"># Código que podría lanzar un error</span>
+    <span class="variable">resultado</span> = <span class="number">10</span> / <span class="number">0</span>
+<span class="keyword">except</span> <span class="variable">ZeroDivisionError</span>:
+    <span class="comment"># Código que se ejecuta SI ocurre ese error específico</span>
+    <span class="function">print</span>(<span class="highlight">"Error: No se puede dividir por cero."</span>)
+            </pre></div>
+            <p><strong>Ejemplo Práctico:</strong></p>
+            <div class="code-block"><pre>
+<span class="comment"># Código de Entrada</span>
+<span class="variable">edad_str</span> = <span class="function">input</span>(<span class="highlight">"Introduce tu edad: "</span>) <span class="comment"># Prueba introduciendo "hola"</span>
+<span class="keyword">try</span>:
+    <span class="variable">edad_num</span> = <span class="function">int</span>(<span class="variable">edad_str</span>)
+    <span class="function">print</span>(<span class="highlight">f"En 10 años tendrás {edad_num + 10} años."</span>)
+<span class="keyword">except</span> <span class="variable">ValueError</span>:
+    <span class="function">print</span>(<span class="highlight">"Entrada inválida. Debes introducir un número."</span>)
+
+<span class="comment"># Salida Esperada (si se introduce "hola")</span>
+<span class="highlight">Entrada inválida. Debes introducir un número.</span>
+            </pre></div>
+            <p>✅ **Buena Práctica:** Es mejor capturar excepciones específicas (como `ValueError` o `FileNotFoundError`) en lugar de una excepción genérica (`except Exception:`), para saber exactamente qué tipo de error ocurrió.</p>
+        </div>
+
+        <hr>
+
+        <h2>Tema 2: Bloques `else` y `finally`</h2>
+        <p>La estructura `try-except` se puede extender con dos bloques opcionales más.</p>
+
+        <div class="concept-card">
+            <h3>Bloque `else`</h3>
+            <p>El bloque `else` se ejecuta **únicamente si no ocurrió ninguna excepción** en el bloque `try`.</p>
+        </div>
+        
+        <div class="concept-card">
+            <h3>Bloque `finally`</h3>
+            <p>El bloque `finally` se ejecuta **siempre**, sin importar si hubo una excepción o no. Es ideal para tareas de "limpieza", como cerrar un archivo o una conexión de red.</p>
+            <div class="code-block"><pre>
+<span class="keyword">try</span>:
+    <span class="variable">numero</span> = <span class="function">int</span>(<span class="highlight">"123"</span>)
+<span class="keyword">except</span> <span class="variable">ValueError</span>:
+    <span class="function">print</span>(<span class="highlight">"Ocurrió un error de valor."</span>)
+<span class="keyword">else</span>:
+    <span class="function">print</span>(<span class="highlight">"No hubo errores, la conversión fue exitosa."</span>) <span class="comment"># Se ejecuta</span>
+<span class="keyword">finally</span>:
+    <span class="function">print</span>(<span class="highlight">"Este bloque se ejecuta siempre."</span>) <span class="comment"># Se ejecuta</span>
+            </pre></div>
+        </div>
+
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección 1 (Módulo 4)</h3>
+
+            <h4>Ejercicio 1: Calculadora Segura</h4>
+            <p><strong>Objetivo:</strong> Crear una función de división que maneje los errores de división por cero y de entrada no numérica.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `01_calculadora_segura.py`.</li>
+                <li>Define una función `dividir(a, b)` que intente retornar el resultado de `a / b`.</li>
+                <li>Dentro de la función, usa un bloque `try-except` para capturar la excepción `ZeroDivisionError`. Si ocurre, la función debe devolver el string `"Error: No se puede dividir por cero."`.</li>
+                <li>Fuera de la función, pide al usuario dos números.</li>
+                <li>Usa un bloque `try-except` para convertir las entradas a `float`. Si falla (`ValueError`), imprime un mensaje de error.</li>
+                <li>Si la conversión es exitosa (en un bloque `else`), llama a tu función `dividir` e imprime el resultado.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM4L1-1')">Ver Solución</span>
+            <div id="solucionM4L1-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">def</span> <span class="function">dividir</span>(<span class="variable">a</span>, <span class="variable">b</span>):
+    <span class="keyword">try</span>:
+        <span class="keyword">return</span> <span class="variable">a</span> / <span class="variable">b</span>
+    <span class="keyword">except</span> <span class="variable">ZeroDivisionError</span>:
+        <span class="keyword">return</span> <span class="highlight">"Error: No se puede dividir por cero."</span>
+
+<span class="variable">num1_str</span> = <span class="function">input</span>(<span class="highlight">"Introduce el dividendo: "</span>)
+<span class="variable">num2_str</span> = <span class="function">input</span>(<span class="highlight">"Introduce el divisor: "</span>)
+
+<span class="keyword">try</span>:
+    <span class="variable">num1</span> = <span class="function">float</span>(<span class="variable">num1_str</span>)
+    <span class="variable">num2</span> = <span class="function">float</span>(<span class="variable">num2_str</span>)
+<span class="keyword">except</span> <span class="variable">ValueError</span>:
+    <span class="function">print</span>(<span class="highlight">"Error: Ambos valores deben ser numéricos."</span>)
+<span class="keyword">else</span>:
+    <span class="variable">resultado</span> = <span class="function">dividir</span>(<span class="variable">num1</span>, <span class="variable">num2</span>)
+    <span class="function">print</span>(<span class="highlight">f"El resultado es: {resultado}"</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="../module_03_poo/04_encapsulamiento_y_abstraccion.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="02_manipulacion_de_archivos.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

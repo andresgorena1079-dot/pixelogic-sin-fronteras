@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pixelogic Sin Fronteras{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closebrackets.min.js"></script>
+    
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <header class="header-banner">
+        <h1>Pixelogic Sin Fronteras</h1>
+        <h2>Domina la Lógica, Construye tu Realidad</h2>
+    </header>
+
+    <nav class="main-navbar">
+        <div class="navbar-links">
+            <a href="{% url 'pagina_principal' %}" class="{% if request.resolver_match.url_name == 'pagina_principal' %}active{% endif %}">Inicio</a>
+            
+            <a href="{% url 'cursos:lista_cursos' %}" class="{% if request.resolver_match.url_name == 'lista_cursos' or request.resolver_match.url_name == 'detalle_curso' or request.resolver_match.url_name == 'detalle_modulo' or request.resolver_match.url_name == 'detalle_leccion' %}active{% endif %}">Cursos</a>
+            
+            <a href="{% url 'cursos:lista_juegos' %}" class="{% if request.resolver_match.url_name == 'lista_juegos' %}active{% endif %}">Juegos</a>
+            
+            <a href="{% url 'cursos:lista_herramientas' %}" class="{% if request.resolver_match.url_name == 'lista_herramientas' %}active{% endif %}">Herramientas</a>
+            
+            <a href="{% url 'cursos:lista_posts' %}" class="{% if request.resolver_match.url_name == 'lista_posts' %}active{% endif %}">Comunidad</a>
+        </div>
+        <div class="auth-buttons">
+        {% if user.is_authenticated %}
+            <a href="{% url 'cursos:vista_perfil' user.username %}" class="nav-button-profile">Mi Perfil</a>
+            <span>Bienvenido, {{ user.username }}</span>
+            <a href="{% url 'account_logout' %}" class="nav-button-logout">Cerrar Sesión</a>
+        {% else %}
+            <a href="{% url 'account_login' %}" class="nav-button-login">Iniciar Sesión</a>
+            <a href="{% url 'account_signup' %}" class="nav-button-signup">Registrarse</a>
+        {% endif %}
+        </div>
+    </nav>
+
+    <aside class="sidebar">
+        {% block sidebar %}
+            <h4>Navegación</h4>
+            <a href="{% url 'pagina_principal' %}">Página Principal</a>
+            <a href="{% url 'cursos:lista_cursos' %}">Cursos</a>
+            <hr>
+            <h4>Contacto</h4>
+            <a href="https://wa.me/541131160543" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="mailto:andresgorena1079@gmail.com"><i class="fas fa-envelope"></i> Correo</a>
+            <hr>
+            <div class="counter-container">
+                <div class="counter-title">Visitas</div>
+                <div class="counter-display" id="visit-counter">0</div>
+            </div>
+        {% endblock %}
+    </aside>
+
+    <main class="main-content">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-info">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="footer">
+        <p>Hecho con Pixelogic Sin Fronteras</p>
+    </footer>
+
+    <body>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Obtenemos el ID del usuario actual desde Django. 
+                // Si no hay usuario logueado, será 'None'.
+                const currentUserID = "{{ user.id|default:'None' }}";
+
+                // Obtenemos el ID del último usuario que ya fue contado en esta sesión.
+                const countedUserID = sessionStorage.getItem('countedUser');
+
+                // 1. Comparamos si el usuario actual es DIFERENTE al que ya contamos.
+                if (currentUserID !== countedUserID) {
+                    // Si son diferentes, es una nueva visita (o un nuevo usuario).
+                    let visitCount = localStorage.getItem('visitCount') || 0;
+                    visitCount = Number(visitCount) + 1;
+                    localStorage.setItem('visitCount', visitCount);
+
+                    // 2. Actualizamos el registro de sesión con el ID del nuevo usuario contado.
+                    sessionStorage.setItem('countedUser', currentUserID);
+                }
+
+                // 3. Mostramos siempre el contador total.
+                const totalVisits = localStorage.getItem('visitCount') || 0;
+                document.getElementById('visit-counter').textContent = totalVisits;
+            });
+        </script>
+    </body>
+
+</body>
+</html>

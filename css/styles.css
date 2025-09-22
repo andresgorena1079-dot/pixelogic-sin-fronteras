@@ -1,0 +1,787 @@
+/* Importación de fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Montserrat:wght@500;700&display=swap');
+
+/* Variables CSS para una gestión de colores y tamaños más fácil */
+:root {
+    --bg-color: #1a1a1d; 
+    --card-bg: #2b2b2e; 
+    --code-bg: #1c1c1f; 
+    --text-color: #f5f5f5; 
+    --secondary-text-color: #aaaaaa; 
+    --primary-color: #58a6ff; 
+    --secondary-color: #2ea44f; 
+    --border-color: #3b3b3e; 
+    --sidebar-bg: #232326; 
+    --highlight-color: #f0c419; 
+    --error-color: #ff4d4d; 
+}
+
+/* Estilos globales */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    overflow-x: hidden; 
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif; 
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 20px 0;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--highlight-color);
+}
+
+/* --- Encabezado --- */
+.sticky-header {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.sticky-header h1 {
+    font-size: 2.2em;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.sticky-header h2 {
+    font-size: 0.9em;
+    margin: 5px 0 0;
+    color: var(--secondary-text-color);
+}
+
+/* --- Barra de Navegación Principal --- */
+.main-navbar {
+    background-color: var(--card-bg);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 60px;
+    z-index: 999;
+}
+
+.navbar-links a {
+    color: var(--text-color);
+    margin: 0 15px;
+    font-weight: 500;
+    font-size: 1.05em;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar-links a:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.auth-buttons a {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-button-login {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.nav-button-login:hover {
+    background-color: #4a91e2;
+    transform: scale(1.03);
+}
+
+.nav-button-signup {
+    background-color: var(--secondary-color);
+    color: white;
+    margin-left: 10px;
+}
+
+.nav-button-signup:hover {
+    background-color: #238636;
+    transform: scale(1.03);
+}
+
+/* --- Layout de la Aplicación (sidebar + contenido principal) --- */
+.app-layout {
+    display: flex;
+    min-height: calc(100vh - 120px);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    padding: 20px;
+    border-right: 1px solid var(--border-color);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.sidebar h4 {
+    color: var(--primary-color);
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.sidebar a {
+    display: block;
+    color: var(--secondary-text-color);
+    padding: 8px 0;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.sidebar a:hover {
+    color: var(--highlight-color);
+    padding-left: 5px;
+}
+
+.sidebar i {
+    margin-right: 8px;
+}
+
+#visitor-counter {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: var(--secondary-text-color);
+    text-align: center;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: var(--bg-color);
+}
+
+/* --- Footer --- */
+.footer {
+    background-color: var(--card-bg);
+    color: var(--secondary-text-color);
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: 30px;
+}
+
+/* --- Estilos del Hero Section (Movido de index.html) --- */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("{% static 'img/hero_bg.jpg' %}") no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background-attachment: fixed;
+}
+.hero-section h1 {
+    font-size: 2.8em; 
+    text-shadow: 2px 2px 4px #000;
+    margin-bottom: 10px; 
+    color: white;
+}
+.hero-section p {
+    font-size: 1.2em; 
+    max-width: 700px; 
+    margin: 15px auto 30px auto; 
+    line-height: 1.6; 
+    color: var(--secondary-text-color);
+}
+.cta-button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 12px 25px;
+    font-size: 1.1em; 
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.cta-button:hover {
+    background-color: #238636;
+    transform: scale(1.05);
+}
+
+/* --- Estilos para Cursos Destacados (homepage) --- */
+.featured-courses {
+    text-align: center;
+    margin-top: 40px;
+}
+.featured-courses h2 {
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-size: 2em;
+}
+.course-card-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+/* Estilos para la card del curso */
+.course-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 300px; /* Ajusta el ancho de la tarjeta si es necesario */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* ¡IMPORTANTE! Añade box-shadow a la transición */
+    margin: 20px auto;
+    position: relative; /* Necesario para el pseudo-elemento si lo usas para el brillo */
+    overflow: hidden; /* Asegura que el brillo no se desborde si es grande */
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    /* Efecto de sombra para el brillo */
+    box-shadow: 0 0 25px rgba(0, 180, 255, 0.7), /* Brillo principal, azul claro */
+                0 0 10px rgba(0, 180, 255, 0.5); /* Brillo secundario más suave */
+}
+
+/* Estilos para la imagen del logo dentro de la card del curso */
+.course-card img {
+    width: 120px; /* Ajusta este valor para el ancho deseado */
+    height: auto; /* Mantener la proporción */
+    margin-bottom: 15px; /* Espacio debajo del logo */
+}
+
+.course-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.course-card p {
+    color: var(--text-color);
+    font-size: 0.95em;
+}}
+
+/* --- Estilos para lista_cursos.html --- */
+.lesson-intro {
+    font-size: 1.1em;
+    color: var(--secondary-text-color);
+    margin-bottom: 25px;
+}
+.module-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+.module-list li {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 25px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.module-list li:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(88, 166, 255, 0.25);
+}
+.module-list li a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.module-list li h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+.module-list li p {
+    color: var(--secondary-text-color);
+    font-size: 0.95em;
+}
+
+/* --- Estilos para detalle_curso.html --- */
+.course-landing {
+    text-align: center;
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+}
+.course-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+.course-landing h1 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+.course-landing .lesson-intro {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.modules-orbit {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+.module-card {
+    background-color: var(--code-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 25px;
+    width: 320px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.module-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(88, 166, 255, 0.2);
+}
+.module-card h4 {
+    font-size: 1.4em;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.module-card p {
+    font-size: 0.9em;
+    color: var(--secondary-text-color);
+    margin-bottom: 15px;
+}
+.module-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* --- Estilos para detalle_modulo.html --- */
+.lesson-list {
+    list-style: none;
+    padding: 0;
+}
+.lesson-list li {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.lesson-list li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.lesson-list li a {
+    flex-grow: 1;
+    color: var(--text-color);
+    font-size: 1.1em;
+}
+.lesson-list li .status-icon {
+    margin-left: 15px;
+    font-size: 1.2em;
+    color: var(--secondary-color);
+}
+.lesson-list li .status-icon.incomplete {
+    color: var(--secondary-text-color);
+}
+
+/* --- Estilos para detalle_leccion.html --- */
+.lesson-content {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+.lesson-content h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+.lesson-content p {
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+.lesson-content pre {
+    background-color: var(--code-bg);
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 20px;
+    font-family: 'Fira Code', 'Roboto Mono', monospace;
+    font-size: 0.95em;
+    line-height: 1.4;
+    border: 1px solid var(--border-color);
+}
+.lesson-content code {
+    background-color: var(--code-bg);
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: 'Fira Code', 'Roboto Mono', monospace;
+    font-size: 0.95em;
+    color: var(--highlight-color);
+}
+.solution-toggle {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.solution-toggle:hover {
+    background-color: #4a91e2;
+    transform: translateY(-2px);
+}
+.lesson-solution {
+    background-color: var(--code-bg);
+    border: 1px dashed var(--primary-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    display: none;
+}
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+.lesson-navigation a {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.lesson-navigation a:hover {
+    background-color: #4a91e2;
+    transform: translateY(-2px);
+}
+.lesson-navigation .disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+.lesson-navigation .disabled:hover {
+    transform: none;
+    background-color: var(--border-color);
+}
+.mark-complete-button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.mark-complete-button:hover {
+    background-color: #238636;
+    transform: translateY(-2px);
+}
+.mark-complete-button.completed {
+    background-color: var(--secondary-text-color);
+    cursor: default;
+    opacity: 0.8;
+}
+.mark-complete-button.completed:hover {
+    transform: none;
+    background-color: var(--secondary-text-color);
+}
+
+/* --- Estilos para la barra de progreso --- */
+.progress-container {
+    width: 100%;
+    background-color: var(--code-bg);
+    border-radius: 5px;
+    margin-top: 10px;
+    height: 12px;
+    overflow: hidden;
+}
+.progress-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+small {
+    display: block;
+    text-align: right;
+    color: var(--secondary-text-color);
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+/* --- ESTILOS PARA FORMULARIOS DE AUTENTICACIÓN --- */
+.form-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: var(--card-bg);
+    padding: 30px 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.form-container h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.form-container p {
+    text-align: center;
+    color: var(--secondary-text-color);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: none;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--code-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-group input::placeholder {
+    color: var(--secondary-text-color);
+    opacity: 0.7;
+}
+
+.form-help-text {
+    display: block;
+    font-size: 0.85em;
+    color: var(--secondary-text-color);
+    margin-top: 5px;
+    text-align: right;
+}
+
+.form-error {
+    background-color: rgba(255, 77, 77, 0.2);
+    color: var(--error-color);
+    border-left: 4px solid var(--error-color);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.cta-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--secondary-color);
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.cta-button:hover {
+    background-color: #238636;
+    transform: scale(1.02);
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--secondary-text-color);
+    margin: 30px 0;
+}
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+.separator:not(:empty)::before {
+    margin-right: .25em;
+}
+.separator:not(:empty)::after {
+    margin-left: .25em;
+}
+
+.social-login {
+    display: flex;
+    justify-content: center;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.social-btn i {
+    margin-right: 10px;
+}
+
+.social-btn.google {
+    background-color: #4285F4;
+}
+
+.social-btn.google:hover {
+    background-color: #357ae8;
+    transform: scale(1.02);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    .app-layout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .main-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        top: 0;
+    }
+    .navbar-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .navbar-links a {
+        margin: 5px 0;
+        text-align: center;
+    }
+    .auth-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .auth-buttons a {
+        flex-grow: 1;
+        text-align: center;
+        margin: 5px;
+    }
+    .nav-button-signup {
+        margin-left: 0;
+    }
+    .hero-section h1 {
+        font-size: 2.2em;
+    }
+    .hero-section p {
+        font-size: 1em;
+    }
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .form-container {
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+    .module-list, .course-card-list, .modules-orbit {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .course-card, .module-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .sticky-header h1 {
+        font-size: 1.8em;
+    }
+    .sticky-header h2 {
+        font-size: 0.8em;
+    }
+    .hero-section {
+        padding: 50px 15px;
+    }
+    .hero-section h1 {
+        font-size: 1.8em;
+    }
+    .hero-section p {
+        font-size: 0.9em;
+    }
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+}

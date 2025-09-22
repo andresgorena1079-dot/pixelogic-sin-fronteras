@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 3, Lección 3: Polimorfismo - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 3: Polimorfismo</h1>
+        <p class="lesson-intro">
+            El **polimorfismo**, que literalmente significa "muchas formas", es uno de los conceptos más poderosos de la POO. Se refiere a la capacidad de objetos de diferentes clases de responder al mismo mensaje (la misma llamada de método) de maneras específicas para cada uno. Esto nos permite escribir código más genérico y flexible.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: El Principio de Polimorfismo</h2>
+        <p>La analogía más clara para el polimorfismo es un **puerto USB**. No importa qué dispositivo conectes (un ratón, un teclado, un pendrive), tu computadora sabe cómo interactuar con él a través de la misma interfaz (el puerto). Cada dispositivo responde al comando "transferir datos" a su manera, pero la forma de llamarlo es siempre la misma. En POO, una función puede recibir diferentes tipos de objetos y llamar al mismo método en ellos, confiando en que cada objeto sabrá cómo ejecutarlo correctamente.</p>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica / Las 5 Cuestionantes del Polimorfismo</h3>
+            
+            <h4>¿Para qué sirve? (El Propósito)</h4>
+            <p>Para escribir código que no dependa de tipos de objetos específicos. Permite crear funciones y métodos genéricos que pueden trabajar con una variedad de objetos diferentes, siempre y cuando compartan una interfaz común (es decir, tengan métodos con el mismo nombre).</p>
+
+            <h4>¿Qué hace? (El Concepto)</h4>
+            <p>Permite que una única interfaz (como una función o un método) trate a objetos de diferentes clases de manera uniforme. Al llamar a un método como `objeto.moverse()`, Python ejecutará la versión de `moverse()` que corresponda a la clase del `objeto` en ese momento.</p>
+
+            <h4>¿Cómo se emplea? (La Sintaxis)</h4>
+            <p>El polimorfismo no requiere una sintaxis especial, sino una estructura de diseño. Generalmente se logra a través de la **herencia** y la **sobrescritura de métodos**. Creas una clase padre con un método, y las clases hijas lo sobrescriben con su propia implementación.</p>
+            <div class="code-block"><pre>
+<span class="keyword">class</span> <span class="variable">Gato</span>:
+    <span class="keyword">def</span> <span class="function">hacer_sonido</span>(<span class="variable">self</span>):
+        <span class="keyword">return</span> <span class="highlight">"¡Miau!"</span>
+
+<span class="keyword">class</span> <span class="variable">Perro</span>:
+    <span class="keyword">def</span> <span class="function">hacer_sonido</span>(<span class="variable">self</span>):
+        <span class="keyword">return</span> <span class="highlight">"¡Guau!"</span>
+
+<span class="comment"># Esta función es polimórfica: no le importa si el animal es un Perro o un Gato</span>
+<span class="keyword">def</span> <span class="function">sonido_animal</span>(<span class="variable">animal</span>):
+    <span class="function">print</span>(<span class="variable">animal</span>.<span class="function">hacer_sonido</span>())
+
+<span class="variable">gato</span> = <span class="variable">Gato</span>()
+<span class="variable">perro</span> = <span class="variable">Perro</span>()
+
+<span class="function">sonido_animal</span>(<span class="variable">gato</span>)  <span class="comment"># Llama a Gato.hacer_sonido()</span>
+<span class="function">sonido_animal</span>(<span class="variable">perro</span>) <span class="comment"># Llama a Perro.hacer_sonido()</span>
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">¡Miau!</span>
+<span class="highlight">¡Guau!</span>
+            </pre></div>
+
+            <h4>¿Dónde se emplea? (Casos de Uso Reales)</h4>
+            <p>En cualquier sistema donde se procesan colecciones de objetos heterogéneos. Por ejemplo, en un videojuego, una función `renderizar()` puede recorrer una lista de todos los objetos en pantalla (`[jugador, enemigo, item, proyectil]`) y llamar a `objeto.dibujar()` en cada uno. Cada objeto sabrá cómo dibujarse a sí mismo.</p>
+
+            <h4>¿Por qué se emplea? (Las Ventajas)</h4>
+            <p>Reduce drásticamente la necesidad de usar condicionales `if/elif/else` para comprobar el tipo de un objeto. Esto hace el código más limpio, más fácil de mantener y, sobre todo, más **extensible**: si en el futuro creas una nueva clase `Vaca`, no necesitas modificar la función `sonido_animal`; simplemente te aseguras de que la clase `Vaca` tenga un método `hacer_sonido()` y funcionará automáticamente.</p>
+        </div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicio: Sistema de Notificaciones</h3>
+            <p><strong>Objetivo:</strong> Crear un sistema polimórfico que pueda enviar diferentes tipos de notificaciones (Email, SMS, Push) a través de una única función.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `03_notificaciones.py`.</li>
+                <li>Define tres clases: `NotificacionEmail`, `NotificacionSMS` y `NotificacionPush`.</li>
+                <li>Cada clase debe tener un método `enviar(mensaje)`. La implementación de este método será diferente para cada clase:
+                    <ul>
+                        <li>`NotificacionEmail`: Debe imprimir `"Enviando email: [mensaje]"`.</li>
+                        <li>`NotificacionSMS`: Debe imprimir `"Enviando SMS: [mensaje]"`.</li>
+                        <li>`NotificacionPush`: Debe imprimir `"Enviando notificación Push: [mensaje]"`.</li>
+                    </ul>
+                </li>
+                <li>Crea una función llamada `enviar_notificacion(notificador, mensaje)`, donde `notificador` es un objeto de cualquiera de las clases anteriores. Esta función debe llamar al método `enviar()` del objeto `notificador`.</li>
+                <li>Crea una lista de `notificadores` que contenga una instancia de cada una de las tres clases de notificación.</li>
+                <li>Usa un bucle `for` para recorrer la lista de `notificadores` y, para cada uno, llama a la función `enviar_notificacion()` pasándole el notificador actual y un mensaje de prueba.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM3L3-1')">Ver Solución</span>
+            <div id="solucionM3L3-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">class</span> <span class="variable">NotificacionEmail</span>:
+    <span class="keyword">def</span> <span class="function">enviar</span>(<span class="variable">self</span>, <span class="variable">mensaje</span>):
+        <span class="function">print</span>(<span class="highlight">f"Enviando email: {mensaje}"</span>)
+
+<span class="keyword">class</span> <span class="variable">NotificacionSMS</span>:
+    <span class="keyword">def</span> <span class="function">enviar</span>(<span class="variable">self</span>, <span class="variable">mensaje</span>):
+        <span class="function">print</span>(<span class="highlight">f"Enviando SMS: {mensaje}"</span>)
+
+<span class="keyword">class</span> <span class="variable">NotificacionPush</span>:
+    <span class="keyword">def</span> <span class="function">enviar</span>(<span class="variable">self</span>, <span class="variable">mensaje</span>):
+        <span class="function">print</span>(<span class="highlight">f"Enviando notificación Push: {mensaje}"</span>)
+
+<span class="keyword">def</span> <span class="function">enviar_notificacion</span>(<span class="variable">notificador</span>, <span class="variable">mensaje</span>):
+    <span class="variable">notificador</span>.<span class="function">enviar</span>(<span class="variable">mensaje</span>)
+
+<span class="comment"># Creamos los objetos</span>
+<span class="variable">email</span> = <span class="variable">NotificacionEmail</span>()
+<span class="variable">sms</span> = <span class="variable">NotificacionSMS</span>()
+<span class="variable">push</span> = <span class="variable">NotificacionPush</span>()
+
+<span class="variable">notificadores</span> = [<span class="variable">email</span>, <span class="variable">sms</span>, <span class="variable">push</span>]
+<span class="variable">mensaje_prueba</span> = <span class="highlight">"Tu pedido ha sido enviado."</span>
+
+<span class="keyword">for</span> <span class="variable">notificador</span> <span class="keyword">in</span> <span class="variable">notificadores</span>:
+    <span class="function">enviar_notificacion</span>(<span class="variable">notificador</span>, <span class="variable">mensaje_prueba</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="02_herencia.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="04_encapsulamiento_y_abstraccion.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

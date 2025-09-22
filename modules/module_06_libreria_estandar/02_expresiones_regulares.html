@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 6, Lección 2: Expresiones Regulares - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 2: Expresiones Regulares</h1>
+        <p class="lesson-intro">
+            Las **expresiones regulares** (o "regex") son un "mini-lenguaje" especializado en la búsqueda y manipulación de patrones en texto. Son una herramienta fundamental para tareas como validar formatos (emails, números de teléfono), encontrar datos específicos en un texto largo o reemplazar partes de una cadena de caracteres. En Python, trabajamos con ellas a través del módulo <code>re</code>.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Funciones Básicas del Módulo <code>re</code></h2>
+        <p>El módulo `re` nos ofrece varias funciones para trabajar con patrones. Las más comunes son `search`, `findall` y `sub`.</p>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>re.search(patron, texto)</code></h3>
+            <p><strong>Descripción:</strong> Escanea el `texto` buscando la **primera ubicación** donde el `patron` produce una coincidencia.</p>
+            <p><strong>Retorna:</strong> Un objeto "match" si encuentra una coincidencia, o `None` si no encuentra nada.</p>
+            <p><strong>Ejemplo Práctico:</strong></p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">re</span>
+<span class="variable">texto</span> = <span class="highlight">"El número de teléfono es 123-456-7890."</span>
+<span class="variable">patron</span> = <span class="highlight">r"\d{3}-\d{3}-\d{4}"</span> <span class="comment"># \d representa un dígito, {3} significa 3 veces</span>
+
+<span class="variable">coincidencia</span> = <span class="variable">re</span>.<span class="function">search</span>(<span class="variable">patron</span>, <span class="variable">texto</span>)
+<span class="keyword">if</span> <span class="variable">coincidencia</span>:
+    <span class="function">print</span>(<span class="highlight">f"Número encontrado: {coincidencia.group(0)}"</span>)
+<span class="keyword">else</span>:
+    <span class="function">print</span>(<span class="highlight">"No se encontró un número."</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">Número encontrado: 123-456-7890</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>re.findall(patron, texto)</code></h3>
+            <p><strong>Descripción:</strong> Encuentra **todas** las subcadenas que coinciden con el `patron` y las devuelve como una lista de strings.</p>
+            <p><strong>Retorna:</strong> Una lista de strings.</p>
+            <p><strong>Ejemplo Práctico:</strong></p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">re</span>
+<span class="variable">texto</span> = <span class="highlight">"Los correos son user1@mail.com y user2@domain.org"</span>
+<span class="variable">patron_email</span> = <span class="highlight">r"\w+@\w+\.\w+"</span> <span class="comment"># \w+ significa "una o más letras/números"</span>
+
+<span class="variable">emails</span> = <span class="variable">re</span>.<span class="function">findall</span>(<span class="variable">patron_email</span>, <span class="variable">texto</span>)
+<span class="function">print</span>(<span class="highlight">f"Emails encontrados: {emails}"</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">Emails encontrados: ['user1@mail.com', 'user2@domain.org']</span>
+            </pre></div>
+        </div>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: <code>re.sub(patron, reemplazo, texto)</code></h3>
+            <p><strong>Descripción:</strong> Busca todas las ocurrencias del `patron` en el `texto` y las reemplaza con el string de `reemplazo`.</p>
+            <p><strong>Retorna:</strong> Un nuevo string con los reemplazos hechos.</p>
+            <p><strong>Ejemplo Práctico:</strong></p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">re</span>
+<span class="variable">texto</span> = <span class="highlight">"Mi número es 12345 y el tuyo 54321"</span>
+<span class="variable">texto_censurado</span> = <span class="variable">re</span>.<span class="function">sub</span>(<span class="highlight">r"\d"</span>, <span class="highlight">"X"</span>, <span class="variable">texto</span>) <span class="comment"># Reemplaza cada dígito (\d) por una 'X'</span>
+
+<span class="function">print</span>(<span class="variable">texto_censurado</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">Mi número es XXXXX y el tuyo XXXXX</span>
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicios de la Lección 2 (Módulo 6)</h3>
+
+            <h4>Ejercicio 1: Extractor de Hashtags</h4>
+            <p><strong>Objetivo:</strong> Usar `re.findall` para extraer todos los hashtags de un texto.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `02_extractor_hashtags.py`.</li>
+                <li>Importa el módulo `re`.</li>
+                <li>Define un string `texto_post` que contenga varios hashtags (ej: "¡Qué gran día de #programacion en #Python!").</li>
+                <li>Define un patrón de regex que busque un `#` seguido de una o más letras o números (`#\w+`).</li>
+                <li>Usa `re.findall()` para encontrar todos los hashtags y guárdalos en una lista.</li>
+                <li>Imprime la lista de hashtags encontrados.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM6L2-1')">Ver Solución</span>
+            <div id="solucionM6L2-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">re</span>
+
+<span class="variable">texto_post</span> = <span class="highlight">"¡Qué gran día de #programacion en #Python! Me encanta el #codigo limpio."</span>
+<span class="variable">patron_hashtag</span> = <span class="highlight">r"#\w+"</span>
+
+<span class="variable">hashtags</span> = <span class="variable">re</span>.<span class="function">findall</span>(<span class="variable">patron_hashtag</span>, <span class="variable">texto_post</span>)
+
+<span class="function">print</span>(<span class="highlight">"--- Hashtags Encontrados ---"</span>)
+<span class="function">print</span>(<span class="variable">hashtags</span>)
+<span class="comment"># Salida Esperada: ['#programacion', '#Python', '#codigo']</span>
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="01_modulos_esenciales.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="03_logging_y_debugging.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

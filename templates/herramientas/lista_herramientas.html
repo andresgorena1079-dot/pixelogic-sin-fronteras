@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Herramientas Esenciales{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="catalog-header">
+        <h1>Herramientas Esenciales</h1>
+        <p class="lesson-intro">Descubre y comparte las mejores herramientas para la programación.</p>
+    </div>
+    <hr>
+
+    <div class="filter-bar">
+        <form method="GET" action="{% url 'cursos:lista_herramientas' %}" class="search-form">
+            <input type="text" name="q" placeholder="Buscar herramienta..." value="{{ request.GET.q }}">
+            <button type="submit">Buscar</button>
+        </form>
+        <div class="sort-options">
+            <span>Ordenar por:</span>
+            <a href="{% url 'cursos:lista_herramientas' %}">Más Recientes</a>
+            <a href="?sort=clicks">Más Populares</a>
+        </div>
+    </div>
+
+    <div class="resource-actions">
+        {% if user.is_authenticated %}
+            <a href="{% url 'cursos:subir_herramienta' %}" class="nav-button">Subir Nueva Herramienta</a>
+        {% endif %}
+    </div>
+
+    <div class="resource-grid">
+        {% for herramienta in herramientas %}
+            <div class="resource-card">
+                {% if herramienta.imagen %}
+                    <img src="{{ herramienta.imagen.url }}" alt="{{ herramienta.nombre }}">
+                {% else %}
+                    <img src="{% static 'img/placeholder_tool.png' %}" alt="Imagen no disponible">
+                {% endif %}
+                
+                <h3>{{ herramienta.nombre }}</h3>
+                <p>{{ herramienta.descripcion }}</p>
+
+                <a href="{% url 'cursos:track_click_herramienta' herramienta.id %}" class="resource-link" {% if herramienta.enlace %}target="_blank"{% endif %} {% if herramienta.archivo %}download{% endif %}>
+                    {% if herramienta.archivo %}Descargar{% else %}Visitar Sitio{% endif %}
+                </a>
+
+                {% if user == herramienta.autor or user.is_superuser %}
+                    <div class="card-actions">
+                        <a href="{% url 'cursos:editar_herramienta' herramienta.id %}" class="btn-edit">Editar</a>
+                        <a href="{% url 'cursos:eliminar_herramienta' herramienta.id %}" class="btn-delete">Eliminar</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p style="text-align: center; width: 100%;">No se encontraron herramientas. ¡Sé el primero en subir una!</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+<style>
+    .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .tool-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .tool-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .tool-card img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        margin-bottom: 15px;
+    }
+
+    .tool-card h3 {
+        color: var(--primary-color);
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .tool-card p {
+        color: var(--secondary-text-color);
+        margin-bottom: 15px;
+    }
+
+    .tool-link {
+        display: block;
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .tool-link:hover {
+        background-color: #238636;
+    }
+</style>
+{% endblock %}

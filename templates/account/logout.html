@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Cerrar Sesión" %}{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>{% trans "Cerrar Sesión" %}</h2>
+    <p>{% trans '¿Estás seguro de que quieres cerrar la sesión?' %}</p>
+    
+    <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <button type="submit" class="cta-button" style="background-color: var(--error-color);">{% trans 'Confirmar Cierre de Sesión' %}</button>
+    </form>
+</div>
+{% endblock %}

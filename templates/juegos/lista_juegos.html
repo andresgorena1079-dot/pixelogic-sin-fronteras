@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Zona de Juegos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="catalog-header">
+        <h1>Zona de Juegos</h1>
+        <p class="lesson-intro">Relájate y diviértete con estos juegos para programadores.</p>
+    </div>
+    <hr>
+
+    <div class="filter-bar">
+        <form method="GET" action="{% url 'cursos:lista_juegos' %}" class="search-form">
+            <input type="text" name="q" placeholder="Buscar juego por nombre..." value="{{ request.GET.q }}">
+            <button type="submit">Buscar</button>
+        </form>
+        <div class="sort-options">
+            <span>Ordenar por:</span>
+            <a href="{% url 'cursos:lista_juegos' %}">Más Recientes</a>
+            <a href="?sort=clicks">Más Populares</a>
+        </div>
+    </div>
+
+    <div class="resource-actions">
+        {% if user.is_authenticated %}
+            <a href="{% url 'cursos:subir_juego' %}" class="nav-button">Subir Nuevo Juego</a>
+        {% endif %}
+    </div>
+
+    <div class="resource-grid">
+        {% for juego in juegos %}
+            <div class="resource-card">
+                {% if juego.imagen %}
+                    <img src="{{ juego.imagen.url }}" alt="{{ juego.nombre }}">
+                {% else %}
+                    <img src="{% static 'img/placeholder_game.png' %}" alt="Imagen no disponible">
+                {% endif %}
+
+                <h3>{{ juego.nombre }}</h3>
+                <p>{{ juego.descripcion }}</p>
+                
+                <a href="{% url 'cursos:track_click_juego' juego.id %}" class="resource-link" {% if juego.enlace %}target="_blank"{% endif %} {% if juego.archivo %}download{% endif %}>
+                    {% if juego.archivo %}
+                        ¡Descargar!
+                    {% else %}
+                        ¡Jugar ahora!
+                    {% endif %}
+                </a>
+
+                {% if user == juego.autor or user.is_superuser %}
+                    <div class="card-actions">
+                        <a href="{% url 'cursos:editar_juego' juego.id %}" class="btn-edit">Editar</a>
+                        <a href="{% url 'cursos:eliminar_juego' juego.id %}" class="btn-delete">Eliminar</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p style="text-align: center; width: 100%;">No se encontraron juegos. ¡Sé el primero en subir uno!</p>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .games-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .game-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .game-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .game-card img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        margin-bottom: 15px;
+    }
+
+    .game-card h3 {
+        color: var(--primary-color);
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .game-card p {
+        color: var(--secondary-text-color);
+        margin-bottom: 15px;
+    }
+
+    .game-link {
+        display: block;
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .game-link:hover {
+        background-color: #238636;
+    }
+</style>
+{% endblock %}

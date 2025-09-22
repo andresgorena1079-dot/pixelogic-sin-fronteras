@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 7, Lección 2: NumPy y Matplotlib - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 2: NumPy y Matplotlib</h1>
+        <p class="lesson-intro">
+            Si Pandas es la hoja de cálculo, **NumPy** es la calculadora científica súper-optimizada y **Matplotlib** es el estudio de diseño gráfico. NumPy es la base para el cálculo numérico en Python, ofreciendo una estructura de datos llamada `array` que es mucho más rápida que las listas para operaciones matemáticas. Matplotlib es la librería por excelencia para crear todo tipo de gráficos y visualizaciones a partir de tus datos.
+        </p>
+        <div class="note">
+            <p><strong>Instalación:</strong> Necesitarás instalar ambas librerías. En tu terminal, ejecuta:<br><code>pip install numpy matplotlib</code></p>
+        </div>
+
+        <hr>
+
+        <h2>Tema 1: NumPy - El Poder de los Arrays</h2>
+        <p>El objeto central de NumPy es el `ndarray` (array N-dimensional). Es similar a una lista, pero con dos ventajas clave: es mucho más rápido para operaciones matemáticas y permite realizar **operaciones vectorizadas**.</p>
+        
+        <div class="concept-card">
+            <h3>Operaciones Vectorizadas</h3>
+            <p>Significa que puedes aplicar una operación a todos los elementos de un array a la vez, sin necesidad de un bucle `for`. Esto hace que el código sea más limpio y órdenes de magnitud más rápido.</p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">numpy</span> <span class="keyword">as</span> <span class="variable">np</span> <span class="comment"># 'np' es el alias estándar para numpy</span>
+
+<span class="comment"># Con listas de Python, necesitaríamos un bucle:</span>
+<span class="variable">lista</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]
+<span class="variable">multiplicada_lista</span> = [<span class="variable">x</span> * <span class="number">2</span> <span class="keyword">for</span> <span class="variable">x</span> <span class="keyword">in</span> <span class="variable">lista</span>]
+
+<span class="comment"># Con NumPy, la operación es directa (vectorizada):</span>
+<span class="variable">array</span> = <span class="variable">np</span>.<span class="function">array</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])
+<span class="variable">multiplicado_array</span> = <span class="variable">array</span> * <span class="number">2</span>
+
+<span class="function">print</span>(<span class="highlight">f"Resultado con NumPy: {multiplicado_array}"</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">Resultado con NumPy: [2 4 6 8]</span>
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 2: Matplotlib - Visualizando tus Datos</h2>
+        <p>Una imagen vale más que mil palabras, y en el análisis de datos, un gráfico vale más que mil tablas. Matplotlib te permite crear gráficos de líneas, barras, histogramas, diagramas de dispersión y mucho más.</p>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Creación de un Gráfico Básico</h3>
+            <p><strong>Descripción:</strong> El flujo básico para crear un gráfico es: crear los datos, pasarlos a una función de ploteo, personalizar el gráfico con títulos y etiquetas, y finalmente mostrarlo.</p>
+            <p><strong>Funciones Clave del Módulo <code>matplotlib.pyplot</code> (alias <code>plt</code>):</strong></p>
+            <ul>
+                <li><strong><code>plt.figure(figsize=(w, h))</code>:</strong> Crea una figura (un lienzo) para el gráfico, con un tamaño opcional.</li>
+                <li><strong><code>plt.plot(x, y)</code>:</strong> Dibuja un gráfico de líneas con los datos de `x` y `y`.</li>
+                <li><strong><code>plt.title('...')</code>, <code>plt.xlabel('...')</code>, <code>plt.ylabel('...')</code>:</strong> Añaden título y etiquetas a los ejes.</li>
+                <li><strong><code>plt.show()</code>:</strong> Muestra la ventana con el gráfico final.</li>
+            </ul>
+            <p><strong>Ejemplo Práctico:</strong></p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">matplotlib.pyplot</span> <span class="keyword">as</span> <span class="variable">plt</span>
+
+<span class="variable">meses</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]
+<span class="variable">ventas</span> = [<span class="number">120</span>, <span class="number">150</span>, <span class="number">130</span>, <span class="number">180</span>, <span class="number">210</span>, <span class="number">190</span>]
+
+<span class="variable">plt</span>.<span class="function">figure</span>(<span class="variable">figsize</span>=(<span class="number">8</span>, <span class="number">5</span>)) <span class="comment"># Tamaño del gráfico</span>
+<span class="variable">plt</span>.<span class="function">plot</span>(<span class="variable">meses</span>, <span class="variable">ventas</span>, <span class="variable">marker</span>=<span class="highlight">'o'</span>) <span class="comment"># marker='o' dibuja círculos en los puntos</span>
+
+<span class="variable">plt</span>.<span class="function">title</span>(<span class="highlight">'Ventas Mensuales'</span>)
+<span class="variable">plt</span>.<span class="function">xlabel</span>(<span class="highlight">'Mes'</span>)
+<span class="variable">plt</span>.<span class="function">ylabel</span>(<span class="highlight">'Ventas (en miles)'</span>)
+<span class="variable">plt</span>.<span class="function">grid</span>(<span class="boolean">True</span>) <span class="comment"># Añade una cuadrícula</span>
+
+<span class="variable">plt</span>.<span class="function">show</span>() <span class="comment"># Muestra el gráfico</span>
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicio: Análisis y Visualización de Datos Climáticos</h3>
+            <p><strong>Objetivo:</strong> Usar NumPy para realizar cálculos estadísticos básicos sobre datos de temperatura y Matplotlib para visualizar los resultados.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `02_clima.py`. Importa `numpy as np` y `matplotlib.pyplot as plt`.</li>
+                <li>Crea un array de NumPy llamado `meses` que vaya del 1 al 12.</li>
+                <li>Crea otro array de NumPy llamado `temperaturas` con 12 valores de temperaturas promedio mensuales (puedes inventarlos).</li>
+                <li>**Análisis con NumPy:** Calcula la temperatura promedio, la máxima y la mínima del año usando los métodos `.mean()`, `.max()` y `.min()` del array `temperaturas`.</li>
+                <li>Imprime estos valores estadísticos en la consola.</li>
+                <li>**Visualización con Matplotlib:**
+                    <ul>
+                        <li>Crea un gráfico de líneas de `meses` vs `temperaturas`.</li>
+                        <li>Añade un título y etiquetas a los ejes X e Y.</li>
+                        <li>Usa `plt.axhline(y=temp_promedio, color='r', linestyle='--')` para dibujar una línea roja punteada que represente la temperatura promedio.</li>
+                        <li>Muestra el gráfico con `plt.show()`.</li>
+                    </ul>
+                </li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM7L2-1')">Ver Solución</span>
+            <div id="solucionM7L2-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">numpy</span> <span class="keyword">as</span> <span class="variable">np</span>
+<span class="keyword">import</span> <span class="variable">matplotlib.pyplot</span> <span class="keyword">as</span> <span class="variable">plt</span>
+
+<span class="variable">meses</span> = <span class="variable">np</span>.<span class="function">arange</span>(<span class="number">1</span>, <span class="number">13</span>)
+<span class="variable">temperaturas</span> = <span class="variable">np</span>.<span class="function">array</span>([<span class="number">15</span>, <span class="number">16</span>, <span class="number">18</span>, <span class="number">21</span>, <span class="number">24</span>, <span class="number">28</span>, <span class="number">30</span>, <span class="number">29</span>, <span class="number">26</span>, <span class="number">22</span>, <span class="number">18</span>, <span class="number">16</span>])
+
+<span class="comment"># Análisis con NumPy</span>
+<span class="variable">temp_promedio</span> = <span class="variable">temperaturas</span>.<span class="function">mean</span>()
+<span class="variable">temp_max</span> = <span class="variable">temperaturas</span>.<span class="function">max</span>()
+<span class="variable">temp_min</span> = <span class="variable">temperaturas</span>.<span class="function">min</span>()
+
+<span class="function">print</span>(<span class="highlight">"--- Análisis Climático Anual ---"</span>)
+<span class="function">print</span>(<span class="highlight">f"Temperatura Promedio: {temp_promedio:.2f}°C"</span>)
+<span class="function">print</span>(<span class="highlight">f"Temperatura Máxima: {temp_max}°C"</span>)
+<span class="function">print</span>(<span class="highlight">f"Temperatura Mínima: {temp_min}°C"</span>)
+
+<span class="comment"># Visualización con Matplotlib</span>
+<span class="variable">plt</span>.<span class="function">figure</span>(<span class="variable">figsize</span>=(<span class="number">10</span>, <span class="number">6</span>))
+<span class="variable">plt</span>.<span class="function">plot</span>(<span class="variable">meses</span>, <span class="variable">temperaturas</span>, <span class="variable">marker</span>=<span class="highlight">'o'</span>, <span class="variable">label</span>=<span class="highlight">'Temp. Mensual'</span>)
+<span class="variable">plt</span>.<span class="function">axhline</span>(<span class="variable">y</span>=<span class="variable">temp_promedio</span>, <span class="variable">color</span>=<span class="highlight">'r'</span>, <span class="variable">linestyle</span>=<span class="highlight">'--'</span>, <span class="variable">label</span>=<span class="highlight">f'Promedio ({temp_promedio:.2f}°C)'</span>)
+
+<span class="variable">plt</span>.<span class="function">title</span>(<span class="highlight">'Temperaturas Promedio Mensuales'</span>)
+<span class="variable">plt</span>.<span class="function">xlabel</span>(<span class="highlight">'Mes del Año'</span>)
+<span class="variable">plt</span>.<span class="function">ylabel</span>(<span class="highlight">'Temperatura (°C)'</span>)
+<span class="variable">plt</span>.<span class="function">xticks</span>(<span class="variable">meses</span>) <span class="comment"># Asegura que se muestren todos los meses en el eje X</span>
+<span class="variable">plt</span>.<span class="function">legend</span>() <span class="comment"># Muestra las etiquetas (labels)</span>
+<span class="variable">plt</span>.<span class="function">grid</span>(<span class="boolean">True</span>)
+<span class="variable">plt</span>.<span class="function">show</span>()
+                </pre></div>
+            </div>
+        </div>

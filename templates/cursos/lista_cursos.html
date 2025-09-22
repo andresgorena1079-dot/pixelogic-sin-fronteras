@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="catalog-header">
+        <h1>Catálogo de Cursos</h1>
+        <p class="lesson-intro">Explora nuestra oferta educativa. Cada curso está diseñado para llevarte de cero a experto.</p>
+    </div>
+
+    <hr>
+
+    <div class="course-catalog-list">
+        {% for curso in cursos %}
+            <a href="{% url 'cursos:detalle_curso' curso.id %}" class="course-card-item">
+                {% if curso.logo %}
+                    <img src="{{ curso.logo.url }}" alt="Logo del curso {{ curso.titulo }}" class="course-card-logo">
+                {% endif %}
+                
+                <h3>{{ curso.titulo }}</h3>
+                <p>{{ curso.descripcion }}</p>
+
+                {% if user.is_authenticated %}
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: {{ curso.progreso_porcentaje }}%;"></div>
+                    </div>
+                    <small>{{ curso.progreso_porcentaje }}% completado</small>
+                {% endif %}
+            </a>
+        {% empty %}
+            <p>Aún no hay cursos disponibles. ¡Vuelve pronto!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

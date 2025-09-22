@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 7, Lección 3: Desarrollo Web con Flask y Requests - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 3: Desarrollo Web con Flask y Requests</h1>
+        <p class="lesson-intro">
+            En nuestra última lección, abriremos la puerta a dos de las áreas más importantes del desarrollo profesional con Python: la creación de aplicaciones web con **Flask** y la comunicación con otros servicios a través de internet usando **Requests**.
+        </p>
+        <div class="note">
+            <p><strong>Instalación:</strong> Necesitarás instalar ambas librerías. En tu terminal, ejecuta:<br><code>pip install Flask requests</code></p>
+        </div>
+
+        <hr>
+
+        <h2>Tema 1: Flask - Creando tu Primera Aplicación Web</h2>
+        <p>**Flask** es un "micro-framework" para desarrollo web. Se le llama "micro" porque es minimalista y fácil de empezar, pero es increíblemente potente y se usa en producción en miles de empresas. Con Flask, puedes crear un servidor web en muy pocas líneas de código.</p>
+        
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Una Aplicación Mínima con Flask</h3>
+            <p><strong>Conceptos Clave:</strong></p>
+            <ul>
+                <li><strong><code>@app.route('/')</code>:</strong> Un decorador que asocia una URL (en este caso, la raíz del sitio `/`) con una función de Python.</li>
+                <li><strong>Función de Vista:</strong> La función que se ejecuta cuando un usuario visita la ruta asociada. Lo que esta función retorna es lo que el usuario verá en su navegador.</li>
+            </ul>
+            <p><strong>Ejemplo Práctico (guarda esto como `app.py`):</strong></p>
+            <div class="code-block"><pre>
+<span class="keyword">from</span> <span class="variable">flask</span> <span class="keyword">import</span> <span class="variable">Flask</span>
+
+<span class="variable">app</span> = <span class="variable">Flask</span>(__name__) <span class="comment"># Creamos la instancia de la aplicación</span>
+
+@<span class="variable">app</span>.<span class="function">route</span>(<span class="highlight">'/'</span>) <span class="comment"># Definimos la ruta para la página de inicio</span>
+<span class="keyword">def</span> <span class="function">hola_mundo</span>():
+    <span class="keyword">return</span> <span class="highlight">'¡Hola, Mundo desde Flask!'</span>
+
+<span class="comment"># Para ejecutar:</span>
+<span class="comment"># 1. Abre la terminal en la carpeta del archivo.</span>
+<span class="comment"># 2. Ejecuta el comando: flask run</span>
+<span class="comment"># 3. Abre tu navegador y ve a http://127.0.0.1:5000</span>
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <h2>Tema 2: Requests - Consumiendo APIs de Internet</h2>
+        <p>Una **API** (Interfaz de Programación de Aplicaciones) es como un "camarero" en un restaurante. Tú (tu programa) no entras a la cocina (el servidor de otra empresa), sino que le pides al camarero (la API) lo que necesitas, y él te lo trae. La librería `requests` es la forma más sencilla de hacer estas "peticiones" en Python.</p>
+
+        <div class="concept-card">
+            <h3>🔵 Ficha Técnica: Petición GET con <code>requests.get()</code></h3>
+            <p><strong>Descripción:</strong> `requests.get()` envía una petición HTTP de tipo GET a una URL para obtener información.</p>
+            <p><strong>Retorna:</strong> Un objeto `Response`. Los datos que nos interesan suelen estar en formato JSON y se pueden acceder con el método `.json()`.</p>
+            <p><strong>Ejemplo Práctico (obteniendo un dato curioso de gatos):</strong></p>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">requests</span>
+
+<span class="variable">URL_API</span> = <span class="highlight">"https://catfact.ninja/fact"</span>
+
+<span class="keyword">try</span>:
+    <span class="variable">respuesta</span> = <span class="variable">requests</span>.<span class="function">get</span>(<span class="variable">URL_API</span>)
+    <span class="variable">respuesta</span>.<span class="function">raise_for_status</span>() <span class="comment"># Lanza un error si la petición falló (ej. error 404)</span>
+
+    <span class="variable">datos</span> = <span class="variable">respuesta</span>.<span class="function">json</span>() <span class="comment"># Convierte la respuesta JSON a un diccionario de Python</span>
+    <span class="variable">dato_curioso</span> = <span class="variable">datos</span>[<span class="highlight">'fact'</span>]
+    
+    <span class="function">print</span>(<span class="highlight">"--- Dato Curioso de Gatos ---"</span>)
+    <span class="function">print</span>(<span class="variable">dato_curioso</span>)
+
+<span class="keyword">except</span> <span class="variable">requests</span>.<span class="variable">exceptions</span>.<span class="variable">RequestException</span> <span class="keyword">as</span> <span class="variable">e</span>:
+    <span class="function">print</span>(<span class="highlight">f"Error al conectar con la API: {e}"</span>)
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicio: Generador de Chistes de Programadores</h3>
+            <p><strong>Objetivo:</strong> Usar la librería `requests` para conectarse a una API pública de chistes y mostrar un chiste al usuario.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `03_chistes_api.py`. Importa `requests`.</li>
+                <li>Usaremos la API de chistes para programadores: `https://official-joke-api.appspot.com/random_joke`.</li>
+                <li>Usa `requests.get()` para hacer una petición a esa URL.</li>
+                <li>Convierte la respuesta a formato JSON usando el método `.json()`.</li>
+                <li>El diccionario resultante tendrá dos claves: `"setup"` (el inicio del chiste) y `"punchline"` (el remate). Extrae ambos valores.</li>
+                <li>Imprime el inicio del chiste, haz una pequeña pausa (puedes usar `input("Presiona Enter para ver el remate...")`) y luego imprime el remate.</li>
+                <li>Envuelve tu código en un bloque `try-except` para manejar posibles errores de conexión.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM7L3-1')">Ver Solución</span>
+            <div id="solucionM7L3-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">requests</span>
+
+<span class="variable">API_URL</span> = <span class="highlight">"https://official-joke-api.appspot.com/random_joke"</span>
+
+<span class="function">print</span>(<span class="highlight">"--- Generador de Chistes para Programadores ---"</span>)
+<span class="keyword">try</span>:
+    <span class="variable">respuesta</span> = <span class="variable">requests</span>.<span class="function">get</span>(<span class="variable">API_URL</span>)
+    <span class="variable">respuesta</span>.<span class="function">raise_for_status</span>() <span class="comment"># Buena práctica para verificar errores</span>
+
+    <span class="variable">chiste</span> = <span class="variable">respuesta</span>.<span class="function">json</span>()
+    <span class="variable">inicio</span> = <span class="variable">chiste</span>[<span class="highlight">'setup'</span>]
+    <span class="variable">remate</span> = <span class="variable">chiste</span>[<span class="highlight">'punchline'</span>]
+
+    <span class="function">print</span>(<span class="highlight">f"\nPregunta: {inicio}"</span>)
+    <span class="function">input</span>(<span class="highlight">"(Presiona Enter para ver el remate...)"</span>)
+    <span class="function">print</span>(<span class="highlight">f"Respuesta: {remate}"</span>)
+
+<span class="keyword">except</span> <span class="variable">requests</span>.<span class="variable">exceptions</span>.<span class="variable">RequestException</span> <span class="keyword">as</span> <span class="variable">e</span>:
+    <span class="function">print</span>(<span class="highlight">f"No se pudo obtener un chiste. Error: {e}"</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="02_numpy_y_matplotlib.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="../../index.html" class="nav-button">
+                Fin del Curso <i class="fas fa-trophy"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>

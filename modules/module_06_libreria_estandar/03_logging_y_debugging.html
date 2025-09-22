@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 6, Lección 3: Logging y Debugging - Python Sin Fronteras</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === "block") {
+                solution.style.display = "none";
+            } else {
+                solution.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lección 3: Logging y Debugging</h1>
+        <p class="lesson-intro">
+            Escribir código es solo una parte del trabajo. La otra es encontrar y corregir errores (<strong>debugging</strong>) y registrar lo que hace tu programa (<strong>logging</strong>). Usar `print()` para depurar está bien al principio, pero para aplicaciones serias, Python ofrece herramientas mucho más potentes y profesionales.
+        </p>
+
+        <hr>
+
+        <h2>Tema 1: Módulo <code>logging</code> - Un Registro de Eventos Profesional</h2>
+        <p>El módulo `logging` te permite registrar mensajes con diferentes niveles de severidad. Esto es infinitamente mejor que `print()` porque puedes filtrar mensajes, guardarlos en un archivo y obtener información detallada como la fecha, hora y el nivel del evento.</p>
+        
+        <div class="concept-card">
+            <h3>Los 5 Niveles de Logging</h3>
+            <p>El sistema de logging tiene 5 niveles estándar, ordenados de menor a mayor severidad. Al configurar el logger a un nivel (ej: INFO), solo se registrarán los mensajes de ese nivel o superiores.</p>
+            
+            <h4>🔵 Nivel: <code>DEBUG</code></h4>
+            <ul>
+                <li><strong>¿Para qué sirve?</strong> Para el diagnóstico detallado. Es el "microscopio" del programador.</li>
+                <li><strong>¿Dónde se emplea?</strong> Durante el desarrollo para rastrear el valor de variables, el flujo de ejecución, o estados complejos. Nunca debería estar activado en un entorno de producción.</li>
+            </ul>
+
+            <h4>🔵 Nivel: <code>INFO</code></h4>
+            <ul>
+                <li><strong>¿Para qué sirve?</strong> Para confirmar que todo funciona como se espera. Es el "diario de a bordo" de la aplicación.</li>
+                <li><strong>¿Dónde se emplea?</strong> Para registrar eventos rutinarios e importantes: "Usuario X ha iniciado sesión", "Proceso de pago completado", "Conexión a la base de datos establecida".</li>
+            </ul>
+
+            <h4>🔵 Nivel: <code>WARNING</code></h4>
+            <ul>
+                <li><strong>¿Para qué sirve?</strong> Para indicar que algo inesperado sucedió, pero el software sigue funcionando. Son alertas que pueden requerir atención.</li>
+                <li><strong>¿Dónde se emplea?</strong> Para situaciones como "Contraseña a punto de expirar", "Uso de disco al 80%", o "Parámetro obsoleto detectado".</li>
+            </ul>
+
+            <h4>🔵 Nivel: <code>ERROR</code></h4>
+            <ul>
+                <li><strong>¿Para qué sirve?</strong> Para registrar un problema serio que impidió que una operación se completara.</li>
+                <li><strong>¿Dónde se emplea?</strong> Típicamente dentro de un bloque `except`, cuando una operación crítica falla: "No se pudo conectar a la base de datos", "El archivo de configuración no se encontró".</li>
+            </ul>
+
+            <h4>🔵 Nivel: <code>CRITICAL</code></h4>
+            <ul>
+                <li><strong>¿Para qué sirve?</strong> Para un error gravísimo que puede causar que la aplicación se detenga por completo.</li>
+                <li><strong>¿Dónde se emplea?</strong> En situaciones catastróficas: "El disco duro está lleno, no se puede escribir más", "Fallo de un componente crítico del sistema".</li>
+            </ul>
+            
+            <h4>¿Cómo se implementan? (Ejemplo Funcional)</h4>
+            <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">logging</span>
+
+<span class="comment"># Configuramos el logger para que solo muestre mensajes de nivel WARNING y superiores</span>
+<span class="variable">logging</span>.<span class="function">basicConfig</span>(<span class="variable">level</span>=<span class="variable">logging</span>.<span class="variable">WARNING</span>, <span class="variable">format</span>=<span class="highlight">'%(levelname)s: %(message)s'</span>)
+
+<span class="comment"># Estos mensajes serán ignorados porque su nivel es inferior a WARNING</span>
+<span class="variable">logging</span>.<span class="function">debug</span>(<span class="highlight">"Detalles de una variable interna."</span>)
+<span class="variable">logging</span>.<span class="function">info</span>(<span class="highlight">"El usuario ha accedido al panel."</span>)
+
+<span class="comment"># Estos mensajes SÍ aparecerán</span>
+<span class="variable">logging</span>.<span class="function">warning</span>(<span class="highlight">"La API externa está respondiendo lentamente."</span>)
+<span class="variable">logging</span>.<span class="function">error</span>(<span class="highlight">"No se pudo procesar el pago del usuario 123."</span>)
+<span class="variable">logging</span>.<span class="function">critical</span>(<span class="highlight">"¡Fallo total del sistema de autenticación!"</span>)
+
+<span class="comment"># Salida Esperada en la Consola</span>
+<span class="highlight">WARNING: La API externa está respondiendo lentamente.</span>
+<span class="highlight">ERROR: No se pudo procesar el pago del usuario 123.</span>
+<span class="highlight">CRITICAL: ¡Fallo total del sistema de autenticación!</span>
+            </pre></div>
+        </div>
+        
+        <hr>
+
+        <div class="exercise">
+            <h3>🚀 Ejercicio: Registrando un Proceso</h3>
+            <p><strong>Objetivo:</strong> Usar el módulo `logging` para registrar cada paso importante de un proceso en un archivo.</p>
+            <p><strong>Instrucciones:</strong></p>
+            <ol>
+                <li>Crea un script `03_procesador_datos.py`. Importa `logging` y `time`.</li>
+                <li>Configura `logging` para que guarde los mensajes en un archivo llamado `proceso.log`, con un nivel `INFO` y un formato que incluya la fecha/hora y el nivel del mensaje.</li>
+                <li>Define una lista de `datos` (ej: `["dato1", "dato2", "error", "dato3"]`).</li>
+                <li>Loguea un mensaje de `INFO` al inicio del proceso.</li>
+                <li>Usa un bucle `for` para iterar sobre los `datos`.
+                    <ul>
+                        <li>Dentro del bucle, loguea un mensaje `INFO` indicando qué dato se está procesando.</li>
+                        <li>Si el dato es igual a `"error"`, loguea un mensaje de `ERROR`.</li>
+                    </ul>
+                </li>
+                <li>Loguea un mensaje `INFO` al final del proceso.</li>
+                <li>Ejecuta el script y luego revisa el contenido del archivo `proceso.log`.</li>
+            </ol>
+            <span class="solution-toggle" onclick="toggleSolution('solucionM6L3-1')">Ver Solución</span>
+            <div id="solucionM6L3-1" class="exercise-solution">
+                <div class="code-block"><pre>
+<span class="keyword">import</span> <span class="variable">logging</span>
+<span class="keyword">import</span> <span class="variable">time</span>
+
+<span class="variable">logging</span>.<span class="function">basicConfig</span>(<span class="variable">filename</span>=<span class="highlight">'proceso.log'</span>, <span class="variable">level</span>=<span class="variable">logging</span>.<span class="variable">INFO</span>, <span class="variable">format</span>=<span class="highlight">'%(asctime)s - %(levelname)s - %(message)s'</span>)
+
+<span class="variable">datos</span> = [<span class="highlight">"dato1"</span>, <span class="highlight">"dato2"</span>, <span class="highlight">"error"</span>, <span class="highlight">"dato3"</span>]
+
+<span class="variable">logging</span>.<span class="function">info</span>(<span class="highlight">"Inicio del procesamiento de datos."</span>)
+
+<span class="keyword">for</span> <span class="variable">dato</span> <span class="keyword">in</span> <span class="variable">datos</span>:
+    <span class="keyword">if</span> <span class="variable">dato</span> == <span class="highlight">"error"</span>:
+        <span class="variable">logging</span>.<span class="function">error</span>(<span class="highlight">f"¡Error encontrado al procesar '{dato}'!"</span>)
+    <span class="keyword">else</span>:
+        <span class="variable">logging</span>.<span class="function">info</span>(<span class="highlight">f"Procesando '{dato}' correctamente."</span>)
+
+<span class="variable">logging</span>.<span class="function">info</span>(<span class="highlight">"Procesamiento de datos finalizado."</span>)
+
+<span class="function">print</span>(<span class="highlight">"Proceso completado. Revisa 'proceso.log' para ver los detalles."</span>)
+                </pre></div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="02_expresiones_regulares.html" class="nav-button">
+                <i class="fas fa-arrow-left"></i> Lección Anterior
+            </a>
+            <a href="../module_07_ecosistema_profesional/01_introduccion_a_pandas.html" class="nav-button">
+                Siguiente Lección <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Hecho con Python Sin Fronteras</p>
+        </div>
+    </div>
+
+</body>
+</html>
