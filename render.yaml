@@ -1,0 +1,23 @@
+databases:
+  - name: pixelogic-db
+    databaseName: pixelogic_db
+    user: pixelogic_user
+    plan: free
+
+services:
+  - type: web
+    name: pixelogic
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn pixelogic.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pixelogic-db
+          property: connectionString
+      - key: SECRET_KEY
+        value: "django-insecure-g6^bgn15%g_y2pv2wy$0(9ec=0jb0okm9ns+g$s@dhga#4wvkx"
+      - key: DEBUG
+        value: "False"
+      - key: DJANGO_SETTINGS_MODULE
+        value: "pixelogic.prod_settings"
