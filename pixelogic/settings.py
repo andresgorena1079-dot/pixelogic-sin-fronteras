@@ -4,10 +4,13 @@ from pathlib import Path
 import dj_database_url
 from decouple import config
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Seguridad
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
+
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = config(
@@ -19,7 +22,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
 
-# Aplicaciones
+# Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -38,7 +41,6 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-# Middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -53,11 +55,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "pixelogic.urls"
 
-# Templates
+# Templates configuration updated to find Allauth templates
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [
+            BASE_DIR / "templates",
+            BASE_DIR.parent / "templates",  # Templates outside pixelogic folder
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -72,12 +77,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "pixelogic.wsgi.application"
 
-# Base de datos
+# Database
 DATABASES = {
     "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
 }
 
-# Validadores de contraseña
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
@@ -87,13 +92,13 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# Internacionalización
+# Internationalization
 LANGUAGE_CODE = "es-la"
 TIME_ZONE = "America/Buenos_Aires"
 USE_I18N = True
 USE_TZ = True
 
-# Archivos estáticos
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -107,14 +112,13 @@ STORAGES = {
     },
 }
 
-# Archivos media
+# Media files
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# Campo primario
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Allauth - Configuración actualizada
+# Django Allauth configuration
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
@@ -128,7 +132,7 @@ ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGIN_METHODS = {"username", "email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "username*", "password1*", "password2*"]
 
-# Email
+# Email backend
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Google OAuth
