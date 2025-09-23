@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load account socialaccount %}
+{% load socialaccount %}
 
 {% block title %}{% trans "Registrarse" %}{% endblock %}
 
@@ -9,13 +9,14 @@
     <h2>Crear una Nueva Cuenta</h2>
     <p>Únete a Pixelogic para guardar tu progreso.</p>
 
-    <div class="social-login">
-        <a href="{% provider_login_url 'google' %}" class="social-btn google">
-            <i class="fab fa-google"></i> Registrarse con Google
-        </a>
-    </div>
-
-    <div class="separator">O regístrate con tu correo</div>
+    {% if socialaccount_providers %}
+      <div class="social-login">
+          <a href="{% provider_login_url 'google' next=request.GET.next %}" class="social-btn google">
+              <i class="fab fa-google"></i> Registrarse con Google
+          </a>
+      </div>
+      <div class="separator">O regístrate con tu correo</div>
+    {% endif %}
 
     <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}" autocomplete="off">
         {% csrf_token %}
@@ -26,7 +27,10 @@
             <input type="text" name="username" placeholder="Nombre de Usuario" required id="id_username">
         </div>
         <div class="form-group">
-            <input type="password" name="password" placeholder="Contraseña" required id="id_password1">
+            <input type="password" name="password1" placeholder="Contraseña" required id="id_password1">
+        </div>
+        <div class="form-group">
+            <input type="password" name="password2" placeholder="Repite la Contraseña" required id="id_password2">
         </div>
         {% if form.non_field_errors %}
             <div class="form-error">

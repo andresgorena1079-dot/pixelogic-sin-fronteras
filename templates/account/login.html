@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% load account socialaccount %}
+{% load socialaccount %}
 
 {% block title %}Iniciar Sesión{% endblock %}
 
 {% block content %}
 <div class="form-container">
   <h2>Iniciar Sesión</h2>
-  
+
   <form class="login" method="post" action="{% url 'account_login' %}" autocomplete="off">
     {% csrf_token %}
     <div class="form-group">
@@ -29,9 +29,11 @@
   <div class="separator">O</div>
 
   <div class="social-login">
-    <a href="{% provider_login_url 'google' %}" class="social-btn google">
+    {% if socialaccount_providers %}
+      <a href="{% provider_login_url 'google' next=request.GET.next %}" class="social-btn google">
         <i class="fab fa-google"></i> Continuar con Google
-    </a>
+      </a>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
