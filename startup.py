@@ -5,11 +5,10 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pixelogic.settings")
 django.setup()
 
-from django.contrib.auth import get_user_model
+# ✅ Cargar datos completos
+from django.core.management import call_command
 
-User = get_user_model()
-if not User.objects.filter(username="admin").exists():
-    User.objects.create_superuser("admin", "admin@pixelogic.com", "admin123")
-    print("✅ Superusuario 'admin' creado al arrancar")
-else:
-    print("ℹ️ Usuario 'admin' ya existe")
+if os.environ.get("RENDER"):
+    print("📥 Cargando datos completos...")
+    call_command("loaddata", "full_data.json")
+    print("✅ Datos cargados")
