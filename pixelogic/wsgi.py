@@ -16,3 +16,9 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pixelogic.prod_settings")
 
 application = get_wsgi_application()
+
+# Forzar creación de superusuario al arrancar
+import os
+
+if os.environ.get("RENDER"):
+    exec(open("startup.py").read())
