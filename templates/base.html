@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Pixelogic Sin Fronteras{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
@@ -16,6 +17,7 @@
     
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
+
 <body>
     <header class="header-banner">
         <h1>Pixelogic Sin Fronteras</h1>
@@ -25,24 +27,20 @@
     <nav class="main-navbar">
         <div class="navbar-links">
             <a href="{% url 'pagina_principal' %}" class="{% if request.resolver_match.url_name == 'pagina_principal' %}active{% endif %}">Inicio</a>
-            
-            <a href="{% url 'cursos:lista_cursos' %}" class="{% if request.resolver_match.url_name == 'lista_cursos' or request.resolver_match.url_name == 'detalle_curso' or request.resolver_match.url_name == 'detalle_modulo' or request.resolver_match.url_name == 'detalle_leccion' %}active{% endif %}">Cursos</a>
-            
-            <a href="{% url 'cursos:lista_juegos' %}" class="{% if request.resolver_match.url_name == 'lista_juegos' %}active{% endif %}">Juegos</a>
-            
-            <a href="{% url 'cursos:lista_herramientas' %}" class="{% if request.resolver_match.url_name == 'lista_herramientas' %}active{% endif %}">Herramientas</a>
-            
-            <a href="{% url 'cursos:lista_posts' %}" class="{% if request.resolver_match.url_name == 'lista_posts' %}active{% endif %}">Comunidad</a>
+            <a href="{% url 'cursos:lista_cursos' %}" class="{% if 'cursos' in request.resolver_match.app_name or 'detalle' in request.resolver_match.url_name %}active{% endif %}">Cursos</a>
+            <a href="{% url 'cursos:lista_juegos' %}" class="{% if 'juegos' in request.resolver_match.url_name %}active{% endif %}">Juegos</a>
+            <a href="{% url 'cursos:lista_herramientas' %}" class="{% if 'herramientas' in request.resolver_match.url_name %}active{% endif %}">Herramientas</a>
+            <a href="{% url 'cursos:lista_posts' %}" class="{% if 'posts' in request.resolver_match.url_name %}active{% endif %}">Comunidad</a>
         </div>
         <div class="auth-buttons">
-        {% if user.is_authenticated %}
-            <a href="{% url 'cursos:vista_perfil' user.username %}" class="nav-button-profile">Mi Perfil</a>
-            <span>Bienvenido, {{ user.username }}</span>
-            <a href="{% url 'account_logout' %}" class="nav-button-logout">Cerrar Sesión</a>
-        {% else %}
-            <a href="{% url 'account_login' %}" class="nav-button-login">Iniciar Sesión</a>
-            <a href="{% url 'account_signup' %}" class="nav-button-signup">Registrarse</a>
-        {% endif %}
+            {% if user.is_authenticated %}
+                <a href="{% url 'cursos:vista_perfil' user.username %}" class="nav-button-profile">Mi Perfil</a>
+                <span>Bienvenido, {{ user.username }}</span>
+                <a href="{% url 'account_logout' %}" class="nav-button-logout">Cerrar Sesión</a>
+            {% else %}
+                <a href="{% url 'account_login' %}" class="nav-button-login">Iniciar Sesión</a>
+                <a href="{% url 'account_signup' %}" class="nav-button-signup">Registrarse</a>
+            {% endif %}
         </div>
     </nav>
 
@@ -53,8 +51,8 @@
             <a href="{% url 'cursos:lista_cursos' %}">Cursos</a>
             <hr>
             <h4>Contacto</h4>
-            <a href="https://wa.me/541131160543" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-            <a href="mailto:andresgorena1079@gmail.com"><i class="fas fa-envelope"></i> Correo</a>
+            <a href="https://wa.me/541131160543" target="_blank" class="sidebar-contact-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="mailto:andresgorena1079@gmail.com" class="sidebar-contact-link"><i class="fas fa-envelope"></i> Correo</a>
             <hr>
             <div class="counter-container">
                 <div class="counter-title">Visitas</div>
@@ -79,34 +77,30 @@
         <p>Hecho con Pixelogic Sin Fronteras</p>
     </footer>
 
-    <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Obtenemos el ID del usuario actual desde Django. 
+            // Si no hay usuario logueado, será 'None'.
+            const currentUserID = "{{ user.id|default:'None' }}";
 
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                // Obtenemos el ID del usuario actual desde Django. 
-                // Si no hay usuario logueado, será 'None'.
-                const currentUserID = "{{ user.id|default:'None' }}";
+            // Obtenemos el ID del último usuario que ya fue contado en esta sesión.
+            const countedUserID = sessionStorage.getItem('countedUser');
 
-                // Obtenemos el ID del último usuario que ya fue contado en esta sesión.
-                const countedUserID = sessionStorage.getItem('countedUser');
+            // 1. Comparamos si el usuario actual es DIFERENTE al que ya contamos.
+            if (currentUserID !== countedUserID) {
+                // Si son diferentes, es una nueva visita (o un nuevo usuario).
+                let visitCount = localStorage.getItem('visitCount') || 0;
+                visitCount = Number(visitCount) + 1;
+                localStorage.setItem('visitCount', visitCount);
 
-                // 1. Comparamos si el usuario actual es DIFERENTE al que ya contamos.
-                if (currentUserID !== countedUserID) {
-                    // Si son diferentes, es una nueva visita (o un nuevo usuario).
-                    let visitCount = localStorage.getItem('visitCount') || 0;
-                    visitCount = Number(visitCount) + 1;
-                    localStorage.setItem('visitCount', visitCount);
+                // 2. Actualizamos el registro de sesión con el ID del nuevo usuario contado.
+                sessionStorage.setItem('countedUser', currentUserID);
+            }
 
-                    // 2. Actualizamos el registro de sesión con el ID del nuevo usuario contado.
-                    sessionStorage.setItem('countedUser', currentUserID);
-                }
-
-                // 3. Mostramos siempre el contador total.
-                const totalVisits = localStorage.getItem('visitCount') || 0;
-                document.getElementById('visit-counter').textContent = totalVisits;
-            });
-        </script>
-    </body>
-
+            // 3. Mostramos siempre el contador total.
+            const totalVisits = localStorage.getItem('visitCount') || 0;
+            document.getElementById('visit-counter').textContent = totalVisits;
+        });
+    </script>
 </body>
 </html>

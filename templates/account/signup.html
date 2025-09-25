@@ -6,19 +6,17 @@
 
 {% block content %}
 <div class="form-container">
-    <h2>Crear una Nueva Cuenta</h2>
+    <h2>{% trans "Crear una Nueva Cuenta" %}</h2>
     <p>Únete a Pixelogic para guardar tu progreso.</p>
 
-    {% if socialaccount_providers %}
-      <div class="social-login">
-          <a href="{% provider_login_url 'google' next=request.GET.next %}" class="social-btn google">
-              <i class="fab fa-google"></i> Registrarse con Google
-          </a>
-      </div>
-      <div class="separator">O regístrate con tu correo</div>
-    {% endif %}
+    <div class="social-login">
+        <a href="{% provider_login_url 'google' %}" class="social-btn google">
+            <i class="fab fa-google"></i> {% trans "Registrarse con Google" %}
+        </a>
+    </div>
 
-    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}" autocomplete="off">
+    <div class="separator">O regístrate con tu correo</div>
+    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
         <div class="form-group">
             <input type="email" name="email" placeholder="Correo Electrónico" required id="id_email">
@@ -32,12 +30,14 @@
         <div class="form-group">
             <input type="password" name="password2" placeholder="Repite la Contraseña" required id="id_password2">
         </div>
+        
         {% if form.non_field_errors %}
-            <div class="form-error">
+            <div class="form-error" style="color: #dc3545; text-align: center; margin-bottom: 15px;">
                 {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
             </div>
         {% endif %}
-        <button type="submit" class="cta-button">Crear Cuenta</button>
+        
+        <button type="submit" class="cta-button" style="width:100%;">Crear Cuenta</button>
     </form>
 </div>
 {% endblock %}

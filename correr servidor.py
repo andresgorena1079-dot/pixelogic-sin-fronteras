@@ -22,6 +22,13 @@ cursor.execute("DELETE FROM django_migrations;")
 connection.commit()
 exit()
 
+https://pixelogic-sin-fronteras.onrender.com/admin
+
+git add .
+git commit -m "Muevo templates dentro del proyecto para Render"
+git push origin main
 
 
-
+git add -f full_data.json
+git commit -m "Exporta base de datos con UTF-8 válido"
+git push origin main

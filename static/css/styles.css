@@ -167,10 +167,16 @@ body {
     justify-content: flex-start; /* Alinea el contenido a la izquierda */
     text-align: left;
 }
+
+
+
 .hero-content {
-    background-color: transparent; /* Sin fondo negro */
+    background-color: transparent;
     padding: 0;
-    max-width: 450px; /* Caja de texto más angosta */
+    max-width: 650px; /* Aumentamos el ancho máximo para el texto centrado */
+    /* --- AÑADIMOS ESTAS LÍNEAS --- */
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+    text-align: center; /* Centra el texto (h1, p) y el botón */
 }
 .hero-content h1 {
     font-size: 2.8em;
@@ -209,9 +215,9 @@ body {
     box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
 }
 .blog-card-image img {
-    height: 20px; /* Imágenes de blog más bajas */
-    width: 50%;
-    object-fit: contain;
+    height: 200px; /* Le damos una altura fija */
+    width: 100%;
+    object-fit: cover; /* MUY IMPORTANTE: Recorta la imagen para que encaje sin deformarse */
 }
 .blog-card-content { padding: 15px; }
 .blog-card-content h3 a { font-size: 1.2em; color: var(--primary-color); text-decoration: none;}
@@ -292,7 +298,7 @@ img {
 /* --- Encabezado con Banner --- */
 .header-banner {
     height:120px; 
-    background-image: url('/static/img/header_banner.png');
+    background-image: url('../img/header_banner.png');
     background-size: 400px auto; 
     background-repeat: no-repeat;
     background-position: left;
@@ -1903,4 +1909,48 @@ img {
     padding: 15px;
     text-align: center;
     font-size: 1.1em;
+}
+/* EN styles.css (AÑADIR AL FINAL) */
+
+/* --- Estilos para enlaces de contacto en la Sidebar --- */
+.sidebar-contact-link {
+    font-size: 1.1em; /* Letra más grande */
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.sidebar-contact-link i {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    color: var(--primary-color); /* Color azul para los iconos */
+}
+
+.sidebar-contact-link:hover {
+    background-color: var(--card-bg); /* Fondo sutil al pasar el ratón */
+    color: var(--highlight-color); /* Texto se vuelve amarillo */
+}
+
+/* EN styles.css (AÑADIR AL FINAL) */
+
+/* --- Estilo para botones secundarios --- */
+.cta-button-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1em;
+    text-decoration: none;
+    border: 2px solid var(--primary-color);
+    transition: all 0.3s ease;
+    display: inline-block; /* Asegura que se apliquen los estilos correctamente */
+}
+
+.cta-button-secondary:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(88, 166, 255, 0.4);
 }

@@ -4,13 +4,18 @@
 # Archivos de caché de Python
 __pycache__/
 *.pyc
+client_secret_*.json
 
-# Base de datos local
+# Base de datos local (solo desarrollo)
 db.sqlite3
 
 # Archivos de secretos y variables de entorno
 .env
-*.json
+
+# ✅ Permitir db.json (datos de producción)
+# ✅ Bloquear solo JSON temporales o de desarrollo
+*.tmp.json
+datos_backup.json
 
 # Archivos multimedia subidos por los usuarios
 /media/
