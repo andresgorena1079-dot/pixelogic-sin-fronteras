@@ -32,3 +32,13 @@ git push origin main
 git add -f full_data.json
 git commit -m "Exporta base de datos con UTF-8 válido"
 git push origin main
+
+
+# Prepara todos los archivos
+git add .
+
+# Crea el commit final
+git commit -m "Versión final lista para despliegue con datos"
+
+# Sube todo a GitHub
+git push origin main

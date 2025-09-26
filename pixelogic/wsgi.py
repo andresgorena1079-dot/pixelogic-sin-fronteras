@@ -8,4 +8,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pixelogic.settings")
 
 application = get_wsgi_application()
 
-# La ejecución de startup.py ha sido eliminada.
+# --- ACTIVADO PARA LA CARGA DE DATOS EN RENDER ---
+# IMPORTANTE: Comentar la línea 'exec(...)' después de la carga exitosa.
+if os.environ.get("RENDER"):
+    exec(open("startup.py").read())
