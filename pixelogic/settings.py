@@ -1,5 +1,3 @@
-# EN pixelogic/settings.py (Versión Final y Robusta)
-
 import os
 from pathlib import Path
 
@@ -10,23 +8,16 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-# === BASE Y SEGURIDAD ===
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-# === HOSTS PERMITIDOS ===
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    ".onrender.com",
-]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".onrender.com"]
 RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default=None)
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
 
-# === APPS ===
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -47,7 +38,6 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-# === MIDDLEWARE ===
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -74,19 +64,15 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-            ],
+            ]
         },
-    },
+    }
 ]
 
 WSGI_APPLICATION = "pixelogic.wsgi.application"
-
-# === BASE DE DATOS ===
 DATABASES = {
     "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
 }
-
-# === VALIDACIÓN DE CONTRASEÑAS ===
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
@@ -96,13 +82,11 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# === INTERNACIONALIZACIÓN ===
 LANGUAGE_CODE = "es-la"
 TIME_ZONE = "America/Buenos_Aires"
 USE_I18N = True
 USE_TZ = True
 
-# === ARCHIVOS ESTÁTICOS Y MEDIA (Cloudinary) ===
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -116,7 +100,7 @@ STORAGES = {
 }
 CLOUDINARY_URL = config("CLOUDINARY_URL", default=None)
 
-# === ALLAUTH (AUTENTICACIÓN) ===
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
@@ -127,7 +111,6 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
-# ✅ MEJORA: Configuraciones de seguridad que SOLO se aplican en producción (cuando DEBUG=False)
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "httpss")
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
