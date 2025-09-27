@@ -15,6 +15,7 @@
     --sidebar-bg: #232326; 
     --highlight-color: #f0c419;
 }
+
 /* --- Estilos para las tarjetas de publicaciones en la lista --- */
 .post-list {
     list-style: none;
@@ -27,7 +28,7 @@
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    position: relative; /* Importante para posicionar el contador de "Me gusta" */
+    position: relative;
     transition: all 0.3s ease;
 }
 
@@ -38,7 +39,7 @@
 
 .post-card a {
     text-decoration: none;
-    color: inherit; /* Heredar el color del texto */
+    color: inherit;
 }
 
 .post-card h3 {
@@ -67,24 +68,24 @@
     position: absolute;
     top: 15px;
     right: 20px;
-    background-color: var(--highlight-color); /* Un color que destaque */
+    background-color: var(--highlight-color);
     color: white;
     padding: 5px 12px;
-    border-radius: 15px; /* Bordes redondeados para un aspecto de "pastilla" */
+    border-radius: 15px;
     font-weight: bold;
     font-size: 0.9em;
     display: flex;
     align-items: center;
-    gap: 5px; /* Espacio entre el ícono y el número */
+    gap: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .post-likes-count i.fas.fa-thumbs-up {
-    color: white; /* Asegura que el ícono sea blanco */
+    color: white;
 }
 
 .delete-post-btn {
-    background-color: var(--delete-button-bg); /* Define esta variable en tu ':root' si no existe */
+    background-color: #d9534f;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -94,8 +95,40 @@
 }
 
 .delete-post-btn:hover {
-    background-color: #d9534f; /* Un rojo más oscuro al pasar el ratón */
+    background-color: #c9302c;
 }
+
+
+/* --- Estilos para el nuevo diseño del blog --- */
+.blog-post-card-layout {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--card-bg);
+    margin-bottom: 20px;
+}
+
+.blog-post-image-container {
+    flex-shrink: 0;
+    order: 2; /* Coloca la imagen a la derecha */
+    width: 250px;
+}
+
+.blog-post-image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.blog-post-content {
+    flex-grow: 1;
+    order: 1; /* Coloca el texto a la izquierda */
+}
+
 
 /* ==========================================================================
    2. ESTRUCTURA Y LAYOUT PRINCIPAL (CON CSS GRID)
@@ -103,7 +136,7 @@
 html, body {
     height: 100vh;
     margin: 0;
-    overflow: hidden; /* Evita el scroll en la página entera */
+    overflow: hidden;
     font-family: 'Roboto', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -112,8 +145,8 @@ html, body {
 
 body {
     display: grid;
-    grid-template-columns: 250px 1fr; /* Columna fija para sidebar, resto flexible */
-    grid-template-rows: auto auto 1fr auto; /* Header, Navbar, Contenido (ocupa el resto), Footer */
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: auto auto 1fr auto;
     grid-template-areas:
         "header header"
         "navbar navbar"
@@ -123,10 +156,10 @@ body {
 
 .header-banner { grid-area: header; }
 .main-navbar { grid-area: navbar; }
-.sidebar { grid-area: sidebar; overflow-y: auto; } /* Scroll por si el menú lateral es muy largo */
+.sidebar { grid-area: sidebar; overflow-y: auto; }
 .main-content { 
     grid-area: main; 
-    overflow-y: auto; /* AÑADE EL SCROLL SOLAMENTE AL ÁREA DE CONTENIDO */
+    overflow-y: auto;
     padding: 20px;
 }
 .footer { grid-area: footer; }
@@ -137,46 +170,43 @@ body {
 
 /* --- 1. Contenedor Principal y Ancho Angosto --- */
 .homepage-wrapper .container {
-    max-width: 960px; /* Hacemos el contenido principal aún más angosto */
+    max-width: 960px;
     margin: 0 auto;
     padding: 0 15px;
 }
 
 /* --- 2. Secciones Compactas --- */
 .page-section.compact {
-    padding: 35px 0; /* Espaciado vertical MÍNIMO entre secciones */
-    border-bottom: 1px solid var(--border-color); /* Separador sutil */
+    padding: 35px 0;
+    border-bottom: 1px solid var(--border-color);
 }
 .section-header {
     text-align: center;
-    margin-bottom: 2px; /* Menos espacio debajo del título */
+    margin-bottom: 2px;
 }
 .section-title {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.8em; /* Títulos más pequeños y elegantes */
+    font-size: 1.8em;
     color: var(--text-color);
     display: inline-block;
 }
 
 /* --- 3. Hero Section (Bienvenida) Compacta --- */
 .hero-section.compact {
-    height: 450px; /* Altura fija y mucho más baja */
+    height: 450px;
     min-height: auto;
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Alinea el contenido a la izquierda */
+    justify-content: flex-start;
     text-align: left;
 }
-
-
 
 .hero-content {
     background-color: transparent;
     padding: 0;
-    max-width: 650px; /* Aumentamos el ancho máximo para el texto centrado */
-    /* --- AÑADIMOS ESTAS LÍNEAS --- */
-    margin: 0 auto; /* Centra el contenedor horizontalmente */
-    text-align: center; /* Centra el texto (h1, p) y el botón */
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
 }
 .hero-content h1 {
     font-size: 2.8em;
@@ -185,21 +215,20 @@ body {
 .hero-content p {
     font-size: 1.1em;
     color: #e0e0e0;
-    background-color: rgba(0,0,0,0.5); /* Fondo sutil solo para el párrafo */
+    background-color: rgba(0,0,0,0.5);
     padding: 10px;
     border-radius: 5px;
 }
 .hero-content .cta-button {
-    padding: 12px 25px; /* Botón más pequeño */
+    padding: 12px 25px;
     font-size: 0.9em;
 }
-
 
 /* --- 4. Tarjetas del Blog y Cursos (Más Pequeñas) --- */
 .blog-grid, .course-card-list {
     display: grid;
-    grid-template-columns: repeat(1, 1fr); /* Siempre 3 columnas */
-    gap: 20px; /* Espacio reducido entre tarjetas */
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
 }
 .blog-card, .course-card {
     background-color: var(--card-bg);
@@ -215,9 +244,9 @@ body {
     box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
 }
 .blog-card-image img {
-    height: 200px; /* Le damos una altura fija */
+    height: 100px;
     width: 100%;
-    object-fit: cover; /* MUY IMPORTANTE: Recorta la imagen para que encaje sin deformarse */
+    object-fit: contain;
 }
 .blog-card-content { padding: 15px; }
 .blog-card-content h3 a { font-size: 1.2em; color: var(--primary-color); text-decoration: none;}
@@ -228,12 +257,11 @@ body {
     text-align: center;
 }
 .course-card img {
-    width: 80px; /* Logos más pequeños */
+    width: 80px;
     height: 80px;
     margin-bottom: 10px;
 }
 .course-card h3 { font-size: 1.2em; color: var(--primary-color); }
-
 
 /* --- 5. Sección "Acerca de" --- */
 .about-us-section {
@@ -245,6 +273,20 @@ body {
     gap: 30px;
 }
 .about-us-text .section-title { text-align: left; }
+
+/* Estilo para los títulos de los posts dentro de las tarjetas */
+.blog-post-content h3 a {
+    color: var(--highlight-color); /* Cambia el color a un amarillo brillante */
+    font-size: 1.5em; /* Aumenta el tamaño del título */
+    text-decoration: none; /* Asegura que no tenga subrayado por defecto */
+    transition: color 0.3s ease; /* Añade una transición de color para el hover */
+}
+
+.blog-post-content h3 a:hover {
+    color: var(--primary-color); /* Cambia a azul al pasar el ratón */
+    text-decoration: underline; /* Añade un subrayado al pasar el ratón */
+}
+
 /* ==========================================================================
    ESTILOS FINALES PARA IMÁGENES (TAMAÑOS CONTROLADOS)
    ========================================================================== */
@@ -253,12 +295,12 @@ body {
 img {
     max-width: 100%;
     height: auto;
-    display: block; /* Evita espacios extra debajo de las imágenes */
+    display: block;
 }
 
 /* --- 1. Sección de Bienvenida (Hero) más compacta --- */
 .hero-section.compact {
-    height: 0px; /* <-- MODIFICA AQUÍ para cambiar la altura del bloque de bienvenida */
+    height: 0px;
     min-height: auto;
     display: flex;
     align-items: center;
@@ -266,21 +308,16 @@ img {
 
 /* --- 2. Imagen de la Tarjeta del Blog (más pequeña) --- */
 .blog-card-image img {
-    width: 100%; /* La imagen ocupa todo el ancho de la tarjeta */
-    
-    /* --- DETALLES DE TAMAÑO --- */
-    height: 150px; /* <-- MODIFICA ESTE VALOR para hacerla más alta o baja */
-
-    object-fit: cover; /* Recorta la imagen para que encaje sin deformarse (muy importante) */
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
 }
 
 /* --- 3. Imagen de los Cursos Destacados (pequeña y consistente) --- */
 .course-card img {
-    /* --- DETALLES DE TAMAÑO --- */
-    width: 70px;  /* <-- Ancho del logo */
-    height: 70px; /* <-- Alto del logo */
-
-    object-fit: contain; /* 'contain' es mejor para logos, asegura que se vea completo */
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
     margin: 0 auto 10px auto;
 }
 
@@ -288,7 +325,7 @@ img {
 .about-us-image img {
     width: 50%;
     border-radius: 50px;
-    object-fit: contain; /* Recorta para mantener la proporción */
+    object-fit: contain;
 }
 
 /* ==========================================================================
@@ -297,11 +334,16 @@ img {
 
 /* --- Encabezado con Banner --- */
 .header-banner {
-    height:120px; 
+    height: 120px;
     background-image: url('../img/header_banner.png');
-    background-size: 400px auto; 
+    background-size: 400px auto;
     background-repeat: no-repeat;
     background-position: left;
+    
+    /* MODIFICADO: AÑADIDO PARA CENTRAR TEXTO Y MEJORAR EL FONDO */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/header_banner.png');
+    background-position: left center;
+    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -382,7 +424,6 @@ img {
 }
 .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-
 /* ==========================================================================
    4. ESTILOS DE PÁGINAS (HOMEPAGE, CATÁLOGO, ETC.)
    ========================================================================== */
@@ -404,7 +445,7 @@ img {
     font-size: 1em;
     max-width: 700px;
     margin: 0 auto 30px auto;
-    color: var(--secondary-text-color);
+    color: rgb(246, 255, 0);
 }
 .cta-button {
     background-color: var(--secondary-color);
@@ -442,7 +483,7 @@ img {
     border: 1px solid rgba(91, 183, 245, 0.8);
     backdrop-filter: blur(10px);
     border-radius: 10px;
-    width: 250px;
+    width: 180px;
     padding: 25px;
     text-decoration: none;
     color: var(--text-color);
@@ -471,7 +512,6 @@ img {
     flex-grow: 1;
     margin-bottom: 15px;
 }
-
 
 /* ==========================================================================
    ESTILOS PARA PÁGINA DE DETALLE DE MÓDULO (LISTA DE LECCIONES)
@@ -507,7 +547,6 @@ img {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
-    
     transition: transform 0.2s, box-shadow 0.2s;
 }
 .lesson-list li:hover {
@@ -545,6 +584,7 @@ img {
 .status-icon.incomplete {
     color: var(--border-color);
 }
+
 /* ==========================================================================
    6. FORMULARIOS DE AUTENTICACIÓN
    ========================================================================== */
@@ -572,8 +612,8 @@ img {
 
 .modules-orbit-container {
     position: relative;
-    width: 1100px; /* Mantener este tamaño para el espacio general */
-    height: 1000px; /* Mantener este tamaño para el espacio general */
+    width: 1100px;
+    height: 1000px;
     margin: 50px auto;
     display: flex;
     justify-content: center;
@@ -612,7 +652,7 @@ img {
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     transition: all 0.4s ease-in-out;
-    text-align: center; /* Aseguramos que el contenido esté centrado */
+    text-align: center;
 }
 .module-card.orbit-item h4 {
     color: var(--primary-color);
@@ -643,21 +683,20 @@ img {
 .module-pos-5 { transform: rotate(10deg) translateX(350px) rotate(-10deg) translateY(-50%) translateX(-50%); }
 .module-pos-7 { transform: rotate(55deg) translateX(350px) rotate(-55deg) translateY(-50%) translateX(-50%); }
 
-
 /* Estilos para la barra de progreso dentro de los módulos */
 .progress-container { 
     width: 100%; 
     background-color: var(--code-bg); 
     border-radius: 5px; 
     margin-top: 10px; 
-    height: 10px; /* Un poco más delgada */
+    height: 10px;
     overflow: hidden; 
 }
 .progress-bar { 
     height: 100%; 
-    background-color: var(--secondary-color); /* Color secundario para el progreso */
+    background-color: var(--secondary-color);
     border-radius: 5px; 
-    transition: width 0.5s ease-out; /* Animación de progreso */
+    transition: width 0.5s ease-out;
 }
 
 /* ==========================================================================
@@ -666,14 +705,11 @@ img {
 
 /* Contenedor principal del detalle del curso */
 .course-landing {
-    /* Esta línea centra todo el contenido: título, descripción y la línea hr */
     text-align: center;
 }
 
 /* Regla específica para el color del título en esta página */
 .course-landing h1 {
-    /* --- ¡AQUÍ PUEDES CAMBIAR EL COLOR! --- */
-    /* Lo cambiamos a tu color de resalte amarillo. */
     color: var(--highlight-color); 
 }
 /* ==========================================================================
@@ -683,14 +719,14 @@ img {
 /* --- Barra de Navegación de Lección (Fija/Sticky) --- */
 .lesson-navigation {
     position: sticky;
-    top: -20px; /* Se pega al inicio del contenedor .main-content */
+    top: -20px;
     background-color: var(--bg-color); 
     z-index: 900;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    margin: -20px -20px 30px -20px; /* Ocupa todo el ancho */
+    margin: -20px -20px 30px -20px;
     border-bottom: 1px solid var(--border-color);
 }
 .lesson-nav-button {
@@ -707,7 +743,7 @@ img {
     transition: all 0.3s ease;
 }
 .lesson-nav-button:hover {
-    background-color: #4a91e2; /* Azul más claro */
+    background-color: #4a91e2;
     transform: translateY(-2px);
     color: white;
 }
@@ -723,7 +759,6 @@ img {
 .lesson-nav-button.index:hover {
     background-color: #238636;
 }
-
 
 /* --- Contenedores de Contenido (Conceptos, Ejercicios) --- */
 .lesson-intro { font-size: 1.1em; color: var(--secondary-text-color); }
@@ -741,7 +776,7 @@ img {
 }
 
 .exercise {
-    background-color: #263238; /* Un fondo ligeramente diferente */
+    background-color: #263238;
     border: 1px solid #4A555A;
     padding: 20px;
     margin: 25px 0;
@@ -826,7 +861,7 @@ img {
    ESTILOS PARA LA PÁGINA DEL CATÁLOGO DE CURSOS
    ========================================================================== */
 .catalog-header h1 {
-    margin-bottom: 1px; /* Reduce el espacio debajo del título principal */
+    margin-bottom: 1px;
 }
 .catalog-header {
     text-align: center;
@@ -837,8 +872,7 @@ img {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
-    /* NUEVO: Centra las tarjetas en la grilla */
-    justify-items: center; 
+    justify-items: center;
 }
 
 /* Estilo para cada tarjeta del catálogo */
@@ -852,13 +886,9 @@ img {
     text-decoration: none;
     color: var(--text-color);
     transition: transform 0.3s, box-shadow 0.3s;
-    
-    /* --- ¡AQUÍ ESTÁ LA CORRECCIÓN! --- */
-    /* Le damos un ancho máximo para que no ocupe toda la pantalla */
     width: 100%;
-    max-width: 250px; 
+    max-width: 250px;
 }
-
 
 /* Efecto de brillo al pasar el cursor */
 .course-card-item:hover {
@@ -871,7 +901,7 @@ img {
     width: 150px;
     height: 150px;
     object-fit: contain;
-    margin: 0 auto 20px auto; /* Centra el logo */
+    margin: 0 auto 20px auto;
     display: block;
 }
 
@@ -885,12 +915,12 @@ img {
 .course-card-item p {
     color: var(--secondary-text-color);
     font-size: 0.95em;
-    flex-grow: 1; /* Hace que el párrafo ocupe el espacio disponible, alineando las barras de progreso */
+    flex-grow: 1;
     text-align: center;
 }
 
 .course-card-item .progress-container {
-    margin-top: auto; /* Empuja la barra de progreso al final de la tarjeta */
+    margin-top: auto;
 }
 
 /* --- ESTILOS PARA BOTONES SOCIALES --- */
@@ -938,7 +968,6 @@ img {
 }
 .separator:not(:empty)::before { margin-right: .5em; }
 .separator:not(:empty)::after { margin-left: .5em; }
-
 
 
 /* Estilos para el contenedor del contador de visitas */
@@ -989,7 +1018,7 @@ img {
     background-color: transparent;
     border: 1px solid var(--secondary-text-color);
     padding: 8px 15px;
-    border-radius: 20px; /* Bordes más redondeados */
+    border-radius: 20px;
     color: var(--secondary-text-color);
     text-decoration: none;
     font-size: 0.9em;
@@ -1001,7 +1030,7 @@ img {
 
 /* Estado al pasar el ratón */
 .me-gusta-btn:hover {
-    background-color: rgba(88, 166, 255, 0.1); /* Fondo sutil al hacer hover */
+    background-color: rgba(88, 166, 255, 0.1);
     color: var(--primary-color);
     border-color: var(--primary-color);
 }
@@ -1021,9 +1050,8 @@ img {
 
 /* Estilos para los comentarios */
 .comment-card {
-    position: relative; /* Para el botón de "Me Gusta" */
+    position: relative;
 }
-
 
 /* Esto es para las tarjetas de herramientas */
 
@@ -1032,20 +1060,20 @@ img {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 25px;
-    justify-items: center; /* Centra las tarjetas en el espacio disponible */
+    justify-items: center;
     padding: 20px 0;
 }
 
 /* --- Estilos para la Tarjeta Individual de Herramientas (similar a cursos) --- */
 .tool-card {
-    background-color: var(--card-bg); /* Color de fondo de tarjeta global */
-    border: 1px solid var(--border-color); /* Borde de tarjeta global */
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 25px;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
     width: 100%;
-    max-width: 200px; /* Limita el ancho para que sea una tarjeta */
+    max-width: 200px;
     display: flex;
     flex-direction: column;
 }
@@ -1070,11 +1098,10 @@ img {
     font-size: 1.5em;
 }
 
-
 .tool-card p {
     color: var(--secondary-text-color);
     font-size: 0.95em;
-    flex-grow: 1; /* Esto asegura que las tarjetas tengan la misma altura si la descripción es más larga */
+    flex-grow: 1;
     margin-bottom: 15px;
 }
 
@@ -1087,12 +1114,13 @@ img {
     font-weight: bold;
     text-decoration: none;
     transition: background-color 0.3s;
-    margin-top: auto; /* Empuja el botón al final de la tarjeta */
+    margin-top: auto;
 }
 
 .tool-link:hover {
     background-color: #235186;
 }
+
 /* Estilos para todas las tarjetas (cursos, posts, herramientas, juegos) */
 .course-card:hover,
 .post-card:hover,
@@ -1110,7 +1138,7 @@ img {
 }
 
 .delete-button {
-    background-color: var(--delete-button-bg);
+    background-color: #dc3545;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -1119,6 +1147,7 @@ img {
     display: block;
     margin-top: 10px;
 }
+
 /* ==========================================================================
    MEJORAS PARA FORMULARIOS Y TARJETAS DE JUEGOS/HERRAMIENTAS
    ========================================================================== */
@@ -1198,11 +1227,12 @@ img {
 }
 
 .btn-delete {
-    background-color: #dc3545; /* Rojo para eliminar */
+    background-color: #dc3545;
 }
 .btn-delete:hover {
     background-color: #c82333;
 }
+
 /* ==========================================================================
    ESTILOS PARA PÁGINAS DE RECURSOS (JUEGOS Y HERRAMIENTAS)
    ========================================================================== */
@@ -1223,11 +1253,7 @@ img {
     padding: 20px;
     text-align: center;
     width: 100%;
-    
-    /* --- AJUSTE DE TAMAÑO --- */
-    /* Reducimos el ancho máximo para hacer la tarjeta más compacta */
-    max-width: 220px; 
-    
+    max-width: 220px;
     display: flex;
     flex-direction: column;
     transition: transform 0.3s, box-shadow 0.3s;
@@ -1240,11 +1266,8 @@ img {
 }
 
 .resource-card img {
-    /* --- AJUSTE DE TAMAÑO --- */
-    /* Hacemos la imagen más pequeña */
-    width: 60;
+    width: 60px;
     height: 60px;
-
     object-fit: contain;
     margin: 0 auto 2px auto;
 }
@@ -1259,7 +1282,7 @@ img {
 .resource-card p {
     color: var(--secondary-text-color);
     font-size: 0.95em;
-    flex-grow: 1; /* Empuja los botones hacia abajo */
+    flex-grow: 1;
     margin-bottom: 10px;
 }
 
@@ -1273,6 +1296,7 @@ img {
     font-weight: bold;
     text-decoration: none;
     transition: background-color 0.3s;
+    margin-top: auto;
 }
 .resource-link:hover {
     background-color: #238636;
@@ -1290,11 +1314,11 @@ img {
 .btn-edit, .btn-delete {
     padding: 8px 15px;
     border-radius: 5px;
-    color: white !important; /* Importante para anular otros estilos de 'a' */
+    color: white !important;
     font-weight: bold;
     text-decoration: none;
     transition: all 0.3s ease;
-    flex-grow: 1; /* Para que ocupen el mismo espacio */
+    flex-grow: 1;
 }
 
 .btn-edit {
@@ -1305,17 +1329,18 @@ img {
 }
 
 .btn-delete {
-    background-color: #dc3545; /* Rojo */
+    background-color: #dc3545;
 }
 .btn-delete:hover {
     background-color: #c82333;
 }
+
 /* ==========================================================================
    ESTILOS PARA BOTONES DE ACCIÓN (SUBIR JUEGO/HERRAMIENTA)
    ========================================================================== */
 
 .resource-actions {
-    text-align: center; /* Centra el botón */
+    text-align: center;
     margin-bottom: 30px;
     padding-bottom: 30px;
     border-bottom: 1px solid var(--border-color);
@@ -1333,9 +1358,9 @@ img {
 }
 
 .resource-actions .nav-button:hover {
-    background-color: #238636; /* Verde más oscuro */
+    background-color: #238636;
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(46, 164, 79, 0.4); /* Brillo verde */
+    box-shadow: 0 6px 20px rgba(46, 164, 79, 0.4);
 }
 
 /* ==========================================================================
@@ -1358,18 +1383,18 @@ img {
 /* Usamos Flexbox para crear las dos columnas */
 .two-column-form {
     display: flex;
-    flex-wrap: wrap; /* Permite que el botón se vaya abajo */
-    gap: 30px; /* Espacio entre las columnas */
+    flex-wrap: wrap;
+    gap: 30px;
 }
 
 /* Columna izquierda para los campos principales */
 .form-main-column {
-    flex: 2; /* Ocupa 2/3 del espacio */
+    flex: 2;
 }
 
 /* Columna derecha para la imagen */
 .form-image-column {
-    flex: 1; /* Ocupa 1/3 del espacio */
+    flex: 1;
 }
 
 .form-group { margin-bottom: 20px; }
@@ -1431,7 +1456,7 @@ img {
 
 /* Botón de Enviar */
 .form-container .cta-button {
-    width: 100%; /* Ocupa todo el ancho disponible */
+    width: 100%;
     margin-top: 20px;
 }
 /* ==========================================================================
@@ -1440,9 +1465,9 @@ img {
 
 .ide-container {
     display: grid;
-    grid-template-columns: 350px 1fr; /* Columna fija para instrucciones, resto para el editor */
+    grid-template-columns: 350px 1fr;
     gap: 20px;
-    height: calc(100vh - 180px); /* Ocupa el alto disponible de la pantalla */
+    height: calc(100vh - 180px);
 }
 
 /* Sidebar de instrucciones */
@@ -1453,10 +1478,8 @@ img {
     border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    
-    /* --- LÍNEAS AÑADIDAS PARA CONTROLAR EL TAMAÑO Y SCROLL --- */
-    max-height: calc(100vh - 220px); /* Altura máxima para la sidebar */
-    overflow-y: auto; /* Muestra la barra de scroll SÓLO si es necesario */
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
 }
 .ide-sidebar h4 { color: var(--primary-color); font-size: 1.2em; margin-top: 0; }
 .ide-sidebar .exercise-instructions { flex-grow: 1; overflow-y: auto; padding-right: 10px; }
@@ -1466,7 +1489,7 @@ img {
     text-align: center;
     font-weight: bold;
     padding: 10px;
-    margin-top: 15px; /* Separa el botón del contenido */
+    margin-top: 15px;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
@@ -1478,9 +1501,9 @@ img {
     gap: 10px;
 }
 .ide-editor-wrapper {
-    flex-grow: 1; /* El editor ocupa el espacio vertical sobrante */
+    flex-grow: 1;
     position: relative;
-    min-height: 200px; /* Altura mínima para que nunca desaparezca */
+    min-height: 200px;
 }
 .ide-editor-wrapper .CodeMirror {
     position: absolute;
@@ -1503,8 +1526,8 @@ img {
     background-color: var(--code-bg);
     border-radius: 8px;
     padding: 15px;
-    height: 200px; /* Altura fija para la consola */
-    flex-shrink: 0; /* Evita que la consola se encoja */
+    height: 200px;
+    flex-shrink: 0;
     overflow-y: auto;
     border: 1px solid var(--border-color);
 }
@@ -1581,7 +1604,7 @@ img {
 }
 
 .lesson-list li.bloqueada .status-icon {
-    font-size: 2em; /* Hacemos el candado un poco más pequeño que la palomita */
+    font-size: 2em;
 }
 
 /* Envolvemos el enlace normal para evitar conflictos de estilo */
@@ -1624,7 +1647,7 @@ img {
 }
 
 .prompt-text a {
-    color: var(--secondary-color); /* Verde para el enlace */
+    color: var(--secondary-color);
     font-weight: bold;
     text-decoration: underline;
 }
@@ -1677,7 +1700,7 @@ img {
     height: 12px;
     background-color: var(--code-bg);
     border-radius: 6px;
-    overflow: hidden; /* Asegura que el relleno no se salga */
+    overflow: hidden;
     border: 1px solid var(--border-color);
 }
 
@@ -1721,7 +1744,7 @@ img {
     background-color: var(--card-bg);
     padding: 25px;
     border-radius: 8px;
-    border-top: 4px solid var(--border-color); /* Borde superior base */
+    border-top: 4px solid var(--border-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1732,15 +1755,15 @@ img {
 
 /* --- Colores Específicos para cada Tarjeta --- */
 .contribution-column.posts {
-    border-top-color: var(--primary-color); /* Azul para posts */
+    border-top-color: var(--primary-color);
 }
 
 .contribution-column.tools {
-    border-top-color: var(--highlight-color); /* Amarillo para herramientas */
+    border-top-color: var(--highlight-color);
 }
 
 .contribution-column.games {
-    border-top-color: var(--secondary-color); /* Verde para juegos */
+    border-top-color: var(--secondary-color);
 }
 
 /* --- Contenido de las Tarjetas --- */
@@ -1750,7 +1773,7 @@ img {
     margin: 0 0 20px 0;
     display: flex;
     align-items: center;
-    gap: 10px; /* Espacio entre icono y texto */
+    gap: 10px;
 }
 
 /* Coloreamos los iconos con el mismo color del borde superior */
@@ -1769,34 +1792,24 @@ img {
 }
 
 .contribution-list li:last-child {
-    border-bottom: none; /* Quitamos el borde al último elemento */
+    border-bottom: none;
 }
 
 /* --- Estilo para los Enlaces dentro de las Tarjetas --- */
 .contribution-list li a {
-    color: var(--primary-color); /* Usamos el azul primario para todos los enlaces */
+    color: var(--primary-color);
     text-decoration: none;
     transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .contribution-list li a:hover {
-    color: var(--highlight-color); /* Cambia a amarillo al pasar el mouse */
+    color: var(--highlight-color);
     text-decoration: underline;
 }
-/* --- Estilo para los Enlaces dentro de las Tarjetas --- */
-.contribution-list li a {
-    color: var(--primary-color); /* Usamos el azul primario para todos los enlaces */
-    text-decoration: none; /* Quitamos el subrayado por defecto */
-    transition: color 0.2s ease, text-decoration 0.2s ease; /* Suavizamos la transición */
-    display: flex; /* Para alinear si añadimos iconos más tarde */
-    align-items: center;
-    gap: 5px; /* Espacio si añadimos iconos */
-}
 
-.contribution-list li a:hover {
-    color: var(--highlight-color); /* Cambia a amarillo al pasar el mouse */
-    text-decoration: underline; /* Añade subrayado al pasar el mouse */
-}
 /* ==========================================================================
    ESTILOS MEJORADOS PARA BOTONES DE AUTENTICACIÓN
    ========================================================================== */
@@ -1809,7 +1822,7 @@ img {
     color: white;
     text-decoration: none;
     transition: all 0.3s ease;
-    border: 1px solid transparent; /* Borde transparente por defecto */
+    border: 1px solid transparent;
     margin-left: 10px;
 }
 
@@ -1820,20 +1833,20 @@ img {
 
 /* --- Botón "Mi Perfil" --- */
 .nav-button-profile {
-    background-color: var(--highlight-color); /* Amarillo */
-    color: var(--bg-color); /* Texto oscuro para contraste */
+    background-color: var(--highlight-color);
+    color: var(--bg-color);
     font-weight: 700;
 }
 
 .nav-button-profile:hover {
-    background-color: #ffd74b; /* Amarillo un poco más claro */
+    background-color: #ffd74b;
     color: var(--bg-color);
 }
 
 /* --- Botón "Cerrar Sesión" --- */
 .nav-button-logout {
-    background-color: var(--card-bg); /* Gris oscuro de las tarjetas */
-    color: var(--secondary-text-color); /* Texto gris claro */
+    background-color: var(--card-bg);
+    color: var(--secondary-text-color);
     border: 1px solid var(--border-color);
 }
 
@@ -1852,11 +1865,11 @@ img {
 
 /* --- Estilo para el nuevo botón "Validar" --- */
 .ide-controls .validate-btn {
-    background-color: var(--secondary-color); /* Verde */
+    background-color: var(--secondary-color);
 }
 
 .ide-controls .validate-btn:hover {
-    background-color: #238636; /* Verde más oscuro */
+    background-color: #238636;
 }
 
 /* --- Contenedor de resultados de validación --- */
@@ -1912,9 +1925,9 @@ img {
 }
 /* EN styles.css (AÑADIR AL FINAL) */
 
-/* --- Estilos para enlaces de contacto en la Sidebar --- */
+/* --- Estilo para enlaces de contacto en la Sidebar --- */
 .sidebar-contact-link {
-    font-size: 1.1em; /* Letra más grande */
+    font-size: 1.1em;
     font-weight: bold;
     padding: 8px 12px;
     border-radius: 6px;
@@ -1923,13 +1936,13 @@ img {
 }
 
 .sidebar-contact-link i {
-    margin-right: 10px; /* Espacio entre el icono y el texto */
-    color: var(--primary-color); /* Color azul para los iconos */
+    margin-right: 10px;
+    color: var(--primary-color);
 }
 
 .sidebar-contact-link:hover {
-    background-color: var(--card-bg); /* Fondo sutil al pasar el ratón */
-    color: var(--highlight-color); /* Texto se vuelve amarillo */
+    background-color: var(--card-bg);
+    color: var(--highlight-color);
 }
 
 /* EN styles.css (AÑADIR AL FINAL) */
@@ -1945,7 +1958,7 @@ img {
     text-decoration: none;
     border: 2px solid var(--primary-color);
     transition: all 0.3s ease;
-    display: inline-block; /* Asegura que se apliquen los estilos correctamente */
+    display: inline-block;
 }
 
 .cta-button-secondary:hover {
@@ -1953,4 +1966,95 @@ img {
     color: white;
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(88, 166, 255, 0.4);
+}
+
+/* ==========================================================================
+   ESTILOS MEJORADOS PARA EL FOOTER (VERSIÓN FINAL)
+   ========================================================================== */
+
+.main-footer {
+    background-color: var(--card-bg);
+    color: var(--secondary-text-color);
+    padding: 40px 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Columna de suscripción más ancha */
+    gap: 50px;
+    align-items: flex-start; /* Alinea los elementos al inicio */
+}
+
+/* Estilo para la columna de suscripción */
+.footer-subscription {
+    padding: 25px;
+    background-color: var(--code-bg); /* Fondo más oscuro para enmarcarlo */
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
+    text-align: center;
+}
+.footer-subscription h4 {
+    color: var(--highlight-color);
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+.subscription-form {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.subscription-form input[type="email"] {
+    flex-grow: 1;
+    max-width: 300px;
+    padding: 12px;
+    background-color: #1E1E1E;
+    border: 1px solid var(--border-color);
+    color: white;
+    border-radius: 8px;
+}
+.subscription-form .cta-button {
+    padding: 12px 25px;
+    font-size: 1em;
+}
+
+/* Estilo para la columna de contacto */
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+}
+.footer-contact h4 {
+    color: var(--highlight-color); /* Un color que resalte */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--highlight-color);
+    padding-bottom: 10px;
+}
+.contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.contact-list li {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: var(--text-color);
+}
+.contact-list i {
+    margin-right: 15px;
+    color: var(--primary-color); /* Iconos de un color diferente */
+}
+
+/* Estilo para el texto del copyright */
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-bottom p {
+    color: var(--secondary-text-color);
+    font-size: 0.9em;
 }
