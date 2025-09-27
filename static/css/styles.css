@@ -2058,3 +2058,96 @@ img {
     color: var(--secondary-text-color);
     font-size: 0.9em;
 }
+
+/* ==========================================================================
+   DISEÑO RESPONSIVO
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* --- Reorganizar el Layout Principal para Móviles --- */
+    body {
+        /* Desactiva el layout de dos columnas y apila todo verticalmente */
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-areas:
+            "header"
+            "navbar"
+            "main"
+            "footer";
+    }
+
+    /* --- Ocultar la Sidebar en Móviles --- */
+    .sidebar {
+        display: none;
+    }
+
+    /* --- Ajustar el Contenido Principal --- */
+    .main-content {
+        padding: 15px; /* Reduce el relleno para móviles */
+    }
+
+    /* --- Mejorar la Navegación y Encabezado --- */
+    .main-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .navbar-links {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+    }
+    .navbar-links a {
+        flex: 1 1 auto; /* Permite que los botones se adapten al ancho */
+        margin: 0;
+    }
+    .auth-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    /* --- Reorganizar la Grilla de Cursos y Blog --- */
+    .course-card-list, .blog-grid, .footer-grid, .two-column-form {
+        grid-template-columns: 1fr; /* Muestra todos los elementos en una sola columna */
+        gap: 20px;
+    }
+    .course-card-item, .blog-post-card-layout {
+        width: 100%; /* Las tarjetas ocupan todo el ancho */
+        flex-direction: column; /* Apila la imagen y el texto */
+    }
+    .blog-post-image-container {
+        order: 1; /* Coloca la imagen de nuevo arriba del texto */
+        width: 100%;
+    }
+    .blog-post-content {
+        order: 2; /* Coloca el texto debajo de la imagen */
+    }
+
+    /* --- Ajustar el Hero Section y el Footer --- */
+    .hero-content h1 {
+        font-size: 2em;
+    }
+    .hero-content p {
+        font-size: 0.9em;
+    }
+    .footer-grid {
+        text-align: center;
+    }
+    .footer-subscription, .footer-contact {
+        align-items: center;
+    }
+    .subscription-form {
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer-contact .contact-list {
+        text-align: left;
+    }
+    .footer-contact ul li {
+        text-align: left;
+    }
+}
