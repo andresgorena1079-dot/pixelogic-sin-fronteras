@@ -20,3 +20,4 @@ try:
 except Exception as e:
     print(f"❌ Ocurrió un error durante la carga de datos: {e}")
 print("--- SCRIPT DE ARRANQUE FINALIZADO ---")
+# Cambio para forzar re-despliegue
