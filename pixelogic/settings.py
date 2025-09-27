@@ -1,3 +1,5 @@
+# EN pixelogic/settings.py (Versión Final y Robusta)
+
 import os
 from pathlib import Path
 
@@ -5,20 +7,14 @@ import dj_database_url
 from decouple import config
 from dotenv import load_dotenv
 
-# Primero, definimos la ruta base del proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Ahora, cargamos las variables del archivo .env que está en la raíz del proyecto
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-
 # === BASE Y SEGURIDAD ===
-# 'config' leerá las variables que cargó 'load_dotenv'
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-
-# === HOSTS Y SEGURIDAD DE PRODUCCIÓN ===
+# === HOSTS PERMITIDOS ===
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
@@ -29,8 +25,6 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "httpss")
-
 
 # === APPS ===
 INSTALLED_APPS = [
@@ -52,7 +46,6 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
-
 
 # === MIDDLEWARE ===
 MIDDLEWARE = [
@@ -88,12 +81,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "pixelogic.wsgi.application"
 
-
 # === BASE DE DATOS ===
 DATABASES = {
     "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
 }
-
 
 # === VALIDACIÓN DE CONTRASEÑAS ===
 AUTH_PASSWORD_VALIDATORS = [
@@ -105,45 +96,41 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-
 # === INTERNACIONALIZACIÓN ===
 LANGUAGE_CODE = "es-la"
 TIME_ZONE = "America/Buenos_Aires"
 USE_I18N = True
 USE_TZ = True
 
-
 # === ARCHIVOS ESTÁTICOS Y MEDIA (Cloudinary) ===
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
 MEDIA_URL = "/media/"
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
 STORAGES = {
     "default": {"BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"},
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
     },
 }
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
+CLOUDINARY_URL = config("CLOUDINARY_URL", default=None)
 
 # === ALLAUTH (AUTENTICACIÓN) ===
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
-
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/cuentas/login/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_LOGIN_ON_GET = True
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 
-
-# === CLOUDINARY ===
-CLOUDINARY_URL = config("CLOUDINARY_URL", default=None)
+# ✅ MEJORA: Configuraciones de seguridad que SOLO se aplican en producción (cuando DEBUG=False)
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "httpss")
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
