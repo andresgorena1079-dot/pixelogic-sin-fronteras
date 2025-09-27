@@ -9,7 +9,7 @@ echo "📊 Ejecutando migraciones..."
 python manage.py migrate
 
 echo "📥 Cargando datos iniciales..."
-python manage.py loaddata datos_produccion_final.json
+# python manage.py loaddata datos_produccion_final.json
 echo "👤 Creando superusuario..."
 python -c "
 import os, django
