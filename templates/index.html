@@ -13,26 +13,49 @@
         </div>
     </section>
 
+    {% if not user.is_authenticated %}
+    <section id="guest-prompt" class="page-section section-border-blue">
+        <div class="container">
+            <div class="guest-prompt-card">
+                <div class="prompt-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <div class="prompt-text">
+                    <h3>¿Listo para dar el siguiente paso?</h3>
+                    <p>Únete a nuestra comunidad para desbloquear lecciones exclusivas y seguir tu progreso. ¡Es completamente gratis!</p>
+                    <a href="{% url 'account_signup' %}" class="cta-button-secondary">Regístrate ahora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
     <section id="blog" class="page-section section-border-blue">
         <div class="container">
             <h2 class="section-title">Nuestro Blog</h2>
             <div class="blog-grid">
                 {% for post in ultimos_posts %}
-                <a href="{{ post.get_absolute_url }}" class="blog-card-link">
-                    <div class="blog-card">
-                        <div class="blog-card-image">
-                            <img src="{% static 'img/placeholder_blog.png' %}" alt="{{ post.titulo }}">
-                        </div>
-                        <div class="blog-card-content">
-                            <p class="blog-author">Por: {{ post.autor.username }}</p>
-                            <h3>{{ post.titulo }}</h3>
-                            <p>{{ post.contenido|truncatewords:20 }}</p>
-                            <div class="blog-meta">
-                                <span><i class="fas fa-heart"></i> {{ post.me_gusta.count }}</span>
-                            </div>
+                <div class="blog-post-card-layout">
+                    <div class="blog-post-image-container">
+                        {% if post.imagen %}
+                        <a href="{{ post.get_absolute_url }}">
+                            <img src="{{ post.imagen.url }}" alt="{{ post.titulo }}">
+                        </a>
+                        {% else %}
+                        <a href="{{ post.get_absolute_url }}">
+                            <img src="{% static 'img/placeholder_blog.png' %}" alt="Imagen por defecto del blog">
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="blog-post-content">
+                        <h3><a href="{{ post.get_absolute_url }}">{{ post.titulo }}</a></h3>
+                        <p class="blog-author">Por: {{ post.autor.username }}</p>
+                        <p>{{ post.contenido|truncatewords:20 }}</p>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-heart"></i> {{ post.me_gusta.count }}</span>
                         </div>
                     </div>
-                </a>
+                </div>
                 {% empty %}
                 <p>Aún no hay publicaciones en el blog.</p>
                 {% endfor %}
@@ -79,32 +102,28 @@
     </section>
 
     <footer id="contacto" class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h3>Pyxcelogic Sin Fronteras</h3>
-                    <h4>Mantente en Contacto</h4>
-                    <form action="#">
-                        <label for="email_subscribe">Suscríbete a nuestro newsletter:</label>
-                        <input type="email" id="email_subscribe" name="email_subscribe" required>
-                        <button type="submit" class="cta-button">Suscribirse</button>
-                    </form>
-                </div>
-                <div class="footer-column">
-                    <p><i class="fab fa-whatsapp"></i> +54 9 11 3116 0543</p>
-                    <p><i class="fas fa-envelope"></i> andresgorena1079@gmail.com</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Buenos Aires, Argentina</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 by Pyxcelogic Sin Fronteras. Todos los derechos reservados.</p>
-            </div>
+    <div class="container footer-grid">
+        <div class="footer-subscription">
+            <h4>Suscríbete a nuestro newsletter</h4>
+            <form action="#" class="subscription-form">
+                <input type="email" id="email_subscribe" name="email_subscribe" placeholder="Tu correo electrónico" required>
+                <button type="submit" class="cta-button">Suscribirse</button>
+            </form>
         </div>
-    </footer>
+        
+        <div class="footer-contact">
+            <h4>Contacto</h4>
+            <ul class="contact-list">
+                <li><i class="fab fa-whatsapp"></i> +591 61915340 (Bolivia)</li>
+                <li><i class="fab fa-whatsapp"></i> +54 9 11 31160543 (Argentina)</li>
+                <li><i class="fas fa-envelope"></i> andresgorena1079@gmail.com</li>
+                <li><i class="fas fa-envelope"></i> carquego@hotmail.com</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 by Pixelogic Sin Fronteras. Todos los derechos reservados.</p>
+    </div>
+</footer>
 </div>
 {% endblock %}
