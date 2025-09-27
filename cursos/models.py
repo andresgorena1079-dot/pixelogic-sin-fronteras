@@ -59,9 +59,10 @@ class Perfil(models.Model):
 
     @receiver(post_save, sender=User)
     def crear_o_actualizar_perfil_usuario(sender, instance, created, **kwargs):
-        if created:
+        if hasattr(instance, "perfil"):
+            instance.perfil.save()
+        else:
             Perfil.objects.create(usuario=instance)
-        instance.perfil.save()
 
 
 class Post(models.Model):
