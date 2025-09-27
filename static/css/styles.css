@@ -136,13 +136,12 @@
 html, body {
     height: 100vh;
     margin: 0;
-    overflow: hidden;
+    /* CORREGIDO: Eliminamos overflow: hidden para permitir el scroll */
     font-family: 'Roboto', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
 }
-
 body {
     display: grid;
     grid-template-columns: 250px 1fr;
@@ -734,7 +733,6 @@ img {
     color: white;
     padding: 10px 15px;
     border-radius: 5px;
-    text-decoration: none;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -972,42 +970,42 @@ img {
 
 /* Estilos para el contenedor del contador de visitas */
 .counter-container {
-  perspective: 800px;
-  transform-style: preserve-3d;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 20px 40px;
-  text-align: center;
-  box-shadow: 0 0 50px rgba(0, 255, 255, 0.5),
-              0 0 20px rgba(0, 255, 255, 0.3) inset;
-  transition: transform 0.5s ease;
+    perspective: 800px;
+    transform-style: preserve-3d;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px 40px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(0, 255, 255, 0.5),
+                0 0 20px rgba(0, 255, 255, 0.3) inset;
+    transition: transform 0.5s ease;
 }
 
 .counter-container:hover {
-  transform: rotateY(30deg) rotateX(15deg);
+    transform: rotateY(30deg) rotateX(15deg);
 }
 
 .counter-title {
-  color: #00e5ff;
-  font-size: 1.2rem;
-  font-weight: 100;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 0 0 10px #00e5ff;
+    color: #00e5ff;
+    font-size: 1.2rem;
+    font-weight: 100;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #00e5ff;
 }
 
 .counter-display {
-  color: #f0f0f0;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-top: 10px;
-  background: linear-gradient(45deg, #00e5ff, #8a2be2, #f39c12);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(138, 43, 226, 0.8),
-               0 0 40px rgba(243, 156, 18, 0.6);
+    color: #f0f0f0;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 10px;
+    background: linear-gradient(45deg, #00e5ff, #8a2be2, #f39c12);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(138, 43, 226, 0.8),
+                 0 0 40px rgba(243, 156, 18, 0.6);
 }
 
 /* --- Estilos para el botón de "Me Gusta" --- */
@@ -1109,16 +1107,16 @@ img {
     display: block;
     background-color: var(--secondary-color);
     color: white;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border-radius: 5px;
     font-weight: bold;
     text-decoration: none;
     transition: background-color 0.3s;
     margin-top: auto;
 }
-
 .tool-link:hover {
-    background-color: #235186;
+    background-color: #238636;
+    color: white;
 }
 
 /* Estilos para todas las tarjetas (cursos, posts, herramientas, juegos) */
@@ -1314,11 +1312,10 @@ img {
 .btn-edit, .btn-delete {
     padding: 8px 15px;
     border-radius: 5px;
-    color: white !important;
+    color: white;
     font-weight: bold;
     text-decoration: none;
     transition: all 0.3s ease;
-    flex-grow: 1;
 }
 
 .btn-edit {
@@ -1374,7 +1371,8 @@ img {
     padding: 30px 40px;
     border-radius: 15px;
     border: 1px solid #444;
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5), inset 0px 2px 2px rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5), 
+                inset 0px 2px 2px rgba(255, 255, 255, 0.1);
 }
 
 .form-container h2 { text-align: center; margin-bottom: 10px; }
@@ -2066,20 +2064,20 @@ img {
 @media (max-width: 768px) {
     /* --- Desactivar el layout de dos columnas y apilar todo verticalmente --- */
     body {
-        display: flex; /* Usamos flexbox para que los elementos se apilen */
-        flex-direction: column; /* Apilar los elementos uno encima del otro */
-        height: auto; /* Permitir que el cuerpo crezca con el contenido */
-        overflow-y: scroll; /* Asegurar que el desplazamiento funcione */
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        overflow-y: scroll;
     }
 
     /* --- Eliminar la Sidebar y Navbar fija --- */
     .sidebar {
-        display: none; /* Ocultar la barra lateral por completo */
+        display: none;
     }
 
     .main-navbar, .header-banner {
-        position: static; /* Desactivar la posición fija para que se desplace con el contenido */
-        width: 100%; /* Asegurar que ocupen todo el ancho */
+        position: static;
+        width: 100%;
     }
 
     /* --- Ajustar el Contenido Principal y la Navegación --- */
@@ -2116,45 +2114,45 @@ img {
 
     /* --- Ajustar la Grilla y las Tarjetas --- */
     .blog-grid, .course-card-list, .footer-grid, .two-column-form {
-        grid-template-columns: 1fr; /* Muestra todo en una sola columna */
+        grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .blog-post-card-layout {
-        flex-direction: column; /* Apila la imagen y el texto */
+        flex-direction: column;
     }
-    
+
     .blog-post-image-container {
-        order: 1; /* Imagen arriba */
+        order: 1;
         width: 100%;
     }
-    
+
     .blog-post-content {
-        order: 2; /* Texto abajo */
+        order: 2;
     }
 
     /* --- Ajustar el Hero Section y el Footer --- */
     .hero-content h1 {
         font-size: 2em;
     }
-    
+
     .hero-content p {
         font-size: 0.9em;
     }
-    
+
     .footer-grid {
         text-align: center;
     }
-    
+
     .footer-subscription, .footer-contact {
         align-items: center;
     }
-    
+
     .subscription-form {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .footer-contact .contact-list {
         text-align: center;
     }
