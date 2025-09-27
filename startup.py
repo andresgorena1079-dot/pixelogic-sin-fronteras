@@ -1,4 +1,4 @@
-# startup.py (Versión para crear superusuario)
+# startup.py (Versión final para ACTUALIZAR datos)
 import os
 
 import django
@@ -6,23 +6,17 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pixelogic.settings")
 django.setup()
 
-from django.contrib.auth import get_user_model
+from django.core.management import call_command
 
-print("--- INICIANDO SCRIPT DE ARRANQUE EN RENDER ---")
+print("--- INICIANDO SCRIPT DE ARRANQUE EN RENDER (MODO ACTUALIZACIÓN) ---")
 
-User = get_user_model()
-username = "admin"
-password = "admin123"
-email = "admin@example.com"
+try:
+    # Ya no ejecutamos 'flush'. Cargamos los datos directamente.
+    print("📥 Cargando datos desde 'datos_produccion_final.json'...")
+    call_command("loaddata", "datos_produccion_final.json")
+    print("✅ Datos cargados y actualizados exitosamente.")
 
-if not User.objects.filter(username=username).exists():
-    print(f"Creando nuevo superusuario: {username}")
-    try:
-        User.objects.create_superuser(username, email, password)
-        print("✅ Superusuario creado exitosamente.")
-    except Exception as e:
-        print(f"❌ Error al crear superusuario: {e}")
-else:
-    print(f"El superusuario '{username}' ya existe. No se realizaron cambios.")
+except Exception as e:
+    print(f"❌ Ocurrió un error durante la carga de datos: {e}")
 
 print("--- SCRIPT DE ARRANQUE FINALIZADO ---")

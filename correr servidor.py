@@ -21,8 +21,8 @@ cursor = connection.cursor()
 cursor.execute("DELETE FROM django_migrations;")
 connection.commit()
 exit()
-
-https://pixelogic-sin-fronteras.onrender.com/admin
+o
+https://pixelogic-sin-fronteras.onrender.cm/admin
 
 git add .
 git commit -m "Muevo templates dentro del proyecto para Render"
