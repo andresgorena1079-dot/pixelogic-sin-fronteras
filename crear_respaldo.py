@@ -1,10 +1,10 @@
-# crear_respaldo.py (Versión final que EXCLUYE secretos)
+# crear_respaldo.py (Versión final que EXCLUYE secretos Y perfiles)
 import os
 import sys
 
 import django
 
-print("Iniciando la creación del respaldo limpio (sin secretos)...")
+print("Iniciando la creación del respaldo limpio (sin secretos ni perfiles)...")
 
 try:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pixelogic.settings")
@@ -26,6 +26,8 @@ try:
             "auth.permission",
             "--exclude",
             "socialaccount.socialapp",  # <-- EXCLUYE LAS CLAVES DE GOOGLE
+            "-e",
+            "cursos.perfil",  # <-- AÑADE ESTA LÍNEA PARA EXCLUIR LOS PERFILES
         )
 
     sys.stdout = original_stdout
