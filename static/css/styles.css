@@ -2064,34 +2064,36 @@ img {
    ========================================================================== */
 
 @media (max-width: 768px) {
-    /* --- Reorganizar el Layout Principal para Móviles --- */
+    /* --- Desactivar el layout de dos columnas y apilar todo verticalmente --- */
     body {
-        /* Desactiva el layout de dos columnas y apila todo verticalmente */
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr auto;
-        grid-template-areas:
-            "header"
-            "navbar"
-            "main"
-            "footer";
+        display: flex; /* Usamos flexbox para que los elementos se apilen */
+        flex-direction: column; /* Apilar los elementos uno encima del otro */
+        height: auto; /* Permitir que el cuerpo crezca con el contenido */
+        overflow-y: scroll; /* Asegurar que el desplazamiento funcione */
     }
 
-    /* --- Ocultar la Sidebar en Móviles --- */
+    /* --- Eliminar la Sidebar y Navbar fija --- */
     .sidebar {
-        display: none;
+        display: none; /* Ocultar la barra lateral por completo */
     }
 
-    /* --- Ajustar el Contenido Principal --- */
+    .main-navbar, .header-banner {
+        position: static; /* Desactivar la posición fija para que se desplace con el contenido */
+        width: 100%; /* Asegurar que ocupen todo el ancho */
+    }
+
+    /* --- Ajustar el Contenido Principal y la Navegación --- */
     .main-content {
-        padding: 15px; /* Reduce el relleno para móviles */
+        padding: 15px;
+        width: 100%;
     }
 
-    /* --- Mejorar la Navegación y Encabezado --- */
     .main-navbar {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
+
     .navbar-links {
         width: 100%;
         display: flex;
@@ -2099,10 +2101,12 @@ img {
         gap: 5px;
         justify-content: center;
     }
+
     .navbar-links a {
-        flex: 1 1 auto; /* Permite que los botones se adapten al ancho */
+        flex: 1 1 auto;
         margin: 0;
     }
+
     .auth-buttons {
         width: 100%;
         display: flex;
@@ -2110,44 +2114,48 @@ img {
         margin-top: 10px;
     }
 
-    /* --- Reorganizar la Grilla de Cursos y Blog --- */
-    .course-card-list, .blog-grid, .footer-grid, .two-column-form {
-        grid-template-columns: 1fr; /* Muestra todos los elementos en una sola columna */
+    /* --- Ajustar la Grilla y las Tarjetas --- */
+    .blog-grid, .course-card-list, .footer-grid, .two-column-form {
+        grid-template-columns: 1fr; /* Muestra todo en una sola columna */
         gap: 20px;
     }
-    .course-card-item, .blog-post-card-layout {
-        width: 100%; /* Las tarjetas ocupan todo el ancho */
+    
+    .blog-post-card-layout {
         flex-direction: column; /* Apila la imagen y el texto */
     }
+    
     .blog-post-image-container {
-        order: 1; /* Coloca la imagen de nuevo arriba del texto */
+        order: 1; /* Imagen arriba */
         width: 100%;
     }
+    
     .blog-post-content {
-        order: 2; /* Coloca el texto debajo de la imagen */
+        order: 2; /* Texto abajo */
     }
 
     /* --- Ajustar el Hero Section y el Footer --- */
     .hero-content h1 {
         font-size: 2em;
     }
+    
     .hero-content p {
         font-size: 0.9em;
     }
+    
     .footer-grid {
         text-align: center;
     }
+    
     .footer-subscription, .footer-contact {
         align-items: center;
     }
+    
     .subscription-form {
         flex-direction: column;
         align-items: center;
     }
+    
     .footer-contact .contact-list {
-        text-align: left;
-    }
-    .footer-contact ul li {
-        text-align: left;
+        text-align: center;
     }
 }
