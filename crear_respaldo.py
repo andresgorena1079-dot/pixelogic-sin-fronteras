@@ -1,44 +1,37 @@
+# crear_respaldo.py (Versión final que EXCLUYE secretos)
 import os
-import subprocess
 import sys
 
-print("Iniciando la creación del respaldo...")
+import django
 
-output_filename = "datos_produccion_final.json"
-
-command = [
-    sys.executable,
-    "manage.py",
-    "dumpdata",
-    "--natural-foreign",
-    "--natural-primary",
-    "-e",
-    "contenttypes",
-    "-e",
-    "auth.permission",
-]
+print("Iniciando la creación del respaldo limpio (sin secretos)...")
 
 try:
-    my_env = os.environ.copy()
-    my_env["PYTHONIOENCODING"] = "utf-8"
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pixelogic.settings")
+    django.setup()
+    from django.core.management import call_command
 
-    # ✅ CAMBIO CLAVE: Capturamos la salida como bytes crudos, no como texto.
-    result = subprocess.run(command, capture_output=True, check=True, env=my_env)
-
-    # Decodificamos los bytes a texto UTF-8 manualmente.
-    output_text = result.stdout.decode("utf-8")
-
-    # Escribimos el texto decodificado al archivo.
+    output_filename = "datos_produccion_final.json"
     with open(output_filename, "w", encoding="utf-8") as f:
-        f.write(output_text)
+        original_stdout = sys.stdout
+        sys.stdout = f
 
-    print(f"✅ Respaldo '{output_filename}' creado exitosamente.")
+        call_command(
+            "dumpdata",
+            "--natural-foreign",
+            "--natural-primary",
+            "-e",
+            "contenttypes",
+            "-e",
+            "auth.permission",
+            "--exclude",
+            "socialaccount.socialapp",  # <-- EXCLUYE LAS CLAVES DE GOOGLE
+        )
 
-except subprocess.CalledProcessError as e:
-    print("❌ Error al ejecutar dumpdata.")
-    print("--- SALIDA DE ERROR ---")
-    # Decodificamos el error de forma segura, reemplazando caracteres problemáticos.
-    error_text = e.stderr.decode("utf-8", errors="replace")
-    print(error_text)
+    sys.stdout = original_stdout
+    print(f"✅ Respaldo limpio '{output_filename}' creado exitosamente.")
+
 except Exception as e:
+    if "original_stdout" in locals():
+        sys.stdout = original_stdout
     print(f"❌ Ocurrió un error inesperado: {e}")

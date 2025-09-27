@@ -11,7 +11,7 @@ db.sqlite3
 
 # Archivos de secretos y variables de entorno
 .env
-*.json
+
 
 # ✅ Permitir db.json (datos de producción)
 # ✅ Bloquear solo JSON temporales o de desarrollo
